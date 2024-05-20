@@ -35,7 +35,7 @@ function Events() {
                     </li>
                     <li>
                       <span>Price:</span>
-                      <h6>$120</h6>
+                      <h6>₹120</h6>
                     </li>
                   </ul>
                   <a href="#">
@@ -69,7 +69,7 @@ function Events() {
                     </li>
                     <li>
                       <span>Price:</span>
-                      <h6>$320</h6>
+                      <h6>₹320</h6>
                     </li>
                   </ul>
                   <a href="#">
@@ -103,7 +103,7 @@ function Events() {
                     </li>
                     <li>
                       <span>Price:</span>
-                      <h6>$440</h6>
+                      <h6>₹440</h6>
                     </li>
                   </ul>
                   <a href="#">

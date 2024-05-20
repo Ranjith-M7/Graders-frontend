@@ -1,21 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
+import database from "./firebaseConfig";
 
 function Footer() {
+  const [footerData, setFooterData] = useState({
+    text: "",
+  });
+
+  useEffect(() => {
+    const fetchFooterData = async () => {
+      try {
+        const snapshot = await database.ref("Footer").once("value");
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          const { Text } = data;
+          setFooterData({
+            text: Text || "",
+          });
+        } else {
+          console.log("The footer data was not found in the database");
+        }
+      } catch (error) {
+        console.log(`Error: ${error}`);
+      }
+    };
+
+    fetchFooterData();
+  }, []);
+
   return (
     <footer>
       <div className="container">
         <div className="col-lg-12">
-          <p>
-            Copyright © 2036 Scholar Organization. All rights reserved.
-            &nbsp;&nbsp;&nbsp; Design:{" "}
-            <a href="https://templatemo.com" rel="nofollow" target="_blank">
-              TemplateMo
-            </a>{" "}
-            Distribution:{" "}
-            <a href="https://themewagon.com" rel="nofollow" target="_blank">
-              ThemeWagon
-            </a>
-          </p>
+          <p>{footerData.text}</p>
         </div>
       </div>
     </footer>

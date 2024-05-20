@@ -366,8 +366,8 @@ Header Style
 
 .header-area {
   position: absolute;
-  background-color: transparent;
-  top: 40px;
+  background-color: #7a6ad8;
+  top: 0px;
   left: 0;
   right: 0;
   z-index: 100;
@@ -376,10 +376,18 @@ Header Style
   -o-transition: all 0.5s ease 0s;
   transition: all 0.5s ease 0s;
 }
-
 .header-area .main-nav {
-  background: transparent;
   display: flex;
+  transition: all 0.5s ease 0s;
+  padding: 1.2rem 0;
+  height: 80px;
+}
+.header-sticky {
+  position: fixed;
+  -webkit-transition: all 0.5s ease 0s;
+  -moz-transition: all 0.5s ease 0s;
+  -o-transition: all 0.5s ease 0s;
+  transition: all 0.5s ease 0s;
 }
 
 .header-area .main-nav .logo {
@@ -402,7 +410,7 @@ Header Style
 
 .background-header .main-nav .logo,
 .background-header .main-nav #search {
-  margin-top: 18px;
+  margin-top: 0px;
 }
 
 .header-area .main-nav #search {
@@ -477,7 +485,7 @@ Header Style
 }
 
 .background-header .main-nav .nav {
-  margin-top: 20px;
+  margin-top: 0px;
 }
 
 .background-header .main-nav .nav li {
@@ -516,7 +524,7 @@ Header Style
 }
 
 .background-header .main-nav .menu-trigger {
-  top: 20px;
+  top: 0px;
 }
 
 .header-area .main-nav .menu-trigger span,
@@ -715,7 +723,7 @@ Header Style
     margin-top: 100px !important;
   }
   .background-header.header-sticky .nav {
-    margin-top: 80px !important;
+    margin-top: 0px !important;
   }
   .header-area .main-nav .nav li {
     width: 100%;
@@ -730,13 +738,7 @@ Header Style
 Banner Style
 --------------------------------------------- 
 */
-.header-nav {
-  background-image: url(../images/banner-bg.jpg);
-  background-position: right bottom;
-  background-repeat: no-repeat;
-  background-size: cover;
-  padding: 70px 0px;
-}
+
 .main-banner {
   background-image: url(../images/banner-bg.jpg);
   background-position: right bottom;

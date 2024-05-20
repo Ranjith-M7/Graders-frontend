@@ -4,7 +4,7 @@ function Contact() {
   return (
     <div className="contact-us section" id="contact">
       <div className="container">
-        <div className="row">
+        <div className="row pt-5">
           <div className="col-lg-6  align-self-center">
             <div className="section-heading">
               <h6>Contact Us</h6>
@@ -16,12 +16,10 @@ function Contact() {
               </p>
               <div className="special-offer">
                 <span className="offer">
-                  off
-                  <br />
-                  <em>50%</em>
+                  off<br /><em>50%</em>
                 </span>
                 <h6>
-                  Valide: <em>24 April 2036</em>
+                  Valid: <em>24 April 2036</em>
                 </h6>
                 <h4>
                   Special Offer <em>50%</em> OFF!

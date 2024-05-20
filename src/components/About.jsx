@@ -4,7 +4,7 @@ function About() {
   return (
     <div className="section about-us">
       <div className="container">
-        <div className="row">
+        <div className="row pt-5">
           <div className="col-lg-6 offset-lg-1">
             <div className="accordion" id="accordionExample">
               <div className="accordion-item">

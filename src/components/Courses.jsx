@@ -44,7 +44,7 @@ function Courses() {
                 <span className="category">Webdesign</span>
                 <span className="price">
                   <h6>
-                    <em>$</em>160
+                    <em>₹</em>160
                   </h6>
                 </span>
               </div>
@@ -63,7 +63,7 @@ function Courses() {
                 <span className="category">Development</span>
                 <span className="price">
                   <h6>
-                    <em>$</em>340
+                    <em>₹</em>340
                   </h6>
                 </span>
               </div>
@@ -82,7 +82,7 @@ function Courses() {
                 <span className="category">Wordpress</span>
                 <span className="price">
                   <h6>
-                    <em>$</em>640
+                    <em>₹</em>640
                   </h6>
                 </span>
               </div>
@@ -101,7 +101,7 @@ function Courses() {
                 <span className="category">Development</span>
                 <span className="price">
                   <h6>
-                    <em>$</em>450
+                    <em>₹</em>450
                   </h6>
                 </span>
               </div>
@@ -120,7 +120,7 @@ function Courses() {
                 <span className="category">Wordpress</span>
                 <span className="price">
                   <h6>
-                    <em>$</em>320
+                    <em>₹</em>320
                   </h6>
                 </span>
               </div>
@@ -136,10 +136,10 @@ function Courses() {
                 <a href="#">
                   <img src="assets/images/course-06.jpg" alt="" />
                 </a>
-                <span className="category">Webdesign</span>
+                <span className="category">c</span>
                 <span className="price">
                   <h6>
-                    <em>$</em>240
+                    <em>₹</em>240
                   </h6>
                 </span>
               </div>

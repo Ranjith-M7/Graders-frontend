@@ -11,26 +11,21 @@
     var box = $(".header-text").height();
     var header = $("header").height();
 
-    // if (scroll >= box - header) {
-    //   $("header").addClass("background-header");
-    // } else {
-    //   $("header").removeClass("background-header");
-    // }
-    if (scroll) {
+    if (scroll >= "20") {
       $("header").addClass("background-header");
     } else {
       $("header").removeClass("background-header");
     }
   });
 
-  var width = $(window).width();
-  $(window).resize(function () {
-    if (width > 767 && $(window).width() < 767) {
-      location.reload();
-    } else if (width < 767 && $(window).width() > 767) {
-      location.reload();
-    }
-  });
+  // var width = $(window).width();
+  // $(window).resize(function () {
+  //   if (width > 767 && $(window).width() < 767) {
+  //     location.reload();
+  //   } else if (width < 767 && $(window).width() > 767) {
+  //     location.reload();
+  //   }
+  // });
 
   const elem = document.querySelector(".event_box");
   const filtersElem = document.querySelector(".event_filter");

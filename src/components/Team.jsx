@@ -8,7 +8,7 @@ function Team() {
   return (
     <div className="team section" id="team">
       <div className="container">
-        <div className="row">
+        <div className="row pt-5">
           <div className="col-lg-3 col-md-6">
             <div className="team-member">
               <div className="main-content">
