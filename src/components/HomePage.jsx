@@ -6,7 +6,7 @@ import MainBanner from "./MainBanner";
 import Services from "./Services";
 import About from "./About";
 import Courses from "./Courses";
-import FunFacts from "./FunFacts";
+import Statistics from "./Statistics";
 import Team from "./Team";
 import Testimonial from "./Testimonial";
 import Events from "./Events";
@@ -22,7 +22,7 @@ function HomePage() {
       <Services />
       <About />
       <Courses />
-      <FunFacts />
+      <Statistics />
       <Team />
       <Testimonial />
       <Events />

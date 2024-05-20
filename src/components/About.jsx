@@ -15,7 +15,7 @@ function About() {
     },
     faqContent: [],
   });
-  console.log(aboutData.faqContent);
+
   useEffect(() => {
     const fetchAboutData = async () => {
       try {
@@ -42,7 +42,7 @@ function About() {
             faqContent: filteredFaqContent || [],
           });
         } else {
-          console.log("The contact data was not found in the database");
+          console.log("The about data was not found in the database");
         }
       } catch (error) {
         console.log(`Error: ${error}`);
