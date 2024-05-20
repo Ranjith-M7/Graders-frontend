@@ -744,7 +744,7 @@ Banner Style
   background-position: right bottom;
   background-repeat: no-repeat;
   background-size: cover;
-  padding: 170px 0px 120px 0px;
+  padding: 150px 0px 120px 0px;
 }
 .main-banner .item-1 {
   background-image: url(../images/banner-item-01.jpg);
@@ -1760,6 +1760,7 @@ body {
   }
   .main-banner .item {
     padding: 80px 30px 120px 30px !important;
+    margin-left: 30px;
   }
   .main-banner .owl-nav {
     left: 30px !important;
@@ -1789,7 +1790,7 @@ body {
   }
   .main-banner .item {
     padding: 100px 60px 140px 60px;
-    margin-left: 0px;
+    margin-left: 30px;
     text-align: center;
   }
   .main-banner .item h2,

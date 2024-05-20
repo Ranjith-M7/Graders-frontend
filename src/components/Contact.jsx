@@ -1,28 +1,77 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
+import database from "./firebaseConfig";
 
 function Contact() {
+  const [contactData, setContactData] = useState({
+    sectionHeading: {
+      title: "",
+      subTitle: "",
+      description: "",
+    },
+    specialOffer: {
+      title: "",
+      date: "",
+      label: "",
+      offerDiscount: "",
+      offerText: "",
+    },
+  });
+
+  useEffect(() => {
+    const fetchContactData = async () => {
+      try {
+        const snapshot = await database.ref("Contact Section").once("value");
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          const { Section_Heading, Special_Offer } = data;
+          setContactData({
+            sectionHeading: {
+              title: Section_Heading.Title || "",
+              subTitle: Section_Heading.Subtitle || "",
+              description: Section_Heading.Description || "",
+            },
+            specialOffer: {
+              title: Special_Offer.Title || "",
+              date: Special_Offer.Date || "",
+              label: Special_Offer.Label || "",
+              offerDiscount: Special_Offer.Offer_Discount || "",
+              offerText: Special_Offer.Offer_Text || "",
+            },
+          });
+        } else {
+          console.log("The contact data was not found in the database");
+        }
+      } catch (error) {
+        console.log(`Error: ${error}`);
+      }
+    };
+
+    fetchContactData();
+  }, []);
   return (
     <div className="contact-us section" id="contact">
       <div className="container">
         <div className="row pt-5">
           <div className="col-lg-6  align-self-center">
             <div className="section-heading">
-              <h6>Contact Us</h6>
-              <h2>Feel free to contact us anytime</h2>
-              <p>
-                Thank you for choosing our templates. We provide you best CSS
-                templates at absolutely 100% free of charge. You may support us
-                by sharing our website to your friends.
-              </p>
+              <h6>{contactData.sectionHeading.subTitle}</h6>
+              <h2>{contactData.sectionHeading.title}</h2>
+              <p>{contactData.sectionHeading.description}</p>
               <div className="special-offer">
                 <span className="offer">
-                  off<br /><em>50%</em>
+                  {contactData.specialOffer.offerText}
+                  <br />
+                  <em>{contactData.specialOffer.offerDiscount}</em>
                 </span>
                 <h6>
-                  Valid: <em>24 April 2036</em>
+                  {contactData.specialOffer.label}{" "}
+                  <em>{contactData.specialOffer.date}</em>
                 </h6>
                 <h4>
-                  Special Offer <em>50%</em> OFF!
+                  {contactData.specialOffer.title}{" "}
+                  <em>{contactData.specialOffer.offerDiscount}</em>{" "}
+                  {contactData.specialOffer.offerText}
                 </h4>
                 <a href="#">
                   <i className="fa fa-angle-right" />
