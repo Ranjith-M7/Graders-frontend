@@ -1,6 +1,7 @@
 import React from "react";
 
 function Courses() {
+  
   return (
     <section className="section courses" id="courses">
       <div className="container">
@@ -136,7 +137,7 @@ function Courses() {
                 <a href="#">
                   <img src="assets/images/course-06.jpg" alt="" />
                 </a>
-                <span className="category">c</span>
+                <span className="category">WEBDESIGN</span>
                 <span className="price">
                   <h6>
                     <em>₹</em>240

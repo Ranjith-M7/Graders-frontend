@@ -10,9 +10,9 @@ function Contact() {
       description: "",
     },
     specialOffer: {
-      title: "",
       date: "",
       label: "",
+      description: "",
       offerDiscount: "",
       offerText: "",
     },
@@ -32,7 +32,7 @@ function Contact() {
               description: Section_Heading.Description || "",
             },
             specialOffer: {
-              title: Special_Offer.Title || "",
+              description: Special_Offer.Description || "",
               date: Special_Offer.Date || "",
               label: Special_Offer.Label || "",
               offerDiscount: Special_Offer.Offer_Discount || "",
@@ -69,7 +69,7 @@ function Contact() {
                   <em>{contactData.specialOffer.date}</em>
                 </h6>
                 <h4>
-                  {contactData.specialOffer.title}{" "}
+                  {contactData.specialOffer.description}{" "}
                   <em>{contactData.specialOffer.offerDiscount}</em>{" "}
                   {contactData.specialOffer.offerText}
                 </h4>

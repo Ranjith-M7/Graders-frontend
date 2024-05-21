@@ -1,118 +1,89 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import database from "./firebaseConfig";
+
+import img from "../assets/images/event-01.jpg";
 
 function Events() {
+  const [eventsData, setEventsData] = useState({
+    title: "",
+    subtitle: "",
+    eventsContent: [],
+  });
+
+  useEffect(() => {
+    const fetchEventsData = async () => {
+      try {
+        const snapshot = await database.ref("Events Section").once("value");
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          const { Title, Subtitle, Events } = data;
+
+          // Filter out empty events item
+          const filteredEvents = Events
+            ? Events.filter((item) => item.Title && item.Category)
+            : [];
+
+          setEventsData({
+            title: Title,
+            subtitle: Subtitle,
+            eventsContent: filteredEvents || [],
+          });
+        } else {
+          console.log("The data for events was not found in the database");
+        }
+      } catch (error) {
+        console.log(`Error: ${error}`);
+      }
+    };
+
+    fetchEventsData();
+  }, []);
   return (
     <div className="section events" id="events">
       <div className="container">
         <div className="row">
           <div className="col-lg-12 text-center">
             <div className="section-heading">
-              <h6>Schedule</h6>
-              <h2>Upcoming Events</h2>
+              <h6>{eventsData.subtitle}</h6>
+              <h2>{eventsData.title}</h2>
             </div>
           </div>
-          <div className="col-lg-12 col-md-6">
-            <div className="item">
-              <div className="row">
-                <div className="col-lg-3">
-                  <div className="image">
-                    <img src="assets/images/event-01.jpg" alt="" />
+          {eventsData.eventsContent.map((item, index) => (
+            <div key={index} className="col-lg-12 col-md-6">
+              <div className="item">
+                <div className="row">
+                  <div className="col-lg-3">
+                    <div className="image">
+                      <img src={img} alt="" />
+                    </div>
                   </div>
-                </div>
-                <div className="col-lg-9">
-                  <ul>
-                    <li>
-                      <span className="category">Web Design</span>
-                      <h4>UI Best Practices</h4>
-                    </li>
-                    <li>
-                      <span>Date:</span>
-                      <h6>16 Feb 2036</h6>
-                    </li>
-                    <li>
-                      <span>Duration:</span>
-                      <h6>22 Hours</h6>
-                    </li>
-                    <li>
-                      <span>Price:</span>
-                      <h6>₹120</h6>
-                    </li>
-                  </ul>
-                  <a href="#">
-                    <i className="fa fa-angle-right" />
-                  </a>
+                  <div className="col-lg-9">
+                    <ul>
+                      <li>
+                        <span className="category">{item.Category}</span>
+                        <h4>{item.Title}</h4>
+                      </li>
+                      <li>
+                        <span>{item.Date.Label}</span>
+                        <h6>{item.Date.Value}</h6>
+                      </li>
+                      <li>
+                        <span>{item.Duration.Label}</span>
+                        <h6>{item.Duration.Value}</h6>
+                      </li>
+                      <li>
+                        <span>{item.Price.Label}</span>
+                        <h6>{item.Price.Value}</h6>
+                      </li>
+                    </ul>
+                    <a href="#">
+                      <i className="fa fa-angle-right" />
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="col-lg-12 col-md-6">
-            <div className="item">
-              <div className="row">
-                <div className="col-lg-3">
-                  <div className="image">
-                    <img src="assets/images/event-02.jpg" alt="" />
-                  </div>
-                </div>
-                <div className="col-lg-9">
-                  <ul>
-                    <li>
-                      <span className="category">Front End</span>
-                      <h4>New Design Trend</h4>
-                    </li>
-                    <li>
-                      <span>Date:</span>
-                      <h6>24 Feb 2036</h6>
-                    </li>
-                    <li>
-                      <span>Duration:</span>
-                      <h6>30 Hours</h6>
-                    </li>
-                    <li>
-                      <span>Price:</span>
-                      <h6>₹320</h6>
-                    </li>
-                  </ul>
-                  <a href="#">
-                    <i className="fa fa-angle-right" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-12 col-md-6">
-            <div className="item">
-              <div className="row">
-                <div className="col-lg-3">
-                  <div className="image">
-                    <img src="assets/images/event-03.jpg" alt="" />
-                  </div>
-                </div>
-                <div className="col-lg-9">
-                  <ul>
-                    <li>
-                      <span className="category">Full Stack</span>
-                      <h4>Web Programming</h4>
-                    </li>
-                    <li>
-                      <span>Date:</span>
-                      <h6>12 Mar 2036</h6>
-                    </li>
-                    <li>
-                      <span>Duration:</span>
-                      <h6>48 Hours</h6>
-                    </li>
-                    <li>
-                      <span>Price:</span>
-                      <h6>₹440</h6>
-                    </li>
-                  </ul>
-                  <a href="#">
-                    <i className="fa fa-angle-right" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
