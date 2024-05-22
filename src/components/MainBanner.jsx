@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import database from "./firebaseConfig";
+import { database, firestore, storage } from "./firebaseConfig";
 
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.min.css";
@@ -26,7 +26,6 @@ function MainBanner() {
           const filteredBannerArray = bannerArray
             ? bannerArray.filter((item) => item.Title && item.Category)
             : [];
-          console.log(filteredBannerArray);
           setMainBannerData({
             mainBannerContent: filteredBannerArray || [],
           });

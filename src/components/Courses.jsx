@@ -1,156 +1,172 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
+import Isotope from "isotope-layout";
+import matchesSelector from "desandro-matches-selector";
+import { database, firestore, storage } from "./firebaseConfig";
 
 function Courses() {
-  
+  const [imageUrls, setImageUrls] = useState([]);
+  const [coursesData, setCoursesData] = useState({
+    title: "",
+    subtitle: "",
+    rupeeSign: "",
+    coursesContent: [],
+    filtersContent: [],
+  });
+  const eventBoxRef = useRef(null);
+  const filtersElemRef = useRef(null);
+  const [dataLoaded, setDataLoaded] = useState(false);
+
+  // Fetch images from storage
+  useEffect(() => {
+    const fetchImageUrls = async () => {
+      try {
+        const storageRef = storage.ref("Courses Section");
+
+        // Get list of items (images) in the directory
+        const listResult = await storageRef.listAll();
+
+        // Fetch download URL for each item (image) in the directory
+        const urls = await Promise.all(
+          listResult.items.map(async (itemRef) => {
+            return await itemRef.getDownloadURL();
+          })
+        );
+        setImageUrls(urls);
+      } catch (error) {
+        console.error("Error fetching image URLs:", error);
+      }
+    };
+
+    fetchImageUrls();
+  }, []);
+
+  useEffect(() => {
+    const fetchCoursesData = async () => {
+      try {
+        const snapshot = await database.ref("Courses Section").once("value");
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          const { Title, Subtitle, Rupee_Sign, Courses, Filters } = data;
+
+          const filteredCoursesContent = Courses
+            ? Courses.filter((item) => item.Title && item.Category)
+            : [];
+          const filteredFiltersContent = Filters
+            ? Filters.filter((item) => item.Name && item.Category)
+            : [];
+
+          setCoursesData({
+            title: Title || "",
+            subtitle: Subtitle || "",
+            rupeeSign: Rupee_Sign || "",
+            coursesContent: filteredCoursesContent || [],
+            filtersContent: filteredFiltersContent || [],
+          });
+        } else {
+          console.log("The courses section data was not found in the database");
+        }
+      } catch (error) {
+        console.log(`Error: ${error}`);
+      }
+    };
+
+    fetchCoursesData();
+  }, []);
+
+  useEffect(() => {
+    if (dataLoaded) {
+      const elem = eventBoxRef.current;
+      const filtersElem = filtersElemRef.current;
+
+      const isotopeInstance = new Isotope(elem, {
+        itemSelector: ".event_outer",
+        layoutMode: "masonry",
+      });
+
+      const filterHandler = (event) => {
+        if (!matchesSelector(event.target, "a")) {
+          return;
+        }
+        const filterValue = event.target.getAttribute("data-filter");
+        isotopeInstance.arrange({
+          filter: filterValue,
+        });
+        filtersElem.querySelector(".is_active").classList.remove("is_active");
+        event.target.classList.add("is_active");
+        event.preventDefault();
+      };
+
+      filtersElem.addEventListener("click", filterHandler);
+
+      return () => {
+        filtersElem.removeEventListener("click", filterHandler);
+        isotopeInstance.destroy();
+      };
+    }
+  }, [dataLoaded]);
+
+  useEffect(() => {
+    //check if all data is loaded
+    if (coursesData.coursesContent.length === imageUrls.length) {
+      setDataLoaded(true);
+    }
+  }, [coursesData, imageUrls]);
+
   return (
     <section className="section courses" id="courses">
       <div className="container">
         <div className="row">
           <div className="col-lg-12 text-center">
             <div className="section-heading">
-              <h6>Latest Courses</h6>
-              <h2>Latest Courses</h2>
+              <h6>{coursesData.subtitle}</h6>
+              <h2>{coursesData.title}</h2>
             </div>
           </div>
         </div>
-        <ul className="event_filter">
-          <li>
-            <a className="is_active" href="#!" data-filter="*">
-              Show All
-            </a>
-          </li>
-          <li>
-            <a href="#!" data-filter=".design">
-              Webdesign
-            </a>
-          </li>
-          <li>
-            <a href="#!" data-filter=".development">
-              Development
-            </a>
-          </li>
-          <li>
-            <a href="#!" data-filter=".wordpress">
-              Wordpress
-            </a>
-          </li>
+        <ul className="event_filter" ref={filtersElemRef}>
+          {coursesData.filtersContent.map((filter, index) => (
+            <li key={index}>
+              <a
+                className={index === 0 ? "is_active" : ""}
+                href="#!"
+                data-filter={
+                  index === 0 ? "*" : `.${filter.Category.toLowerCase()}`
+                }
+              >
+                {filter.Name}
+              </a>
+            </li>
+          ))}
         </ul>
-        <div className="row event_box">
-          <div className="col-lg-4 col-md-6 align-self-center mb-30 event_outer col-md-6 design">
-            <div className="events_item">
-              <div className="thumb">
-                <a href="#">
-                  <img src="assets/images/course-01.jpg" alt="" />
-                </a>
-                <span className="category">Webdesign</span>
-                <span className="price">
-                  <h6>
-                    <em>₹</em>160
-                  </h6>
-                </span>
+        {dataLoaded && (
+          <div className="row event_box" ref={eventBoxRef}>
+            {coursesData.coursesContent.map((course, index) => (
+              <div
+                key={index}
+                className={`col-lg-4 col-md-6 align-self-center mb-30 event_outer ${course.Category.toLowerCase()}`}
+              >
+                <div className="events_item">
+                  <div className="thumb">
+                    <a href="#">
+                      <img src={imageUrls[index]} alt={`Image ${index + 1}`} />
+                    </a>
+                    <span className="category">{course.Category}</span>
+                    <span className="price">
+                      <h6>
+                        <em>{coursesData.rupeeSign}</em>
+                        {course.Price}
+                      </h6>
+                    </span>
+                  </div>
+                  <div className="down-content">
+                    <span className="author">{course.Author}</span>
+                    <h4>{course.Title}</h4>
+                  </div>
+                </div>
               </div>
-              <div className="down-content">
-                <span className="author">Stella Blair</span>
-                <h4>Learn Web Design</h4>
-              </div>
-            </div>
+            ))}
           </div>
-          <div className="col-lg-4 col-md-6 align-self-center mb-30 event_outer col-md-6  development">
-            <div className="events_item">
-              <div className="thumb">
-                <a href="#">
-                  <img src="assets/images/course-02.jpg" alt="" />
-                </a>
-                <span className="category">Development</span>
-                <span className="price">
-                  <h6>
-                    <em>₹</em>340
-                  </h6>
-                </span>
-              </div>
-              <div className="down-content">
-                <span className="author">Cindy Walker</span>
-                <h4>Web Development Tips</h4>
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-4 col-md-6 align-self-center mb-30 event_outer col-md-6 design wordpress">
-            <div className="events_item">
-              <div className="thumb">
-                <a href="#">
-                  <img src="assets/images/course-03.jpg" alt="" />
-                </a>
-                <span className="category">Wordpress</span>
-                <span className="price">
-                  <h6>
-                    <em>₹</em>640
-                  </h6>
-                </span>
-              </div>
-              <div className="down-content">
-                <span className="author">David Hutson</span>
-                <h4>Latest Web Trends</h4>
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-4 col-md-6 align-self-center mb-30 event_outer col-md-6 development">
-            <div className="events_item">
-              <div className="thumb">
-                <a href="#">
-                  <img src="assets/images/course-04.jpg" alt="" />
-                </a>
-                <span className="category">Development</span>
-                <span className="price">
-                  <h6>
-                    <em>₹</em>450
-                  </h6>
-                </span>
-              </div>
-              <div className="down-content">
-                <span className="author">Stella Blair</span>
-                <h4>Online Learning Steps</h4>
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-4 col-md-6 align-self-center mb-30 event_outer col-md-6 wordpress development">
-            <div className="events_item">
-              <div className="thumb">
-                <a href="#">
-                  <img src="assets/images/course-05.jpg" alt="" />
-                </a>
-                <span className="category">Wordpress</span>
-                <span className="price">
-                  <h6>
-                    <em>₹</em>320
-                  </h6>
-                </span>
-              </div>
-              <div className="down-content">
-                <span className="author">Sophia Rose</span>
-                <h4>Be a WordPress Master</h4>
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-4 col-md-6 align-self-center mb-30 event_outer col-md-6 wordpress design">
-            <div className="events_item">
-              <div className="thumb">
-                <a href="#">
-                  <img src="assets/images/course-06.jpg" alt="" />
-                </a>
-                <span className="category">WEBDESIGN</span>
-                <span className="price">
-                  <h6>
-                    <em>₹</em>240
-                  </h6>
-                </span>
-              </div>
-              <div className="down-content">
-                <span className="author">David Hutson</span>
-                <h4>Full Stack Developer</h4>
-              </div>
-            </div>
-          </div>
-        </div>
+        )}
       </div>
     </section>
   );

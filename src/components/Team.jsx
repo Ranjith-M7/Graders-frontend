@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import database from "./firebaseConfig";
+import { database, firestore, storage } from "./firebaseConfig";
 
 import img from "../assets/images/member-04.jpg";
 

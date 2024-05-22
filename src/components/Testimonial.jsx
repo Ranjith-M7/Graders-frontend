@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-import database from "./firebaseConfig";
+import { database, firestore, storage } from "./firebaseConfig";
 
 import testimonialImg1 from "../assets/images/testimonial-author.jpg";
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import database from "./firebaseConfig";
+import { database, firestore, storage } from "./firebaseConfig";
 
 function Header() {
   const [headerData, setHeaderData] = useState({

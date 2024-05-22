@@ -746,7 +746,7 @@ Banner Style
   background-size: cover;
   padding: 150px 0px 120px 0px;
 }
-.main-banner .item-1 {
+/* .main-banner .item-1 {
   background-image: url(../images/banner-item-01.jpg);
 }
 
@@ -756,7 +756,7 @@ Banner Style
 
 .main-banner .item-3 {
   background-image: url(../images/banner-item-03.jpg);
-}
+} */
 
 .main-banner .item {
   background-repeat: no-repeat;
