@@ -5,12 +5,37 @@ import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.min.css";
 import "owl.carousel/dist/assets/owl.theme.default.min.css";
 
-import img from "../assets/images/banner-item-01.jpg";
 
 function MainBanner() {
   const [mainBannerData, setMainBannerData] = useState({
     mainBannerContent: [],
   });
+  const [imageUrls, setImageUrls] = useState([]);
+  const [dataLoaded, setDataLoaded] = useState(false);
+
+  // Fetch images from storage
+  useEffect(() => {
+    const fetchImageUrls = async () => {
+      try {
+        const storageRef = storage.ref("Main Banner");
+
+        // Get list of items (images) in the directory
+        const listResult = await storageRef.listAll();
+
+        // Fetch download URL for each item (image) in the directory
+        const urls = await Promise.all(
+          listResult.items.map(async (itemRef) => {
+            return await itemRef.getDownloadURL();
+          })
+        );
+        setImageUrls(urls);
+      } catch (error) {
+        console.error("Error fetching image URLs:", error);
+      }
+    };
+
+    fetchImageUrls();
+  }, []);
 
   useEffect(() => {
     const fetchMainBannerData = async () => {
@@ -39,12 +64,23 @@ function MainBanner() {
 
     fetchMainBannerData();
   }, []);
+
+  //check if all data is loaded
+  useEffect(() => {
+    if (
+      mainBannerData.mainBannerContent.length > 0 &&
+      mainBannerData.mainBannerContent.length === imageUrls.length
+    ) {
+      setDataLoaded(true);
+    }
+  }, [mainBannerData, imageUrls]);
+
   return (
     <div className="main-banner" id="top">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
-            {mainBannerData.mainBannerContent.length > 0 ? (
+            {dataLoaded && (
               <OwlCarousel
                 className="owl-carousel owl-banner"
                 center={true}
@@ -71,7 +107,7 @@ function MainBanner() {
                   <div
                     key={index}
                     className="item"
-                    style={{ backgroundImage: `url("${img}")` }}
+                    style={{ backgroundImage: `url("${imageUrls[index]}")` }}
                   >
                     <div className="header-text">
                       <span className="category">{banner.Category}</span>
@@ -93,51 +129,7 @@ function MainBanner() {
                     </div>
                   </div>
                 ))}
-                {/* <div className="item item-2">
-                  <div className="header-text">
-                    <span className="category">Best Result</span>
-                    <h2>Get the best result out of your effort</h2>
-                    <p>
-                      You are allowed to use this template for any educational
-                      or commercial purpose. You are not allowed to
-                      re-distribute the template ZIP file on any other website.
-                    </p>
-                    <div className="buttons">
-                      <div className="main-button">
-                        <a href="#">Request Demo</a>
-                      </div>
-                      <div className="icon-button">
-                        <a href="#">
-                          <i className="fa fa-play" /> What's the best result?
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="item item-3">
-                  <div className="header-text">
-                    <span className="category">Online Learning</span>
-                    <h2>Online Learning helps you save the time</h2>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod temporious incididunt ut labore et dolore
-                      magna aliqua suspendisse.
-                    </p>
-                    <div className="buttons">
-                      <div className="main-button">
-                        <a href="#">Request Demo</a>
-                      </div>
-                      <div className="icon-button">
-                        <a href="#">
-                          <i className="fa fa-play" /> What's Online Course?
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
               </OwlCarousel>
-            ) : (
-              ""
             )}
           </div>
         </div>

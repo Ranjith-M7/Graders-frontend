@@ -4,7 +4,6 @@ import matchesSelector from "desandro-matches-selector";
 import { database, firestore, storage } from "./firebaseConfig";
 
 function Courses() {
-  const [imageUrls, setImageUrls] = useState([]);
   const [coursesData, setCoursesData] = useState({
     title: "",
     subtitle: "",
@@ -12,6 +11,7 @@ function Courses() {
     coursesContent: [],
     filtersContent: [],
   });
+  const [imageUrls, setImageUrls] = useState([]);
   const eventBoxRef = useRef(null);
   const filtersElemRef = useRef(null);
   const [dataLoaded, setDataLoaded] = useState(false);
@@ -74,40 +74,41 @@ function Courses() {
   }, []);
 
   useEffect(() => {
-    if (dataLoaded) {
-      const elem = eventBoxRef.current;
-      const filtersElem = filtersElemRef.current;
+    const elem = eventBoxRef.current;
+    const filtersElem = filtersElemRef.current;
 
-      const isotopeInstance = new Isotope(elem, {
-        itemSelector: ".event_outer",
-        layoutMode: "masonry",
+    const isotopeInstance = new Isotope(elem, {
+      itemSelector: ".event_outer",
+      layoutMode: "masonry",
+    });
+
+    const filterHandler = (event) => {
+      if (!matchesSelector(event.target, "a")) {
+        return;
+      }
+      const filterValue = event.target.getAttribute("data-filter");
+      isotopeInstance.arrange({
+        filter: filterValue,
       });
+      filtersElem.querySelector(".is_active").classList.remove("is_active");
+      event.target.classList.add("is_active");
+      event.preventDefault();
+    };
 
-      const filterHandler = (event) => {
-        if (!matchesSelector(event.target, "a")) {
-          return;
-        }
-        const filterValue = event.target.getAttribute("data-filter");
-        isotopeInstance.arrange({
-          filter: filterValue,
-        });
-        filtersElem.querySelector(".is_active").classList.remove("is_active");
-        event.target.classList.add("is_active");
-        event.preventDefault();
-      };
+    filtersElem.addEventListener("click", filterHandler);
 
-      filtersElem.addEventListener("click", filterHandler);
+    return () => {
+      filtersElem.removeEventListener("click", filterHandler);
+      isotopeInstance.destroy();
+    };
+  }, []);
 
-      return () => {
-        filtersElem.removeEventListener("click", filterHandler);
-        isotopeInstance.destroy();
-      };
-    }
-  }, [dataLoaded]);
-
+  //check if all data is loaded
   useEffect(() => {
-    //check if all data is loaded
-    if (coursesData.coursesContent.length === imageUrls.length) {
+    if (
+      coursesData.coursesContent.length > 0 &&
+      coursesData.coursesContent.length === imageUrls.length
+    ) {
       setDataLoaded(true);
     }
   }, [coursesData, imageUrls]);

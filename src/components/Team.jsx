@@ -5,6 +5,32 @@ import img from "../assets/images/member-04.jpg";
 
 function Team() {
   const [teamData, setTeamData] = useState([]);
+  const [imageUrls, setImageUrls] = useState([]);
+
+  // Fetch images from storage
+  useEffect(() => {
+    const fetchImageUrls = async () => {
+      try {
+        const storageRef = storage.ref("Team Section");
+
+        // Get list of items (images) in the directory
+        const listResult = await storageRef.listAll();
+
+        // Fetch download URL for each item (image) in the directory
+        const urls = await Promise.all(
+          listResult.items.map(async (itemRef) => {
+            return await itemRef.getDownloadURL();
+          })
+        );
+        setImageUrls(urls);
+      } catch (error) {
+        console.error("Error fetching image URLs:", error);
+      }
+    };
+
+    fetchImageUrls();
+  }, []);
+
   useEffect(() => {
     const fetchTeamData = async () => {
       try {
@@ -34,7 +60,7 @@ function Team() {
             <div key={index} className="col-lg-3 col-md-6">
               <div className="team-member">
                 <div className="main-content">
-                  <img src={img} alt="" />
+                  <img src={imageUrls[index]} alt="" />
                   <span className="category">{member.Category}</span>
                   <h4>{member.Name}</h4>
                   <ul className="social-icons">

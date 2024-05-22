@@ -9,7 +9,31 @@ function Events() {
     subtitle: "",
     eventsContent: [],
   });
+  const [imageUrls, setImageUrls] = useState([]);
 
+  // Fetch images from storage
+  useEffect(() => {
+    const fetchImageUrls = async () => {
+      try {
+        const storageRef = storage.ref("Events Section");
+
+        // Get list of items (images) in the directory
+        const listResult = await storageRef.listAll();
+
+        // Fetch download URL for each item (image) in the directory
+        const urls = await Promise.all(
+          listResult.items.map(async (itemRef) => {
+            return await itemRef.getDownloadURL();
+          })
+        );
+        setImageUrls(urls);
+      } catch (error) {
+        console.error("Error fetching image URLs:", error);
+      }
+    };
+
+    fetchImageUrls();
+  }, []);
   useEffect(() => {
     const fetchEventsData = async () => {
       try {
@@ -38,6 +62,7 @@ function Events() {
 
     fetchEventsData();
   }, []);
+
   return (
     <div className="section events" id="events">
       <div className="container">
@@ -54,7 +79,7 @@ function Events() {
                 <div className="row">
                   <div className="col-lg-3">
                     <div className="image">
-                      <img src={img} alt="" />
+                      <img src={imageUrls[index]} alt="" />
                     </div>
                   </div>
                   <div className="col-lg-9">

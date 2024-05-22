@@ -2,10 +2,34 @@ import React, { useEffect, useState } from "react";
 
 import { database, firestore, storage } from "./firebaseConfig";
 
-import img from "../assets/images/service-01.png";
-
 function Services() {
   const [servicesData, setServicesData] = useState([]);
+  const [imageUrls, setImageUrls] = useState([]);
+
+  // Fetch images from storage
+  useEffect(() => {
+    const fetchImageUrls = async () => {
+      try {
+        const storageRef = storage.ref("Services Section");
+
+        // Get list of items (images) in the directory
+        const listResult = await storageRef.listAll();
+
+        // Fetch download URL for each item (image) in the directory
+        const urls = await Promise.all(
+          listResult.items.map(async (itemRef) => {
+            return await itemRef.getDownloadURL();
+          })
+        );
+        setImageUrls(urls);
+      } catch (error) {
+        console.error("Error fetching image URLs:", error);
+      }
+    };
+
+    fetchImageUrls();
+  }, []);
+
   useEffect(() => {
     const fetchServicesData = async () => {
       try {
@@ -35,7 +59,7 @@ function Services() {
             <div key={index} className="col-lg-4 col-md-6">
               <div className="service-item">
                 <div className="icon">
-                  <img src={img} alt={`Img${index}`} />
+                  <img src={imageUrls[index]} alt={`Image ${index + 1}`} />
                 </div>
                 <div className="main-content">
                   <h4>{service.Title}</h4>

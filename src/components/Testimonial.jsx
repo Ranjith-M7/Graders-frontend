@@ -4,8 +4,6 @@ import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import { database, firestore, storage } from "./firebaseConfig";
 
-import testimonialImg1 from "../assets/images/testimonial-author.jpg";
-
 function Testimonial() {
   const [testimonialData, setTestimonialData] = useState({
     title: "",
@@ -13,6 +11,32 @@ function Testimonial() {
     description: "",
     testimonialContent: [],
   });
+  const [imageUrls, setImageUrls] = useState([]);
+  const [dataLoaded, setDataLoaded] = useState(false);
+
+  // Fetch images from storage
+  useEffect(() => {
+    const fetchImageUrls = async () => {
+      try {
+        const storageRef = storage.ref("Testimonial Section");
+
+        // Get list of items (images) in the directory
+        const listResult = await storageRef.listAll();
+
+        // Fetch download URL for each item (image) in the directory
+        const urls = await Promise.all(
+          listResult.items.map(async (itemRef) => {
+            return await itemRef.getDownloadURL();
+          })
+        );
+        setImageUrls(urls);
+      } catch (error) {
+        console.error("Error fetching image URLs:", error);
+      }
+    };
+
+    fetchImageUrls();
+  }, []);
 
   useEffect(() => {
     const fetchTestimonialData = async () => {
@@ -46,6 +70,16 @@ function Testimonial() {
     fetchTestimonialData();
   }, []);
 
+  useEffect(() => {
+    //check if all data is loaded
+    if (
+      testimonialData.testimonialContent.length > 0 &&
+      testimonialData.testimonialContent.length === imageUrls.length
+    ) {
+      setDataLoaded(true);
+    }
+  }, [testimonialData, imageUrls]);
+
   const options = {
     center: true,
     items: 1,
@@ -74,21 +108,19 @@ function Testimonial() {
       <div className="container">
         <div className="row">
           <div className="col-lg-7">
-            {testimonialData.testimonialContent.length > 0 ? (
+            {dataLoaded && (
               <OwlCarousel className="owl-carousel" {...options}>
                 {testimonialData.testimonialContent.map((item, index) => (
                   <div key={index} className="item">
                     <p>{item.Description}</p>
                     <div className="author">
-                      <img src={testimonialImg1} alt="" />
+                      <img src={imageUrls[index]} alt={`Image ${index + 1}`} />
                       <span className="category">{item.Category}</span>
                       <h4>{item.Name}</h4>
                     </div>
                   </div>
                 ))}
               </OwlCarousel>
-            ) : (
-              ""
             )}
           </div>
           <div className="col-lg-5 align-self-center">
