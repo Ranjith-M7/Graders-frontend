@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
-import Isotope from "isotope-layout";
-import matchesSelector from "desandro-matches-selector";
-import { database, firestore, storage } from "./firebaseConfig";
+import Masonry from "react-masonry-css";
+import { database, storage } from "./firebaseConfig";
 
 function Courses() {
   const [coursesData, setCoursesData] = useState({
@@ -11,21 +10,48 @@ function Courses() {
     coursesContent: [],
     filtersContent: [],
   });
-  const [imageUrls, setImageUrls] = useState([]);
-  const eventBoxRef = useRef(null);
-  const filtersElemRef = useRef(null);
   const [dataLoaded, setDataLoaded] = useState(false);
+  const [imageUrls, setImageUrls] = useState([]);
+  const [activeFilter, setActiveFilter] = useState("*");
 
-  // Fetch images from storage
+  const fetchCoursesData = async () => {
+    try {
+      const snapshot = await database.ref("Courses Section").once("value");
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        const { Title, Subtitle, Rupee_Sign, Courses, Filters } = data;
+
+        const filteredCoursesContent = Courses
+          ? Courses.filter((item) => item.Title && item.Category)
+          : [];
+        const filteredFiltersContent = Filters
+          ? Filters.filter((item) => item.Name && item.Category)
+          : [];
+
+        setCoursesData({
+          title: Title || "",
+          subtitle: Subtitle || "",
+          rupeeSign: Rupee_Sign || "",
+          coursesContent: filteredCoursesContent || [],
+          filtersContent: filteredFiltersContent || [],
+        });
+      } else {
+        console.log("The courses section data was not found in the database");
+      }
+    } catch (error) {
+      console.log(`Error: ${error}`);
+    }
+  };
+
+  useEffect(() => {
+    fetchCoursesData();
+  }, []);
+
   useEffect(() => {
     const fetchImageUrls = async () => {
       try {
         const storageRef = storage.ref("Courses Section");
-
-        // Get list of items (images) in the directory
         const listResult = await storageRef.listAll();
-
-        // Fetch download URL for each item (image) in the directory
         const urls = await Promise.all(
           listResult.items.map(async (itemRef) => {
             return await itemRef.getDownloadURL();
@@ -36,74 +62,9 @@ function Courses() {
         console.error("Error fetching image URLs:", error);
       }
     };
-
     fetchImageUrls();
   }, []);
 
-  useEffect(() => {
-    const fetchCoursesData = async () => {
-      try {
-        const snapshot = await database.ref("Courses Section").once("value");
-        if (snapshot.exists()) {
-          const data = snapshot.val();
-          const { Title, Subtitle, Rupee_Sign, Courses, Filters } = data;
-
-          const filteredCoursesContent = Courses
-            ? Courses.filter((item) => item.Title && item.Category)
-            : [];
-          const filteredFiltersContent = Filters
-            ? Filters.filter((item) => item.Name && item.Category)
-            : [];
-
-          setCoursesData({
-            title: Title || "",
-            subtitle: Subtitle || "",
-            rupeeSign: Rupee_Sign || "",
-            coursesContent: filteredCoursesContent || [],
-            filtersContent: filteredFiltersContent || [],
-          });
-        } else {
-          console.log("The courses section data was not found in the database");
-        }
-      } catch (error) {
-        console.log(`Error: ${error}`);
-      }
-    };
-
-    fetchCoursesData();
-  }, []);
-
-  useEffect(() => {
-    const elem = eventBoxRef.current;
-    const filtersElem = filtersElemRef.current;
-
-    const isotopeInstance = new Isotope(elem, {
-      itemSelector: ".event_outer",
-      layoutMode: "masonry",
-    });
-
-    const filterHandler = (event) => {
-      if (!matchesSelector(event.target, "a")) {
-        return;
-      }
-      const filterValue = event.target.getAttribute("data-filter");
-      isotopeInstance.arrange({
-        filter: filterValue,
-      });
-      filtersElem.querySelector(".is_active").classList.remove("is_active");
-      event.target.classList.add("is_active");
-      event.preventDefault();
-    };
-
-    filtersElem.addEventListener("click", filterHandler);
-
-    return () => {
-      filtersElem.removeEventListener("click", filterHandler);
-      isotopeInstance.destroy();
-    };
-  }, []);
-
-  //check if all data is loaded
   useEffect(() => {
     if (
       coursesData.coursesContent.length > 0 &&
@@ -112,6 +73,23 @@ function Courses() {
       setDataLoaded(true);
     }
   }, [coursesData, imageUrls]);
+
+  const handleFilterClick = (filterValue) => {
+    setActiveFilter(filterValue);
+  };
+
+  const filteredCourses =
+    activeFilter === "*"
+      ? coursesData.coursesContent
+      : coursesData.coursesContent.filter(
+          (course) => course.Category.toLowerCase() === activeFilter
+        );
+
+  const breakpointColumnsObj = {
+    default: 3,
+    1100: 2,
+    700: 1,
+  };
 
   return (
     <section className="section courses" id="courses">
@@ -124,14 +102,19 @@ function Courses() {
             </div>
           </div>
         </div>
-        <ul className="event_filter" ref={filtersElemRef}>
+        <ul className="event_filter">
           {coursesData.filtersContent.map((filter, index) => (
             <li key={index}>
               <a
-                className={index === 0 ? "is_active" : ""}
+                className={
+                  activeFilter === "*" && index === 0 ? "is_active" : ""
+                }
                 href="#!"
-                data-filter={
-                  index === 0 ? "*" : `.${filter.Category.toLowerCase()}`
+                data-filter={index === 0 ? "*" : filter.Category.toLowerCase()}
+                onClick={() =>
+                  handleFilterClick(
+                    index === 0 ? "*" : filter.Category.toLowerCase()
+                  )
                 }
               >
                 {filter.Name}
@@ -140,11 +123,15 @@ function Courses() {
           ))}
         </ul>
         {dataLoaded && (
-          <div className="row event_box" ref={eventBoxRef}>
-            {coursesData.coursesContent.map((course, index) => (
+          <Masonry
+            breakpointCols={breakpointColumnsObj}
+            className="my-masonry-grid"
+            columnClassName="my-masonry-grid_column"
+          >
+            {filteredCourses.map((course, index) => (
               <div
                 key={index}
-                className={`col-lg-4 col-md-6 align-self-center mb-30 event_outer ${course.Category.toLowerCase()}`}
+                className={`align-self-center mb-30 event_outer ${course.Category.toLowerCase()}`}
               >
                 <div className="events_item">
                   <div className="thumb">
@@ -166,7 +153,7 @@ function Courses() {
                 </div>
               </div>
             ))}
-          </div>
+          </Masonry>
         )}
       </div>
     </section>

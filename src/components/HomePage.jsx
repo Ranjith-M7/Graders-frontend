@@ -16,7 +16,7 @@ import Footer from "./Footer";
 function HomePage() {
   return (
     <>
-      <Preloder />
+      {/* <Preloder />*/}
       <Header />
       <MainBanner />
       <Services />
