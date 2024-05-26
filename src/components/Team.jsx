@@ -55,7 +55,7 @@ function Team() {
   return (
     <div className="team section" id="team">
       <div className="container">
-        <div className="row pt-5">
+        <div className="row">
           {teamData.map((member, index) => (
             <div key={index} className="col-lg-3 col-md-6">
               <div className="team-member">

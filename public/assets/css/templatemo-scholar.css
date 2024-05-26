@@ -249,7 +249,7 @@ Pre-loader Style
 --------------------------------------------- 
 */
 
-.js-preloader {
+/* .js-preloader {
   position: fixed;
   top: 0;
   left: 0;
@@ -301,9 +301,9 @@ Pre-loader Style
     -webkit-transform: translateX(-31px);
     transform: translateX(-31px);
   }
-}
+} */
 
-.preloader-inner {
+/* .preloader-inner {
   position: relative;
   width: 142px;
   height: 40px;
@@ -341,7 +341,7 @@ Pre-loader Style
   margin-left: 16px;
   background: #7a6ad8;
   border-radius: 50%;
-}
+} */
 
 /* Header Style */
 .background-header {
@@ -558,6 +558,26 @@ Pre-loader Style
 .header-area.header-sticky .nav li a.active {
   color: #fff;
 }
+.user-icon {
+  color: #fff;
+}
+/* 
+---------------------------------------------
+Drop down menu style
+--------------------------------------------- 
+*/
+.dropdown-menu {
+  background-color: #7a6ad8;
+}
+
+.dropdown-menu a.dropdown-item {
+  padding: 0;
+  margin-top: 5px;
+}
+
+.dropdown-menu a.dropdown-item:hover {
+  background-color: #8272d9;
+}
 
 @media (max-width: 1200px) {
   .header-area .main-nav .nav li {
@@ -570,59 +590,89 @@ Pre-loader Style
   }
 }
 
+/* Media query for screens with a maximum width of 767px */
 @media (max-width: 767px) {
+  /* Styling for the background color of the navigation */
   .background-header .main-nav .nav,
   .header-area .main-nav .nav {
     background-color: #f1f0fe;
   }
+
+  /* Styling for the links in the navigation */
   .background-header .main-nav .nav li a,
   .header-area .main-nav .nav li a {
     line-height: 50px;
     height: 50px;
     font-weight: 400;
     color: #1e1e1e;
-    background-color: #f1f0fe;
-    border-radius: 0px 0px 25px 25px;
+    background-color: #f1f0fe; /* Background color */
+    border-radius: 0px;
   }
+
+  /* Styling for navigation list items */
   .background-header .main-nav .nav li,
   .header-area .main-nav .nav li {
     border-top: 1px solid #ddd;
-    background-color: #f1f0fe;
+    background-color: #f1f0fe; /* Background color */
     height: 50px;
-    border-radius: 0px 0px 25px 25px;
+    /* border-radius: 0px 0px 25px 25px; */
   }
+
+  /* Styling for the last navigation list item */
   .background-header .main-nav .nav li:last-child,
   .header-area .main-nav .nav li:last-child {
     border-radius: 0px 0px 25px 25px;
   }
+
+  /* Styling for the navigation */
   .header-area .main-nav .nav {
     height: auto;
     flex-basis: 100%;
   }
+
+  /* Styling for the logo in the navigation */
   .header-area .main-nav .logo {
     position: absolute;
     left: 30px;
     top: 0px;
   }
+
+  /* Styling for the sticky background header */
   .background-header .main-nav .logo {
     top: 0px;
   }
+
+  /* Styling for the border button */
   .background-header .main-nav .border-button {
     top: 0px !important;
   }
+
+  /* Styling for the border button */
   .header-area .main-nav .border-button {
     position: absolute;
     top: 15px;
     right: 70px;
   }
-  .header-area.header-sticky .nav li a:hover,
-  .header-area.header-sticky .nav li a.active {
-    color: #7a6ad8 !important;
+
+  /* Styling for navigation list items on hover and when active */
+  .header-area.header-sticky .nav li a:hover {
+    color: #7a6ad8;
     opacity: 1;
   }
+  .header-area .main-nav .nav li a.active {
+    background-color: #7a6ad8;
+    opacity: 1;
+  }
+  .header-area .main-nav .nav li:hover a.active {
+    color: white;
+  }
+
+  /* Styling for the search icon in the navigation */
   .header-area.header-sticky .nav li.search-icon a {
     width: 100%;
   }
+
+  /* Styling for the header area */
   .header-area {
     background-color: #7a6ad8;
     padding: 0px 15px;
@@ -630,19 +680,29 @@ Pre-loader Style
     box-shadow: none;
     text-align: center;
   }
+
+  /* Styling for the container */
   .header-area .container {
     padding: 0px;
   }
+
+  /* Styling for the logo */
   .header-area .logo {
     margin-left: 0px;
     margin-top: 30px;
   }
+
+  /* Styling for the menu trigger */
   .header-area .menu-trigger {
     display: block !important;
   }
+
+  /* Styling for the main navigation */
   .header-area .main-nav {
     overflow: hidden;
   }
+
+  /* Styling for the navigation list */
   .header-area .main-nav .nav {
     float: none;
     width: 100%;
@@ -654,47 +714,56 @@ Pre-loader Style
     margin-left: 0px;
     text-align: center;
   }
+
+  /* Styling for the first navigation list item */
   .header-area .main-nav .nav li:first-child {
     border-top: 1px solid #eee;
   }
+
+  /* Styling for the sticky navigation */
   .header-area.header-sticky .nav {
     margin-top: 100px !important;
   }
+
+  /* Styling for the sticky background header */
   .background-header.header-sticky .nav {
     margin-top: 60px !important;
   }
+
+  /* Styling for navigation list items */
   .header-area .main-nav .nav li {
     width: 100%;
-    background: #fff;
     padding-left: 0px !important;
     padding-right: 0px !important;
+    border: 1px solid white;
+  }
+  .user-icon {
+    color: #7a6ad8;
   }
 }
+
 /* 
 ---------------------------------------------
-Drop down menu style
+Profile style
 --------------------------------------------- 
 */
-
-/* Add this CSS to your stylesheet */
-.dropdown-menu {
-  background-color: #7a6ad8; /* Set background color */
+.form-group1 > label {
+  margin-bottom: 0.2rem;
 }
-
-.dropdown-menu a.dropdown-item {
-  padding: 0; 
+.radio-container input {
+  margin-right: 0.5rem;
 }
-
-.dropdown-menu a.dropdown-item:hover {
-  background-color: #8071d7; /* Add hover effect */
+.profile-section .section-heading {
+  margin-bottom: 40px;
 }
-
+.profile-section.section {
+  margin-top: 120px;
+}
 /* 
 ---------------------------------------------
 Banner Style
 --------------------------------------------- 
 */
-
 .main-banner {
   background-image: url(../images/banner-bg.jpg);
   background-position: right top;
@@ -1782,6 +1851,9 @@ body {
     bottom: 0px;
     position: absolute;
     left: 65px;
+  }
+  .profile-section.section {
+    margin-top: 80px;
   }
   .services {
     margin-top: 80px;

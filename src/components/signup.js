@@ -51,7 +51,7 @@ const SignUpForm = () => {
   };
 
   return (
-    <div className="d-flex align-items-center justify-content-center">
+    <div className="signin-container">
       <div className="align-content-center">
         <form className="bg-light p-5 rounded">
           <p className="h4 mb-4 text-center">Sign Up</p>

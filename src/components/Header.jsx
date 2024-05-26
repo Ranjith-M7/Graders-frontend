@@ -178,16 +178,55 @@ function Header() {
                     <a href="/about">About Us</a>
                   </li>
                   <li>
-                    <a href="/courses">Courses</a>
+                    <a href="/courses" className="dropdown-item">
+                      Courses
+                    </a>
                   </li>
+                  {/* <li>
+                    <a href="/events" className="dropdown-item">
+                      Events
+                    </a>
+                  </li> */}
+                  {/*  <li>
+                   <div className="dropdown">
+
+                      <a
+                        className="dropdown-toggle"
+                        href
+                        id="dropdownMenuButton"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        style={{
+                          cursor: "pointer",
+                        }}
+                      >
+                        Pages
+                      </a>
+     
+                      <ul
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <li>
+                          <NavLink to="/courses" className="dropdown-item">
+                            Courses
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink to="/team" className="dropdown-item">
+                            Team
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink to="/event" className="dropdown-item">
+                            Events
+                          </NavLink>
+                        </li>
+                      </ul>
+                    </div>
+                  </li> */}
                   <li>
-                    <a href="/team">Team</a>
-                  </li>
-                  <li>
-                    <a href="/events">Events</a>
-                  </li>
-                  <li>
-                    <a href="/contact">Register Now!</a>
+                    <a href="/contact">Contact Us</a>
                   </li>
                   <li>
                     {/* Sign In Button */}
@@ -202,22 +241,22 @@ function Header() {
                       <div className="dropdown">
                         {/* Dropdown Button */}
                         <button
-                          className="btn py-2 px-4 ms-3 dropdown-toggle"
+                          className="btn button py-2 px-4 ms-3 dropdown-toggle"
                           type="button"
                           id="dropdownMenuButton"
                           data-bs-toggle="dropdown"
                           aria-expanded="false"
+                          style={{ outline: "none", boxShadow: "none", border: "none" }}
                         >
                           <FontAwesomeIcon
+                            className="user-icon"
                             icon={faUser}
                             aria-hidden="true"
                             style={{
                               marginRight: "10px",
                               cursor: "pointer",
-                              color: "white",
                             }}
                           />
-                          {/* Replace this with actual user name */}
                         </button>
                         {/* Dropdown Menu */}
                         <ul

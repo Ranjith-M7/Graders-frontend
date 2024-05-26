@@ -7,9 +7,7 @@ import Footer from "./Footer";
 function CoursesPage() {
   return (
     <>
-      <div className="header-nav"></div>
       <Header />
-
       <Courses />
       <Footer />
     </>

@@ -1,0 +1,38 @@
+  
+   {/* Profile details start */}
+      <div>
+        <section className="ftco-section section profile-section" id="profile">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-12 text-center">
+                <div className="section-heading">
+                  <h2>My Profile</h2>
+                </div>
+              </div>
+            </div>
+
+---------------------------------------------
+Profile style
+--------------------------------------------- 
+
+.form-group1 > label {
+  margin-bottom: 0.2rem;
+}
+.radio-container input {
+  margin-right: 0.5rem;
+}
+.profile-section .section-heading{
+  margin-bottom: 40px;
+}
+.profile-section.section{
+  margin-top: 120px;
+} 
+
+---------------------------------------------
+Media 
+--------------------------------------------- 
+@media (max-width: 992px) {
+  .profile-section.section{
+    margin-top: 80px;
+  } 
+}

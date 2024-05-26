@@ -232,7 +232,7 @@ const LoginForm = () => {
   }
 
   return (
-    <div className="align-content-center">
+    <div className="signin-container">
       <div className="align-content-end" id="recaptcha-container" />
       <form className="bg-light p-5 rounded">
         <p className="h4 mb-4 text-center">Sign in</p>
@@ -269,19 +269,19 @@ const LoginForm = () => {
           </button>
         </div>
         <br></br>
-        <p className="text-center">--Or with--</p>
+        <p className="text-center">-- Or with --</p>
         <div className="text-center">
           <button
             id="googleSignInButton"
             onClick={signInWithGoogle}
-            className="btn btn-outline-primary btn-block"
+            className="btn btn-outline-primary btn-block me-1"
           >
             Google
           </button>
           <button
             id="microsoftSignInButton"
             onClick={signInWithMicrosoft}
-            className="btn btn-outline-success btn-block"
+            className="btn btn-outline-success btn-block ms-1"
           >
             Microsoft
           </button>
