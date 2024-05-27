@@ -115,7 +115,7 @@ function Profile() {
               </div>
             </div>
             <div className="row d-flex justify-content-center">
-              <div className="col-md-7">
+              <div className="col-md-6">
                 <div className="form_container">
                   <form onSubmit={handleUpdateProfile}>
                     <div className="form-group1 mb-2">

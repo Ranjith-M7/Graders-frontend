@@ -170,69 +170,31 @@ function Header() {
                 {/* ***** Menu Start ***** */}
                 <ul className="nav">
                   <li>
-                    <a href="/" className="">
+                    <NavLink to="/" exact activeClassName="active">
                       Home
-                    </a>
+                    </NavLink>
                   </li>
                   <li>
-                    <a href="/about">About Us</a>
+                    <NavLink to="/about" activeClassName="active">
+                      About Us
+                    </NavLink>
                   </li>
                   <li>
-                    <a href="/courses" className="dropdown-item">
+                    <NavLink to="/courses" activeClassName="active">
                       Courses
-                    </a>
+                    </NavLink>
                   </li>
-                  {/* <li>
-                    <a href="/events" className="dropdown-item">
-                      Events
-                    </a>
-                  </li> */}
-                  {/*  <li>
-                   <div className="dropdown">
-
-                      <a
-                        className="dropdown-toggle"
-                        href
-                        id="dropdownMenuButton"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                        style={{
-                          cursor: "pointer",
-                        }}
-                      >
-                        Pages
-                      </a>
-     
-                      <ul
-                        className="dropdown-menu"
-                        aria-labelledby="dropdownMenuButton"
-                      >
-                        <li>
-                          <NavLink to="/courses" className="dropdown-item">
-                            Courses
-                          </NavLink>
-                        </li>
-                        <li>
-                          <NavLink to="/team" className="dropdown-item">
-                            Team
-                          </NavLink>
-                        </li>
-                        <li>
-                          <NavLink to="/event" className="dropdown-item">
-                            Events
-                          </NavLink>
-                        </li>
-                      </ul>
-                    </div>
-                  </li> */}
                   <li>
-                    <a href="/contact">Contact Us</a>
+                    <NavLink to="/contact" activeClassName="active">
+                      Contact Us
+                    </NavLink>
                   </li>
                   <li>
                     {/* Sign In Button */}
                     <NavLink
                       to="/signin"
                       style={{ display: isLoggedIn ? "none" : "block" }}
+                      activeClassName="active"
                     >
                       Sign In
                     </NavLink>
@@ -241,12 +203,16 @@ function Header() {
                       <div className="dropdown">
                         {/* Dropdown Button */}
                         <button
-                          className="btn button py-2 px-4 ms-3 dropdown-toggle"
+                          className="btn py-2 px-4 ms-3 dropdown-toggle"
                           type="button"
                           id="dropdownMenuButton"
                           data-bs-toggle="dropdown"
                           aria-expanded="false"
-                          style={{ outline: "none", boxShadow: "none", border: "none" }}
+                          style={{
+                            outline: "none",
+                            boxShadow: "none",
+                            border: "none",
+                          }}
                         >
                           <FontAwesomeIcon
                             className="user-icon"
@@ -264,7 +230,11 @@ function Header() {
                           aria-labelledby="dropdownMenuButton"
                         >
                           <li>
-                            <NavLink to="/profile" className="dropdown-item">
+                            <NavLink
+                              to="/profile"
+                              className="dropdown-item"
+                              activeClassName="active"
+                            >
                               Profile
                             </NavLink>
                           </li>
@@ -272,12 +242,17 @@ function Header() {
                             <NavLink
                               to="/seo-settings"
                               className="dropdown-item"
+                              activeClassName="active"
                             >
                               SEO Settings
                             </NavLink>
                           </li>
                           <li>
-                            <NavLink to="/adminpage" className="dropdown-item">
+                            <NavLink
+                              to="/adminpage"
+                              className="dropdown-item"
+                              activeClassName="active"
+                            >
                               Admin Page
                             </NavLink>
                           </li>
@@ -285,6 +260,7 @@ function Header() {
                             <NavLink
                               to="home"
                               className="dropdown-item"
+                              activeClassName="active"
                               onClick={handleLogout}
                             >
                               Sign out

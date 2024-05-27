@@ -561,18 +561,26 @@ Pre-loader Style
 .user-icon {
   color: #fff;
 }
+
 /* 
 ---------------------------------------------
 Drop down menu style
 --------------------------------------------- 
 */
+.dropdown{
+  position: relative;
+}
 .dropdown-menu {
   background-color: #7a6ad8;
+  /* margin-top: 15rem;
+  top: 100%;
+  position: absolute;
+  border: 2px solid black; */
 }
 
 .dropdown-menu a.dropdown-item {
   padding: 0;
-  margin-top: 5px;
+  margin-top: 4px;
 }
 
 .dropdown-menu a.dropdown-item:hover {
@@ -655,7 +663,8 @@ Drop down menu style
   }
 
   /* Styling for navigation list items on hover and when active */
-  .header-area.header-sticky .nav li a:hover {
+  .header-area.header-sticky .nav li a:hover,
+  .header-area.header-sticky .nav li a:active {
     color: #7a6ad8;
     opacity: 1;
   }

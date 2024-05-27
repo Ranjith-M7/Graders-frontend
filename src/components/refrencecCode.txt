@@ -36,3 +36,12 @@ Media
     margin-top: 80px;
   } 
 }
+
+
+// Toastify - npm i react-toastify
+
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"
+
+ toast.success(`Signed in with Google as ${user.displayName}`);
+ toast.error(`Error: ${error.message}`);
