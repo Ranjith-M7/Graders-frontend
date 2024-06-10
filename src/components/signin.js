@@ -5,27 +5,6 @@ import { Link } from "react-router-dom";
 import "./signin.css";
 
 import { OAuthProvider } from "firebase/auth";
-import { database, firestore } from "./firebaseConfig";
-
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
-// // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-// const firebaseConfig = {
-//   apiKey: "AIzaSyCYvz97qtv0EEe1P8w3t7GUMI-nc6RWkBE",
-//   authDomain: "graders-51b05.firebaseapp.com",
-//   databaseURL: "https://graders-51b05-default-rtdb.firebaseio.com",
-//   projectId: "graders-51b05",
-//   storageBucket: "graders-51b05.appspot.com",
-//   messagingSenderId: "551587800777",
-//   appId: "1:551587800777:web:e8a30ec197ac45d3afcf18",
-//   measurementId: "G-VTEJFC66EH",
-// };
-
-// // Initialize Firebase
-// if (!firebase.apps.length) {
-//   firebase.initializeApp(firebaseConfig);
-// }
 
 const LoginForm = () => {
   const [emailOrPhone, setEmailOrPhone] = useState("");
@@ -51,12 +30,10 @@ const LoginForm = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         setMessage(`Signed in as ${user.email}`);
-        toast.success(`Successful login!`);
         window.location.href = "/";
       })
       .catch((error) => {
         setMessage(`Error: ${error.message}`);
-        toast.error(`Your email or password is incorrect. Please try again.`);
       });
   }
 
@@ -89,14 +66,10 @@ const LoginForm = () => {
 
         storeUserData(user.uid, displayName[0], displayName[1], email);
 
-        toast.success(`Successful login!`);
-
         document.getElementById("googleSignInButton").disabled = false;
       })
       .catch((error) => {
         setMessage(`Error: ${error.message}`);
-
-        toast.error(`Error: ${error.message}`);
 
         document.getElementById("googleSignInButton").disabled = false;
       });
@@ -294,7 +267,7 @@ const LoginForm = () => {
           >
             Microsoft
           </button>
-          <ToastContainer />
+
           {/* Add buttons for other sign-in methods */}
         </div>
         <div className="text-center1">

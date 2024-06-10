@@ -567,7 +567,7 @@ Pre-loader Style
 Drop down menu style
 --------------------------------------------- 
 */
-.dropdown{
+.dropdown {
   position: relative;
 }
 .dropdown-menu {
@@ -762,13 +762,43 @@ Profile style
 .radio-container input {
   margin-right: 0.5rem;
 }
-.profile-section .section-heading {
-  margin-bottom: 40px;
-}
 .profile-section.section {
   margin-top: 120px;
 }
+.profile-section .section-heading {
+  margin-bottom: 40px;
+}
+
 /* 
+---------------------------------------------
+Seo style
+--------------------------------------------- 
+*/
+
+.seo-section.section {
+  margin-top: 120px;
+}
+
+.seo-section .section-heading {
+  margin-bottom: 40px;
+}
+/* 
+
+/* 
+---------------------------------------------
+Admin style
+--------------------------------------------- 
+*/
+
+.admin-section.section {
+  margin-top: 120px;
+}
+
+.admin-section .section-heading {
+  margin-bottom: 40px;
+}
+/* 
+
 ---------------------------------------------
 Banner Style
 --------------------------------------------- 
@@ -2002,6 +2032,10 @@ body {
   }
   footer {
     margin-top: 30px;
+  }
+
+  .seo-section.section {
+    margin-top: 80px;
   }
 }
 

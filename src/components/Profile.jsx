@@ -118,7 +118,7 @@ function Profile() {
               <div className="col-md-6">
                 <div className="form_container">
                   <form onSubmit={handleUpdateProfile}>
-                    <div className="form-group1 mb-2">
+                    <div className="form-group1 mb-3">
                       <label htmlFor="firstName">First Name:</label>
                       <input
                         type="text"
@@ -128,7 +128,7 @@ function Profile() {
                         onChange={(e) => setFirstName(e.target.value)}
                       />
                     </div>
-                    <div className="form-group1 mb-2">
+                    <div className="form-group1 mb-3">
                       <label htmlFor="lastName">Last Name:</label>
                       <input
                         type="text"
@@ -138,7 +138,7 @@ function Profile() {
                         onChange={(e) => setLastName(e.target.value)}
                       />
                     </div>
-                    <div className="form-group1 mb-2">
+                    <div className="form-group1 mb-3">
                       <label htmlFor="email">Email:</label>
                       <input
                         type="email"
@@ -148,7 +148,7 @@ function Profile() {
                         onChange={(e) => setEmail(e.target.value)}
                       />
                     </div>
-                    <div className="form-group1 mb-2">
+                    <div className="form-group1 mb-3">
                       <label htmlFor="age">Age:</label>
                       <input
                         type="number"
@@ -160,7 +160,7 @@ function Profile() {
                         onChange={(e) => setAge(e.target.value)}
                       />
                     </div>
-                    <div className="form-group1 mb-2">
+                    <div className="form-group1 mb-3">
                       <label htmlFor="pphoneNumber">Phone Number:</label>
                       <input
                         type="tel"
@@ -178,7 +178,7 @@ function Profile() {
                         </div>
                       )}
                     </div>
-                    <div className="form-group1 mb-2">
+                    <div className="form-group1 mb-3">
                       <label>Gender:</label>
                       <div className="radio-container">
                         <input
@@ -207,7 +207,7 @@ function Profile() {
                         </label>
                       </div>
                     </div>
-                    <div className="form-group1 mb-2">
+                    <div className="form-group1 mb-3">
                       <label htmlFor="location">Location:</label>
                       <input
                         type="text"

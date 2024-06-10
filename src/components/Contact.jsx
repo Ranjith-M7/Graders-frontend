@@ -1,8 +1,75 @@
 import React, { useEffect, useState } from "react";
 
-import { database, firestore, storage } from "./firebaseConfig";
+import { database } from "./firebaseConfig";
+
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Contact() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  // const [successMessage, setSuccessMessage] = useState("");
+  // const [errorMessage, setErrorMessage] = useState("");
+  const [latestId, setLatestId] = useState(0);
+
+  useEffect(() => {
+    const fetchLatestId = async () => {
+      try {
+        const snapshot = await database
+          .ref("Contact Form")
+          .orderByChild("Contact_id")
+          .limitToLast(1)
+          .once("value");
+        if (snapshot.exists()) {
+          const latestEntry = snapshot.val();
+          const latestIdValue = Object.values(latestEntry)[0].Contact_id;
+          setLatestId(latestIdValue);
+        } else {
+          setLatestId(0);
+        }
+      } catch (error) {
+        console.error("Error fetching latest ID:", error);
+      }
+    };
+
+    fetchLatestId();
+  }, []);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const db = database;
+
+    try {
+      console.log("Latest ID:", latestId);
+      const newId = latestId + 1;
+      console.log("New ID:", newId);
+      // Push form data to the database
+      await db.ref("Contact Form").push({
+        Contact_id: newId,
+        Contact_name: name,
+        Contact_email: email,
+        Contact_subject: subject,
+        Contact_message: message,
+      });
+
+      // Clear form fields and set success message
+      setName("");
+      setEmail("");
+      setSubject("");
+      setMessage("");
+      // setSuccessMessage("Message sent successfully!");
+      toast.success(`Message sent successfully`);
+      // setErrorMessage("");
+    } catch (error) {
+      console.error("Error storing form data:", error);
+      // setSuccessMessage("");
+      toast.success(`Failed to send message. Please try again.`);
+      // setErrorMessage("Failed to send message. Please try again.");
+    }
+  };
   const [contactData, setContactData] = useState({
     sectionHeading: {
       title: "",
@@ -81,7 +148,7 @@ function Contact() {
           </div>
           <div className="col-lg-6">
             <div className="contact-us-content">
-              <form id="contact-form" action="" method="post">
+              <form id="contact-form" onSubmit={handleSubmit} method="post">
                 <div className="row">
                   <div className="col-lg-12">
                     <fieldset>
@@ -91,7 +158,9 @@ function Contact() {
                         id="name"
                         placeholder="Your Name..."
                         autoComplete="on"
-                        required=""
+                        required
+                        value={name}
+                        onChange={(event) => setName(event.target.value)}
                       />
                     </fieldset>
                   </div>
@@ -103,7 +172,22 @@ function Contact() {
                         id="email"
                         pattern="[^ @]*@[^ @]*"
                         placeholder="Your E-mail..."
-                        required=""
+                        required
+                        value={email}
+                        onChange={(event) => setEmail(event.target.value)}
+                      />
+                    </fieldset>
+                  </div>
+                  <div className="col-lg-12">
+                    <fieldset>
+                      <input
+                        type="text"
+                        name="subject"
+                        id="subject"
+                        placeholder="Subject..."
+                        required
+                        value={subject}
+                        onChange={(event) => setSubject(event.target.value)}
                       />
                     </fieldset>
                   </div>
@@ -114,6 +198,9 @@ function Contact() {
                         id="message"
                         placeholder="Your Message"
                         defaultValue={""}
+                        required
+                        value={message}
+                        onChange={(event) => setMessage(event.target.value)}
                       />
                     </fieldset>
                   </div>
@@ -128,9 +215,16 @@ function Contact() {
                       </button>
                     </fieldset>
                   </div>
+                  {/* {successMessage && (
+                    <div className="alert alert-success">{successMessage}</div>
+                  )}
+                  {errorMessage && (
+                    <div className="alert alert-danger">{errorMessage}</div>
+                  )} */}
                 </div>
               </form>
             </div>
+            <ToastContainer />
           </div>
         </div>
       </div>
