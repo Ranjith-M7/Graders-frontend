@@ -66,7 +66,7 @@ function Contact() {
     } catch (error) {
       console.error("Error storing form data:", error);
       // setSuccessMessage("");
-      toast.success(`Failed to send message. Please try again.`);
+      toast.error(`Failed to send message. Please try again.`);
       // setErrorMessage("Failed to send message. Please try again.");
     }
   };

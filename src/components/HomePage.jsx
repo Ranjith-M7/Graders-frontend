@@ -1,6 +1,4 @@
 import React from "react";
-
-import Preloder from "./Preloader";
 import Header from "./Header";
 import MainBanner from "./MainBanner";
 import Services from "./Services";
