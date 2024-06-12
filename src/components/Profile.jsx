@@ -5,6 +5,9 @@ import { database, storage } from "./firebaseConfig";
 import Header from "./Header";
 import Footer from "./Footer";
 
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function Profile() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -13,7 +16,6 @@ function Profile() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [gender, setGender] = useState("");
   const [location, setLocation] = useState("");
-  const [message, setMessage] = useState("");
 
   useEffect(() => {
     const currentUser = firebase.auth().currentUser;
@@ -35,16 +37,16 @@ function Profile() {
             setGender(userData.gender || "");
             setLocation(userData.location || "");
           } else {
-            setMessage("User data not found");
+            toast.error(`User data not found`);
           }
         },
         (error) => {
           console.error("Error fetching user data:", error);
-          setMessage("Error fetching user data");
+          toast.error(`Error fetching user data`);
         }
       );
     } else {
-      setMessage("User not authenticated");
+      toast.error(`User not authenticated`);
     }
   }, []);
   useEffect(() => {
@@ -79,11 +81,11 @@ function Profile() {
         location,
       })
       .then(() => {
-        setMessage("Profile updated successfully");
+        toast.success(`Profile updated successfully`);
       })
       .catch((error) => {
         console.error("Error updating profile:", error);
-        setMessage("Error updating profile");
+        toast.error(`Error updating profile`);
       });
   };
 
@@ -217,14 +219,13 @@ function Profile() {
                         onChange={(e) => setLocation(e.target.value)}
                       />
                     </div>
-                    <button type="submit" className="btn mt-2" style={{backgroundColor: "#7a6ad8", color: "white"}}>
+                    <button type="submit" className="secondary-button">
                       Update Profile
                     </button>
                   </form>
-                  <p>{message}</p>
+                  <ToastContainer />
                 </div>
               </div>
-           
             </div>
           </div>
         </section>

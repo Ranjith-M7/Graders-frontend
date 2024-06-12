@@ -13,6 +13,12 @@ function Header() {
   const [headerClass, setHeaderClass] = useState("");
   const [headerData, setHeaderData] = useState({
     logo: "",
+    navItems: {
+      item1: "",
+      item2: "",
+      item3: "",
+      item4: "",
+    },
   });
 
   useEffect(() => {
@@ -46,9 +52,15 @@ function Header() {
         const snapshot = await database.ref("Header").once("value");
         if (snapshot.exists()) {
           const data = snapshot.val();
-          const { Logo } = data;
+          const { Logo, Nav_Items } = data;
           setHeaderData({
             logo: Logo,
+            navItems: {
+              item1: Nav_Items.item1 || "",
+              item2: Nav_Items.item2 || "",
+              item3: Nav_Items.item3 || "",
+              item4: Nav_Items.item4 || "",
+            },
           });
         } else {
           console.log("The header data was not found in the database");
@@ -171,22 +183,22 @@ function Header() {
                 <ul className="nav">
                   <li>
                     <NavLink to="/" exact activeClassName="active">
-                      Home
+                      {headerData.navItems.item1}
                     </NavLink>
                   </li>
                   <li>
                     <NavLink to="/about" activeClassName="active">
-                      About Us
+                      {headerData.navItems.item2}
                     </NavLink>
                   </li>
                   <li>
                     <NavLink to="/courses" activeClassName="active">
-                      Courses
+                      {headerData.navItems.item3}
                     </NavLink>
                   </li>
                   <li>
                     <NavLink to="/contact" activeClassName="active">
-                      Contact Us
+                      {headerData.navItems.item4}
                     </NavLink>
                   </li>
                   <li>

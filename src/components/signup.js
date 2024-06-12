@@ -6,12 +6,14 @@ import "firebase/compat/database";
 import "firebase/compat/firestore";
 import "./signin.css";
 
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const SignUpForm = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
 
   const submitSignUpForm = () => {
     signUpEmailPassword(email, password);
@@ -23,12 +25,12 @@ const SignUpForm = () => {
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        setMessage(`Signed up as ${user.email}`);
+        toast.success(`Signed up as ${user.email}`);
 
         storeUserData(user.uid, firstName, lastName, email);
       })
       .catch((error) => {
-        setMessage(`Error: ${error.message}`);
+        toast.error(`Error: ${error.message}`);
       });
   };
 
@@ -51,9 +53,9 @@ const SignUpForm = () => {
   };
 
   return (
-    <div className="signin-container">
+    <div className="signup-container">
       <div className="align-content-center">
-        <form className="bg-light p-5 rounded">
+        <form className="signup-form p-5 rounded">
           <p className="h4 mb-4 text-center">Sign Up</p>
           <div className="form-group">
             <input
@@ -104,13 +106,11 @@ const SignUpForm = () => {
               Submit
             </button>
           </div>
-          <p id="message" className="mt-3 text-center">
-            {message}
-          </p>
           <p className="mt-3 text-center">
             Already have an account? <Link to="/signin">Sign in</Link>
           </p>
         </form>
+        <ToastContainer />
       </div>
     </div>
   );

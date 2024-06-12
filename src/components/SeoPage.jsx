@@ -3,12 +3,14 @@ import firebase from "firebase/compat/app";
 import Header from "./Header";
 import Footer from "./Footer";
 
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function SeoPage() {
   const [metaTitle, setMetaTitle] = useState("");
   const [keywords, setKeywords] = useState("");
   const [primaryKeywords, setPrimaryKeywords] = useState("");
   const [secondaryKeywords, setSecondaryKeywords] = useState("");
-  const [message3, setMessage3] = useState("");
 
   useEffect(() => {
     const metaDataRef = firebase.database().ref("metadata");
@@ -79,11 +81,11 @@ function SeoPage() {
         secondaryKeywords: secondaryKeywords,
       })
       .then(() => {
-        setMessage3("Metadata updated successfully");
+        toast.success(`Metadata updated successfully`);
       })
       .catch((error) => {
         console.error("Error updating metadata:", error);
-        setMessage3("Error updating metadata");
+        toast.error(`Error updating metadata`);
       });
   };
   return (
@@ -154,15 +156,11 @@ function SeoPage() {
                       />
                     </div>
                   </div>
-                  <button
-                    type="submit"
-                    className="btn"
-                    style={{ backgroundColor: "#7a6ad8", color: "white" }}
-                  >
+                  <button type="submit" className="secondary-button">
                     Submit
                   </button>
                 </form>
-                <p>{message3}</p>
+                <ToastContainer />
               </div>
             </div>
           </div>

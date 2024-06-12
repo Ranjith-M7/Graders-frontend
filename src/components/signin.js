@@ -6,6 +6,9 @@ import "./signin.css";
 
 import { OAuthProvider } from "firebase/auth";
 
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const LoginForm = () => {
   const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -29,11 +32,11 @@ const LoginForm = () => {
       .signInWithEmailAndPassword(emailOrPhone, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        setMessage(`Signed in as ${user.email}`);
+        toast.success(`Signed in as ${user.email}`);
         window.location.href = "/";
       })
       .catch((error) => {
-        setMessage(`Error: ${error.message}`);
+        toast.error(`Error: ${error.message}`);
       });
   }
 
@@ -215,10 +218,8 @@ const LoginForm = () => {
 
   return (
     <div className="signin-container">
-      <div className="align-content-end" id="recaptcha-container" />
-      <form className="bg-light p-5 rounded">
+      <form className="signin-form p-5 rounded">
         <p className="h4 mb-4 text-center">Sign in</p>
-
         <div className="form-group">
           <input
             type="text"
@@ -241,6 +242,7 @@ const LoginForm = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
+        <div className="align-content-end mb-4" id="recaptcha-container" />
         <div className="text-center">
           <button
             type="button"
@@ -276,10 +278,8 @@ const LoginForm = () => {
             Sign Up
           </Link>
         </div>
-        <p id="message" className="mt-3 text-center">
-          {message}
-        </p>
       </form>
+      <ToastContainer />
     </div>
   );
 };
