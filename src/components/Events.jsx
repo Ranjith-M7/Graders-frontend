@@ -1,66 +1,69 @@
 import React, { useEffect, useState } from "react";
 import { database, firestore, storage } from "./firebaseConfig";
 
-import img from "../assets/images/event-01.jpg";
-
 function Events() {
-  const [eventsData, setEventsData] = useState({
+  const [eventHeadingContent, setEventHeadingContent] = useState({
     title: "",
     subtitle: "",
-    eventsContent: [],
+    events: [],
   });
-  const [imageUrls, setImageUrls] = useState([]);
 
-  // Fetch images from storage
+  const [eventData, setEventData] = useState({
+    events: {
+      imageUrl: "",
+      title: "",
+      eventType: "",
+      eventDate: "",
+      eventCity: "",
+      duration: "",
+      price: "",
+    },
+  });
+
   useEffect(() => {
-    const fetchImageUrls = async () => {
-      try {
-        const storageRef = storage.ref("Events Section");
-
-        // Get list of items (images) in the directory
-        const listResult = await storageRef.listAll();
-
-        // Fetch download URL for each item (image) in the directory
-        const urls = await Promise.all(
-          listResult.items.map(async (itemRef) => {
-            return await itemRef.getDownloadURL();
-          })
-        );
-        setImageUrls(urls);
-      } catch (error) {
-        console.error("Error fetching image URLs:", error);
-      }
-    };
-
-    fetchImageUrls();
-  }, []);
-  useEffect(() => {
-    const fetchEventsData = async () => {
+    const fetchEventHeadingContent = async () => {
       try {
         const snapshot = await database.ref("Events Section").once("value");
         if (snapshot.exists()) {
           const data = snapshot.val();
-          const { Title, Subtitle, Events } = data;
+          const { Title, Subtitle } = data;
 
-          // Filter out empty events item
-          const filteredEvents = Events
-            ? Events.filter((item) => item.Title && item.Category)
-            : [];
-
-          setEventsData({
+          setEventHeadingContent({
             title: Title,
             subtitle: Subtitle,
-            eventsContent: filteredEvents || [],
           });
         } else {
-          console.log("The data for events was not found in the database");
+          console.log(
+            "The heading data for events was not found in the database"
+          );
         }
       } catch (error) {
         console.log(`Error: ${error}`);
       }
     };
 
-    fetchEventsData();
+    fetchEventHeadingContent();
+  }, []);
+
+  useEffect(() => {
+    const fetchEventData = async () => {
+      try {
+        const snapshot = await database.ref("Events").once("value");
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          const events = Object.values(data); // convert object to array
+          setEventData({ events });
+        } else {
+          console.log(
+            "The events data for events was not found in the database"
+          );
+        }
+      } catch (error) {
+        console.log(`Error: ${error}`);
+      }
+    };
+
+    fetchEventData();
   }, []);
 
   return (
@@ -69,46 +72,75 @@ function Events() {
         <div className="row">
           <div className="col-lg-12 text-center">
             <div className="section-heading">
-              <h6>{eventsData.subtitle}</h6>
-              <h2>{eventsData.title}</h2>
+              <h6>{eventHeadingContent.subtitle}</h6>
+              <h2>{eventHeadingContent.title}</h2>
             </div>
           </div>
-          {eventsData.eventsContent.map((item, index) => (
-            <div key={index} className="col-lg-12 col-md-6">
-              <div className="item">
-                <div className="row">
-                  <div className="col-lg-3">
-                    <div className="image">
-                      <img src={imageUrls[index]} alt="" />
+          {Array.isArray(eventData.events) &&
+            eventData.events.map((event, index) => (
+              <div key={index} className="col-lg-12 col-md-6 col-sm-12">
+                <div className="item text-center text-md-start">
+                  <div className="row">
+                    <div className="col-lg-3">
+                      <div className="image">
+                        <img src={event.imageUrl} alt="img" />
+                      </div>
                     </div>
-                  </div>
-                  <div className="col-lg-9">
-                    <ul>
-                      <li>
-                        <span className="category">{item.Category}</span>
-                        <h4>{item.Title}</h4>
-                      </li>
-                      <li>
-                        <span>{item.Date.Label}</span>
-                        <h6>{item.Date.Value}</h6>
-                      </li>
-                      <li>
-                        <span>{item.Duration.Label}</span>
-                        <h6>{item.Duration.Value}</h6>
-                      </li>
-                      <li>
-                        <span>{item.Price.Label}</span>
-                        <h6>{item.Price.Value}</h6>
-                      </li>
-                    </ul>
+                    <div className="col-lg-9">
+                      {/* <ul>
+                        <li>
+                          <span className="category">{event.eventType}</span>
+                          <h4>{event.title}</h4>
+                        </li>
+                        <li>
+                          <span>Date</span>
+                          <h6>{event.eventDate}</h6>
+                        </li>
+                        <li>
+                          <span>City</span>
+                          <h6>Tamil Nadu</h6>
+                        </li>
+                        <li>
+                          <span>Duration</span>
+                          <h6>{event.duration}</h6>
+                        </li>
+                        <li>
+                          <span>Price</span>
+                          <h6>₹{event.price}</h6>
+                        </li>
+                      </ul> */}
+                      <div className="row">
+                        <div className="col-lg-4 mb-4 mb-lg-0">
+                          <div>
+                            <span className="category">{event.eventType}</span>
+                            <h4>{event.title}</h4>
+                          </div>
+                        </div>
+                        <div className="col-lg-8">
+                          <div className="row mb-3 mb-lg-0">
+                            <div className="col-lg-4 mb-2 mb-lg-0">
+                              <span>Date</span>
+                              <h6>{event.eventDate}</h6>
+                            </div>
+                            <div className="col-lg-4 mb-2 mb-lg-0">
+                              <span>City</span>
+                              <h6>{event.eventCity}</h6>
+                            </div>
+                            <div className="col-lg-4 mb-2 mb-lg-0">
+                              <span>Price</span>
+                              <h6>₹{event.price}</h6>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     <a href="#">
                       <i className="fa fa-angle-right" />
                     </a>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
     </div>

@@ -1,5 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import firebase from "firebase/compat/app";
+import "firebase/compat/storage";
+import "firebase/compat/database";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -13,14 +15,14 @@ import "react-toastify/dist/ReactToastify.css";
 
 const AdminPage = () => {
   const calendarRef = useRef(null);
-
+  const fileInputRef = useRef(null);
   const [eventType, setEventType] = useState("");
   const [eventDate, setEventDate] = useState("");
   const [duration, setDuration] = useState("");
-  // const [successMessage, setSuccessMessage] = useState("");
-  // const [errorMessage, setErrorMessage] = useState("");
   const [eventCity, setEventCity] = useState("");
-
+  const [price, setPrice] = useState("");
+  const [title, setTitle] = useState("");
+  const [image, setImage] = useState(null);
   const [calendarEvents, setCalendarEvents] = useState([]);
 
   useEffect(() => {
@@ -47,10 +49,23 @@ const AdminPage = () => {
     fetchData();
   }, []);
 
+  //handle image upload
+  const handleImageUpload = async (file) => {
+    const storageRef = firebase.storage().ref();
+    const fileRef = storageRef.child(`Event Images/${file.name}`);
+    await fileRef.put(file);
+    return await fileRef.getDownloadURL();
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
+      let imageUrl = "";
+      if (image) {
+        imageUrl = await handleImageUpload(image);
+      }
+
       const database = firebase.database();
       const ref = database.ref("Events");
       const newEventRef = ref.push();
@@ -59,19 +74,26 @@ const AdminPage = () => {
         eventType,
         eventDate,
         duration,
+        title,
+        price,
+        eventCity,
+        imageUrl,
       });
 
       setEventType("");
       setEventDate("");
       setDuration("");
-      // setSuccessMessage("Event booked successfully.");
+      setTitle("");
+      setPrice("");
+      setEventCity("");
+      setImage(null);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
       toast.success(`Event booked successfully.`);
-      // setErrorMessage("");
     } catch (error) {
-      // setErrorMessage("Error booking event. Please try again.");
       toast.error(`Error booking event. Please try again.`);
       console.error("Error booking event:", error);
-      // setSuccessMessage("");
     }
   };
 
@@ -109,7 +131,7 @@ const AdminPage = () => {
               <div className="">
                 <form onSubmit={handleSubmit}>
                   <div className="mb-3 col-md-12">
-                    <label htmlFor="input3" className="form-label">
+                    <label htmlFor="eventCity" className="form-label">
                       Event City
                     </label>
                     <select
@@ -126,7 +148,7 @@ const AdminPage = () => {
                     </select>
                   </div>
                   <div className="mb-3 col-md-12">
-                    <label htmlFor="input1" className="form-label">
+                    <label htmlFor="eventType" className="form-label">
                       Event Type
                     </label>
                     <select
@@ -147,7 +169,7 @@ const AdminPage = () => {
                     </select>
                   </div>
                   <div className="mb-3 col-md-12">
-                    <label htmlFor="datepicker" className="form-label">
+                    <label htmlFor="eventDate" className="form-label">
                       Event Date
                     </label>
                     <input
@@ -160,7 +182,7 @@ const AdminPage = () => {
                     />
                   </div>
                   <div className="mb-3 col-md-12">
-                    <label htmlFor="input2" className="form-label">
+                    <label htmlFor="duration" className="form-label">
                       Duration
                     </label>
                     <select
@@ -188,20 +210,50 @@ const AdminPage = () => {
                       <option value="10+ hours">{`10+ hours`}</option>
                     </select>
                   </div>
+                  <div className="mb-3 col-md-12">
+                    <label htmlFor="title">Title</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="title"
+                      required
+                      placeholder="Enter the event title"
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                    />
+                  </div>
 
-                  <button
-                    type="submit"
-                    className="btn"
-                    style={{ backgroundColor: "#7a6ad8", color: "white" }}
-                  >
+                  <div className="mb-3 col-md-12">
+                    <label htmlFor="imageUpload" className="label-yellow mb-1">
+                      Select image to upload
+                    </label>
+                    <input
+                      type="file"
+                      required
+                      className="form-control-file"
+                      id="imageUpload"
+                      accept="image/*"
+                      ref={fileInputRef}
+                      onChange={(e) => setImage(e.target.files[0])}
+                    />
+                  </div>
+
+                  <div className="mb-3 col-md-12">
+                    <label htmlFor="firstName">Price</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      required
+                      id="price"
+                      placeholder="Enter the price"
+                      value={price}
+                      onChange={(e) => setPrice(e.target.value)}
+                    />
+                  </div>
+
+                  <button type="submit" className="secondary-button">
                     Book Event
                   </button>
-                  {/* {successMessage && (
-                    <div className="alert alert-success">{successMessage}</div>
-                  )}
-                  {errorMessage && (
-                    <div className="alert alert-danger">{errorMessage}</div>
-                  )} */}
                 </form>
                 <ToastContainer />
               </div>
