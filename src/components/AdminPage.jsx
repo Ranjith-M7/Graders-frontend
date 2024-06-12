@@ -2,10 +2,13 @@ import React, { useRef, useState, useEffect } from "react";
 import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
 import "firebase/compat/database";
+import { database, firestore, storage } from "./firebaseConfig";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import Header from "./Header";
 import Footer from "./Footer";
@@ -24,6 +27,39 @@ const AdminPage = () => {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState(null);
   const [calendarEvents, setCalendarEvents] = useState([]);
+
+  const [eventData, setEventData] = useState({
+    events: {
+      imageUrl: "",
+      title: "",
+      eventType: "",
+      eventDate: "",
+      eventCity: "",
+      duration: "",
+      price: "",
+    },
+  });
+
+  useEffect(() => {
+    const fetchEventData = async () => {
+      try {
+        const snapshot = await database.ref("Events").once("value");
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          const events = Object.values(data); // convert object to array
+          setEventData({ events });
+        } else {
+          console.log(
+            "The events data for events was not found in the database"
+          );
+        }
+      } catch (error) {
+        console.log(`Error: ${error}`);
+      }
+    };
+
+    fetchEventData();
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -97,6 +133,41 @@ const AdminPage = () => {
     }
   };
 
+  const handleDeleteEvent = (date, title) => {
+    // Reference to the event node
+    const eventsRef = firebase.database().ref("Events");
+
+    // Query events with the specified date
+    eventsRef
+      .orderByChild("eventDate")
+      .equalTo(date)
+      .once("value", (snapshot) => {
+        snapshot.forEach((childSnapshot) => {
+          const event = childSnapshot.val();
+          // Check if the event matches both the specified date and title
+          if (event.eventDate === date && event.title === title) {
+            // Remove the event entry
+            childSnapshot.ref
+              .remove()
+              .then(() => {
+                console.log("Event data deleted from Firebase");
+                toast.success(`Event data deleted from Firebase`);
+                setTimeout(() => {
+                  window.location.reload();
+                }, 400); // Adjust the delay time as needed
+              })
+              .catch((error) => {
+                console.error(
+                  "Error deleting event data from Firebase: ",
+                  error
+                );
+                toast.error(`Error deleting event data from Firebase: ${error}
+                  `);
+              });
+          }
+        });
+      });
+  };
   return (
     <>
       <Header />
@@ -261,6 +332,53 @@ const AdminPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Admin Event Booking Details's Table */}
+      <section className="event-booking-table mt-5">
+        <div className="container">
+          <table class="table table-striped table-hover table-bordered ">
+            <thead
+              style={{ backgroundColor: "rgb(23, 133, 130)", color: "white" }}
+            >
+              <tr>
+                <th scope="col">No</th>
+                <th scope="col">Date</th>
+                <th scope="col">Title</th>
+                <th scope="col">Event Type</th>
+                <th scope="col">Event City</th>
+                <th scope="col">Duration</th>
+                <th scope="col">Price</th>
+                <th scope="col">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Array.isArray(eventData.events) &&
+                eventData.events.map((event, index) => (
+                  <tr key={index}>
+                    <th scope="row">{`${index + 1}`}</th>
+                    <td>{event.eventDate}</td>
+                    <td>{event.title}</td>
+                    <td>{event.eventType}</td>
+                    <td>{event.eventCity}</td>
+                    <td>{event.duration}</td>
+                    <td>₹{event.price}</td>
+                    <td>
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleDeleteEvent(event.eventDate, event.title);
+                        }}
+                        style={{ cursor: "pointer", color: "red" }}
+                      />
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
       <Footer />
     </>
   );

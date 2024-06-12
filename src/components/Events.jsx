@@ -101,8 +101,8 @@ function Events() {
                               <h6>{event.eventDate}</h6>
                             </div>
                             <div className="col-lg-4 mb-2 mb-lg-0">
-                              <span>City</span>
-                              <h6>{event.eventCity}</h6>
+                              <span>Duration</span>
+                              <h6>{event.duration}</h6>
                             </div>
                             <div className="col-lg-4 mb-2 mb-lg-0">
                               <span>Price</span>
