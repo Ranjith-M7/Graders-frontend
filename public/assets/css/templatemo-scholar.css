@@ -1540,50 +1540,6 @@ Events Style
   font-weight: 600;
 }
 
-/* .events .item ul li {
-  display: inline-block;
-  width: 15.5%;
-  vertical-align: middle;
-}
-
-.events .item ul li:first-child {
-  width: 35%;
-}
-
-.events .item ul li:nth-of-type(2) {
-  width: 28%;
-}
-
-.events .item ul li span.category {
-  font-size: 14px;
-  text-transform: uppercase;
-  color: var(--primary-color);
-  background-color: #fff;
-  padding: 8px 20px;
-  border-radius: 25px;
-  font-weight: 500;
-  display: inline-block;
-  margin-bottom: 20px;
-}
-
-.events .item ul li h4 {
-  font-size: 22px;
-  font-weight: 600;
-}
-
-.events .item ul li span {
-  display: inline-block;
-  font-size: 14px;
-  color: #4a4a4a;
-  margin-bottom: 10px;
-}
-
-.events .item ul li h6 {
-  font-size: 16px;
-  color: var(--primary-color);
-  font-weight: 600;
-} */
-
 .events .item a {
   position: absolute;
   right: 0;
@@ -2039,31 +1995,12 @@ body {
     position: relative;
     max-width: 100%;
   }
-  .events .item ul {
-    margin-top: -40px;
-  }
-  .events .item ul li:first-child {
-    width: 100% !important;
-    margin-bottom: 30px;
-    padding-bottom: 30px;
-    border-bottom: 1px solid #ddd;
-  }
-  .events .item ul li:nth-child(2) {
-    width: 40% !important;
-  }
-  .events .item ul li {
-    display: inline-block;
-    width: 28% !important;
-  }
-
-  .events .item ul li:last-child {
-    text-align: right;
-  }
+  
   .events .item a {
     bottom: 150px;
     top: auto;
   }
-  .events .item ul li h6 {
+  .events .item h6 {
     font-size: 14px;
   }
   .contact-us {

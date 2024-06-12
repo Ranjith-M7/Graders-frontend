@@ -81,35 +81,13 @@ function Events() {
               <div key={index} className="col-lg-12 col-md-6 col-sm-12">
                 <div className="item text-center text-md-start">
                   <div className="row">
-                    <div className="col-lg-3">
+                    <div className="col-lg-3 d-flex d-lg-block justify-content-center ">
                       <div className="image">
                         <img src={event.imageUrl} alt="img" />
                       </div>
                     </div>
                     <div className="col-lg-9">
-                      {/* <ul>
-                        <li>
-                          <span className="category">{event.eventType}</span>
-                          <h4>{event.title}</h4>
-                        </li>
-                        <li>
-                          <span>Date</span>
-                          <h6>{event.eventDate}</h6>
-                        </li>
-                        <li>
-                          <span>City</span>
-                          <h6>Tamil Nadu</h6>
-                        </li>
-                        <li>
-                          <span>Duration</span>
-                          <h6>{event.duration}</h6>
-                        </li>
-                        <li>
-                          <span>Price</span>
-                          <h6>₹{event.price}</h6>
-                        </li>
-                      </ul> */}
-                      <div className="row">
+                      <div className="row d-lg-flex align-items-center">
                         <div className="col-lg-4 mb-4 mb-lg-0">
                           <div>
                             <span className="category">{event.eventType}</span>
