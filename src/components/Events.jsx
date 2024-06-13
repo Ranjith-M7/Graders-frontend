@@ -83,7 +83,11 @@ function Events() {
                   <div className="row">
                     <div className="col-lg-3">
                       <div className="image">
-                        <img src={event.imageUrl} alt="img" />
+                        <img
+                          src={event.imageUrl}
+                          className="img-fluid"
+                          alt="img"
+                        />
                       </div>
                     </div>
                     <div className="col-lg-9">

@@ -750,7 +750,7 @@ Admin style
   margin-bottom: 40px;
 }
 
-.full-calender{
+.full-calender {
   font-size: 1rem;
 }
 /* 
@@ -1427,18 +1427,16 @@ Events Style
 
 .events .item .image {
   position: relative;
-  max-width: 260px;
-  max-height: 200px;
 }
 .events .item .image img {
   position: absolute;
+  top: -70px;
   border-radius: 25px;
   object-fit: cover;
   object-position: center;
-  height: 100%;
-  width: 100%;
+  width: 260px;
+  height: 200px;
   left: 0;
-  top: -70px;
 }
 
 .events .item ul li {
@@ -1798,7 +1796,7 @@ body {
 }
 
 @media (max-width: 576px) {
-  .full-calender{
+  .full-calender {
     font-size: 0.6rem;
   }
 }

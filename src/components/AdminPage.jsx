@@ -176,7 +176,7 @@ const AdminPage = () => {
           <div className="row">
             <div className="col-lg-12 text-center">
               <div className="section-heading">
-                <h2 className="heading">Admin</h2>
+                <h2 className="heading">Admin Page</h2>
               </div>
             </div>
           </div>
