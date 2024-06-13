@@ -750,6 +750,9 @@ Admin style
   margin-bottom: 40px;
 }
 
+.full-calender{
+  font-size: 1rem;
+}
 /* 
 
 ---------------------------------------------
@@ -1427,7 +1430,6 @@ Events Style
   max-width: 260px;
   max-height: 200px;
 }
-
 .events .item .image img {
   position: absolute;
   border-radius: 25px;
@@ -1752,14 +1754,11 @@ footer {
   margin-top: 150px;
   position: relative;
   background-color: var(--bg-color-primary);
-  vertical-align: middle;
-  min-height: 150px;
   border-radius: 150px 150px 0px 0px;
 }
 
 footer p {
   text-align: center;
-  line-height: 150px;
   color: #fff;
   font-weight: 400;
 }
@@ -1774,7 +1773,7 @@ footer p a {
 footer p a:hover {
   opacity: 0.75;
 }
-
+/* 
 footer::before {
   background: url(../images/contact-dec-01.png);
   position: absolute;
@@ -1786,7 +1785,7 @@ footer::before {
   height: 119px;
   content: "";
   z-index: 2;
-}
+} */
 
 /* 
 ---------------------------------------------
@@ -1798,6 +1797,11 @@ body {
   overflow-x: hidden;
 }
 
+@media (max-width: 576px) {
+  .full-calender{
+    font-size: 0.6rem;
+  }
+}
 @media (max-width: 767px) {
   .header-area {
     top: 0px;
@@ -2013,6 +2017,10 @@ body {
   }
 
   .seo-section.section {
+    margin-top: 80px;
+  }
+
+  .admin-section.section {
     margin-top: 80px;
   }
 }

@@ -176,13 +176,13 @@ const AdminPage = () => {
           <div className="row">
             <div className="col-lg-12 text-center">
               <div className="section-heading">
-                <h2 className="heading">Admin Page</h2>
+                <h2 className="heading">Admin</h2>
               </div>
             </div>
           </div>
           <div className="row">
-            <div className="col-md-9">
-              <div className="mb-3 ">
+            <div className="col-md-9 mb-5 mb-md-0">
+              <div className="full-calender ">
                 <FullCalendar
                   ref={calendarRef}
                   plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -198,7 +198,7 @@ const AdminPage = () => {
               </div>
             </div>
 
-            <div className="col-md-3">
+            <div className="col-md-3 mb-5 mb-md-0">
               <div className="">
                 <form onSubmit={handleSubmit}>
                   <div className="mb-3 col-md-12">
@@ -334,7 +334,7 @@ const AdminPage = () => {
       </section>
 
       {/* Admin Event Booking Details's Table */}
-      <section className="event-booking-table mt-5">
+      <section className="event-booking-table mt-0 mt-md-5">
         <div className="mx-2" style={{ overflowX: "auto" }}>
           <table class="table table-striped table-hover table-bordered ">
             <thead

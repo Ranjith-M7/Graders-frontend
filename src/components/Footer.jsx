@@ -31,8 +31,8 @@ function Footer() {
   return (
     <footer>
       <div className="container">
-        <div className="col-lg-12">
-          <p>{footerData.text}</p>
+        <div className="d-flex align-items-center justify-content-center p-5">
+          <p dangerouslySetInnerHTML={{ __html: footerData.text }} />
         </div>
       </div>
     </footer>
