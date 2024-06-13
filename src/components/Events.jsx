@@ -78,43 +78,37 @@ function Events() {
           </div>
           {Array.isArray(eventData.events) &&
             eventData.events.map((event, index) => (
-              <div key={index} className="col-lg-12 col-md-6 col-sm-12">
-                <div className="item text-center text-md-start">
+              <div key={index} className="col-lg-12 col-md-6">
+                <div className="item">
                   <div className="row">
-                    <div className="col-lg-3 d-flex d-lg-block justify-content-center ">
+                    <div className="col-lg-3">
                       <div className="image">
                         <img src={event.imageUrl} alt="img" />
                       </div>
                     </div>
                     <div className="col-lg-9">
-                      <div className="row d-lg-flex align-items-center">
-                        <div className="col-lg-4 mb-4 mb-lg-0">
-                          <div>
-                            <span className="category">{event.eventType}</span>
-                            <h4>{event.title}</h4>
-                          </div>
-                        </div>
-                        <div className="col-lg-8">
-                          <div className="row mb-3 mb-lg-0">
-                            <div className="col-lg-4 mb-2 mb-lg-0">
-                              <span>Date</span>
-                              <h6>{event.eventDate}</h6>
-                            </div>
-                            <div className="col-lg-4 mb-2 mb-lg-0">
-                              <span>Duration</span>
-                              <h6>{event.duration}</h6>
-                            </div>
-                            <div className="col-lg-4 mb-2 mb-lg-0">
-                              <span>Price</span>
-                              <h6>₹{event.price}</h6>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      <ul>
+                        <li>
+                          <span className="category">{event.eventType}</span>
+                          <h4>{event.title}</h4>
+                        </li>
+                        <li>
+                          <span>Date</span>
+                          <h6>{event.eventDate}</h6>
+                        </li>
+                        <li>
+                          <span>Duration</span>
+                          <h6>{event.duration}</h6>
+                        </li>
+                        <li>
+                          <span>Price</span>
+                          <h6>₹{event.price}</h6>
+                        </li>
+                      </ul>
+                      <a href="#">
+                        <i className="fa fa-angle-right" />
+                      </a>
                     </div>
-                    <a href="#">
-                      <i className="fa fa-angle-right" />
-                    </a>
                   </div>
                 </div>
               </div>
