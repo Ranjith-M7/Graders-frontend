@@ -182,7 +182,7 @@ const AdminPage = () => {
           </div>
           <div className="row">
             <div className="col-md-9">
-              <div className="mb-3">
+              <div className="mb-3 ">
                 <FullCalendar
                   ref={calendarRef}
                   plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}

@@ -105,9 +105,131 @@ function Events() {
                           <h6>₹{event.price}</h6>
                         </li>
                       </ul>
-                      <a href="#">
+
+                      <a
+                        href="#"
+                        data-bs-toggle="modal"
+                        data-bs-target={`#more${index}`}
+                      >
                         <i className="fa fa-angle-right" />
                       </a>
+
+                      {/* Modal */}
+                      <div
+                        className="modal fade"
+                        id={`more${index}`}
+                        tabIndex={-1}
+                        role="dialog"
+                        aria-labelledby="exampleModalCenterTitle"
+                        aria-hidden="true"
+                      >
+                        <div
+                          className="modal-dialog modal-dialog-centered"
+                          role="document"
+                        >
+                          <div className="modal-content">
+                            <div className="modal-header event-modal-header">
+                              <h5
+                                className="modal-title"
+                                id="exampleModalLongTitle"
+                              >
+                                More Details
+                              </h5>
+                              <button
+                                type="button"
+                                className="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                              ></button>
+                            </div>
+
+                            <div className="modal-body  event-modal-body">
+                              <div className="d-flex flex-column">
+                                <div className="text-center">
+                                  <img
+                                    src={event.imageUrl}
+                                    alt="Event"
+                                    className="img-fluid mb-3 w-50"
+                                    style={{ borderRadius: "8px" }}
+                                  />
+                                </div>
+                                <div className="d-flex flex-column">
+                                  <div className="">
+                                    <div>
+                                      <span className="category ">
+                                        {event.eventType}
+                                      </span>
+                                      <h4>{event.title}</h4>
+                                    </div>
+                                  </div>
+
+                                  <div className="d-flex justify-content-between mt-3  ">
+                                    <div>
+                                      <span>Date</span>
+                                      <h6>{event.eventDate}</h6>
+                                    </div>
+                                    <div>
+                                      <span>City</span>
+                                      <h6>{event.eventCity}</h6>
+                                    </div>
+                                    <div>
+                                      <span>Duration</span>
+                                      <h6>{event.duration}</h6>
+                                    </div>
+                                  </div>
+
+                                  <div className="mt-3 ">
+                                    <div>
+                                      <span>Price</span>
+                                      <h6>₹{event.price}</h6>
+                                    </div>
+                                  </div>
+
+                                  <div className="mt-3">
+                                    <span
+                                      style={{
+                                        color: "rgb(23, 133, 130)",
+                                        fontWeight: "bold",
+                                      }}
+                                    >
+                                      Description:
+                                    </span>
+                                    <p>
+                                      Lorem, ipsum dolor sit amet consectetur
+                                      adipisicing elit. Earum, molestiae
+                                      consequatur. Excepturi, aliquam. <br />
+                                      <br />
+                                      Accusantium pariatur corporis vel
+                                      recusandae laboriosam vero voluptatibus
+                                      obcaecati repellat corrupti hic, error.{" "}
+                                      <br />
+                                      <br />
+                                      Doloremque pariatur ducimus similique
+                                      mollitia a odio nesciunt fuga eaque libero
+                                      facere error architecto officiis.
+                                      <br />
+                                      <br /> placeat tempore neque enim maxime
+                                      aut voluptatem, aliquid porro eum voluptas
+                                      tenetur. <br />
+                                      <br />
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="modal-footer event-modal-footer">
+                              <button
+                                type="button"
+                                className="primary-button"
+                                data-bs-dismiss="modal"
+                              >
+                                Close
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
