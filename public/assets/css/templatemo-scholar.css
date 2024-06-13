@@ -266,6 +266,17 @@ body {
   --bg-color-secondary: rgb(215, 255, 253);
   --primary-color: rgb(23, 133, 130);
 }
+
+h2.heading {
+  display: inline-block;
+  background-color: var(--bg-color-primary);
+  color: #fff;
+  border-radius: 50px;
+  padding: 0px 20px;
+  font-size: 24px;
+  font-weight: normal;
+}
+
 /* 
 ---------------------------------------------
 Pre-loader Style
@@ -1527,7 +1538,7 @@ Events Style
 .events .item ul li span.category {
   font-size: 14px;
   text-transform: uppercase;
-  color: #7a6ad8;
+  color: var(--primary-color);
   background-color: #fff;
   padding: 8px 20px;
   border-radius: 25px;
@@ -1550,7 +1561,7 @@ Events Style
 
 .events .item ul li h6 {
   font-size: 16px;
-  color: #7a6ad8;
+  color: var(--primary-color);
   font-weight: 600;
 }
 

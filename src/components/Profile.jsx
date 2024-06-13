@@ -112,7 +112,7 @@ function Profile() {
             <div className="row">
               <div className="col-lg-12 text-center">
                 <div className="section-heading">
-                  <h2>My Profile</h2>
+                <h2 className="heading">My Profile</h2>
                 </div>
               </div>
             </div>

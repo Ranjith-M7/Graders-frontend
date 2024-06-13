@@ -176,7 +176,7 @@ const AdminPage = () => {
           <div className="row">
             <div className="col-lg-12 text-center">
               <div className="section-heading">
-                <h2>Admin Page</h2>
+                <h2 className="heading">Admin Page</h2>
               </div>
             </div>
           </div>
@@ -335,10 +335,13 @@ const AdminPage = () => {
 
       {/* Admin Event Booking Details's Table */}
       <section className="event-booking-table mt-5">
-        <div className="container">
+        <div className="mx-2" style={{ overflowX: "auto" }}>
           <table class="table table-striped table-hover table-bordered ">
             <thead
-              style={{ backgroundColor: "rgb(23, 133, 130)", color: "white" }}
+              style={{
+                backgroundColor: "rgb(23, 133, 130)",
+                color: "white",
+              }}
             >
               <tr>
                 <th scope="col">No</th>

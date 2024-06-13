@@ -96,72 +96,68 @@ function SeoPage() {
           <div className="row">
             <div className="col-lg-12 text-center">
               <div className="section-heading">
-                <h2>Update Metadata</h2>
+                <h2 className="heading">Update Metadata</h2>
               </div>
             </div>
           </div>
-          <div className="container-xxl">
-            <div className="container">
-              <div>
-                <form onSubmit={handleFormSubmit}>
-                  <div className="row">
-                    <div className="col-sm-6 mb-3">
-                      <label htmlFor="metaTitle" className="form-label">
-                        Meta Title:
-                      </label>
-                      <input
-                        type="text"
-                        id="metaTitle"
-                        value={metaTitle}
-                        onChange={(e) => setMetaTitle(e.target.value)}
-                        className="form-control"
-                      />
-                    </div>
-                    <div className="col-sm-6 mb-3">
-                      <label htmlFor="keywords" className="form-label">
-                        Keywords:
-                      </label>
-                      <input
-                        type="text"
-                        id="keywords"
-                        value={keywords}
-                        onChange={(e) => setKeywords(e.target.value)}
-                        className="form-control"
-                      />
-                    </div>
+          <div className="row d-flex justify-content-center">
+            <div className="col-md-6">
+              <form onSubmit={handleFormSubmit}>
+                <div className="row">
+                  <div className="mb-3">
+                    <label htmlFor="metaTitle" className="form-label">
+                      Meta Title:
+                    </label>
+                    <input
+                      type="text"
+                      id="metaTitle"
+                      value={metaTitle}
+                      onChange={(e) => setMetaTitle(e.target.value)}
+                      className="form-control"
+                    />
                   </div>
-                  <div className="row">
-                    <div className="col-sm-6 mb-3">
-                      <label htmlFor="primaryKeywords" className="form-label">
-                        Primary Keywords:
-                      </label>
-                      <input
-                        type="text"
-                        id="primaryKeywords"
-                        value={primaryKeywords}
-                        onChange={(e) => setPrimaryKeywords(e.target.value)}
-                        className="form-control"
-                      />
-                    </div>
-                    <div className="col-sm-6 mb-3">
-                      <label htmlFor="secondaryKeywords" className="form-label">
-                        Secondary Keywords:
-                      </label>
-                      <input
-                        type="text"
-                        id="secondaryKeywords"
-                        value={secondaryKeywords}
-                        onChange={(e) => setSecondaryKeywords(e.target.value)}
-                        className="form-control"
-                      />
-                    </div>
+                  <div className="mb-3">
+                    <label htmlFor="keywords" className="form-label">
+                      Keywords:
+                    </label>
+                    <input
+                      type="text"
+                      id="keywords"
+                      value={keywords}
+                      onChange={(e) => setKeywords(e.target.value)}
+                      className="form-control"
+                    />
                   </div>
-                  <button type="submit" className="secondary-button">
-                    Submit
-                  </button>
-                </form>
-                <ToastContainer />
-              </div>
+                  <div className="mb-3">
+                    <label htmlFor="primaryKeywords" className="form-label">
+                      Primary Keywords:
+                    </label>
+                    <input
+                      type="text"
+                      id="primaryKeywords"
+                      value={primaryKeywords}
+                      onChange={(e) => setPrimaryKeywords(e.target.value)}
+                      className="form-control"
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="secondaryKeywords" className="form-label">
+                      Secondary Keywords:
+                    </label>
+                    <input
+                      type="text"
+                      id="secondaryKeywords"
+                      value={secondaryKeywords}
+                      onChange={(e) => setSecondaryKeywords(e.target.value)}
+                      className="form-control"
+                    />
+                  </div>
+                </div>
+                <button type="submit" className="secondary-button">
+                  Update
+                </button>
+              </form>
+              <ToastContainer />
             </div>
           </div>
         </div>
