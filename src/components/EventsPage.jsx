@@ -7,9 +7,7 @@ import Footer from "./Footer";
 function EventsPage() {
   return (
     <>
-      <div className="header-nav"></div>
       <Header />
-
       <Events />
       <Footer />
     </>

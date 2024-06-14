@@ -7,7 +7,6 @@ import Footer from "./Footer";
 function ContactPage() {
   return (
     <>
-      <div className="header-nav"></div>
       <Header />
       <Contact />
       <Footer />
