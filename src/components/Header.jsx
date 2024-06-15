@@ -52,15 +52,10 @@ function Header() {
         const snapshot = await database.ref("Header").once("value");
         if (snapshot.exists()) {
           const data = snapshot.val();
-          const { Logo, Nav_Items } = data;
+          const { Logo } = data;
           setHeaderData({
             logo: Logo,
-            navItems: {
-              item1: Nav_Items.item1 || "",
-              item2: Nav_Items.item2 || "",
-              item3: Nav_Items.item3 || "",
-              item4: Nav_Items.item4 || "",
-            },
+
           });
         } else {
           console.log("The header data was not found in the database");
@@ -183,22 +178,27 @@ function Header() {
                 <ul className="nav">
                   <li>
                     <NavLink to="/" exact activeClassName="active">
-                      {headerData.navItems.item1}
+                      Home
                     </NavLink>
                   </li>
                   <li>
                     <NavLink to="/about" activeClassName="active">
-                      {headerData.navItems.item2}
+                      About Us
                     </NavLink>
                   </li>
                   <li>
                     <NavLink to="/courses" activeClassName="active">
-                      {headerData.navItems.item3}
+                      Courses
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/blog" activeClassName="active">
+                      Blog
                     </NavLink>
                   </li>
                   <li>
                     <NavLink to="/contact" activeClassName="active">
-                      {headerData.navItems.item4}
+                      Contact Us
                     </NavLink>
                   </li>
                   <li>
@@ -266,6 +266,15 @@ function Header() {
                               activeClassName="active"
                             >
                               Admin Page
+                            </NavLink>
+                          </li>
+                          <li>
+                            <NavLink
+                              to="/blogedit"
+                              className="dropdown-item"
+                              activeClassName="active"
+                            >
+                              Blog Edit
                             </NavLink>
                           </li>
                           <li>

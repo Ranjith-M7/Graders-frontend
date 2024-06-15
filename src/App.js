@@ -11,6 +11,7 @@ import SignUpForm from "./components/signup";
 import Profile from "./components/Profile";
 import SeoPage from "./components/SeoPage";
 import AdminPage from "./components/AdminPage";
+import BlogEdit from "./components/BlogEdit";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/seo-settings" element={<SeoPage />} />
           <Route path="/adminpage" element={<AdminPage />} />
+          <Route path="/blogedit" element={<BlogEdit />} />
           <Route path="*" element={<HomePage />} />
         </Routes>
       </BrowserRouter>

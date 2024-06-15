@@ -230,6 +230,9 @@ function Events() {
                               >
                                 Close
                               </button>
+                              <button type="button" class="primary-button">
+                                Save changes
+                              </button>
                             </div>
                           </div>
                         </div>
