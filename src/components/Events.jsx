@@ -91,7 +91,7 @@ function Events() {
                       </div>
                     </div>
                     <div className="col-lg-9">
-                      <ul>
+                      <ul className="event-details-list">
                         <li>
                           <span className="category">{event.eventType}</span>
                           <h4>{event.title}</h4>
@@ -199,23 +199,58 @@ function Events() {
                                       Description:
                                     </span>
                                     <p>
-                                      Lorem, ipsum dolor sit amet consectetur
-                                      adipisicing elit. Earum, molestiae
-                                      consequatur. Excepturi, aliquam. <br />
-                                      <br />
-                                      Accusantium pariatur corporis vel
-                                      recusandae laboriosam vero voluptatibus
-                                      obcaecati repellat corrupti hic, error.{" "}
-                                      <br />
-                                      <br />
-                                      Doloremque pariatur ducimus similique
-                                      mollitia a odio nesciunt fuga eaque libero
-                                      facere error architecto officiis.
-                                      <br />
-                                      <br /> placeat tempore neque enim maxime
-                                      aut voluptatem, aliquid porro eum voluptas
-                                      tenetur. <br />
-                                      <br />
+                                      Join us for an immersive session on
+                                      backend development where you'll dive into
+                                      the fundamentals of building robust
+                                      server-side applications. Whether you're a
+                                      beginner or looking to deepen your
+                                      understanding, this workshop is designed
+                                      to equip you with essential skills and
+                                      practical knowledge.
+                                    </p>
+                                  </div>
+                                  <div className="mt-3">
+                                    <span
+                                      style={{
+                                        color: "rgb(23, 133, 130)",
+                                        fontWeight: "bold",
+                                      }}
+                                    >
+                                      Agenda:
+                                    </span>
+                                    <ul className="event-agenda-list">
+                                      <li>
+                                        <p>
+                                          - Introduction to backend development
+                                        </p>
+                                      </li>
+                                      <li>
+                                        <p>
+                                          - Setting up a development environment
+                                        </p>
+                                      </li>
+                                      <li>
+                                        <p>
+                                          - Exploring databases and data
+                                          modeling
+                                        </p>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                  <div className="mt-3">
+                                    <p>
+                                      Expand your programming horizons and learn
+                                      from experienced developers in a
+                                      supportive environment. Don't miss out on
+                                      this opportunity to enhance your backend
+                                      skills and advance your career in software
+                                      development.
+                                    </p>
+                                  </div>
+                                  <div className="mt-3">
+                                    <p>
+                                      For registration and inquiries, please
+                                      contact us at learn@thegraders.in / +91 80561 95554
                                     </p>
                                   </div>
                                 </div>
@@ -231,7 +266,7 @@ function Events() {
                                 Close
                               </button>
                               <button type="button" class="primary-button">
-                                Save changes
+                                For Booking
                               </button>
                             </div>
                           </div>

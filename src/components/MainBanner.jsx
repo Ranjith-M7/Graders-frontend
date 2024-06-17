@@ -5,7 +5,6 @@ import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.min.css";
 import "owl.carousel/dist/assets/owl.theme.default.min.css";
 
-
 function MainBanner() {
   const [mainBannerData, setMainBannerData] = useState({
     mainBannerContent: [],

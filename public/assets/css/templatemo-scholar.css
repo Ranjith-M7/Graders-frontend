@@ -1523,21 +1523,21 @@ Events Style
   left: 0;
 }
 
-.events .item ul li {
+.events .item .event-details-list li {
   display: inline-block;
   width: 17.5%;
   vertical-align: middle;
 }
 
-.events .item ul li:first-child {
+.events .item .event-details-list li:first-child {
   width: 35%;
 }
 
-.events .item ul li:nth-of-type(2) {
+.events .item .event-details-list li:nth-of-type(2) {
   width: 28%;
 }
 
-.events .item ul li span.category,
+.events .item .event-details-list li span.category,
 .event-modal-body span.category {
   font-size: 14px;
   text-transform: uppercase;
@@ -1550,13 +1550,13 @@ Events Style
   margin-bottom: 20px;
 }
 
-.events .item ul li h4,
+.events .item .event-details-list li h4,
 .event-modal-body h4 {
   font-size: 22px;
   font-weight: 600;
 }
 
-.events .item ul li span,
+.events .item .event-details-list li span,
 .event-modal-body span {
   display: inline-block;
   font-size: 14px;
@@ -1564,7 +1564,7 @@ Events Style
   margin-bottom: 10px;
 }
 
-.events .item ul li h6,
+.events .item .event-details-list li h6,
 .event-modal-body h6 {
   font-size: 16px;
   color: var(--primary-color);
@@ -1601,6 +1601,8 @@ Events Style
   background-color: var(--bg-color-primary);
 }
 
+.events .item .event-agenda-list li {
+  }
 /* 
 ---------------------------------------------
 Contact Style
@@ -2042,31 +2044,31 @@ body {
     position: relative;
     max-width: 100%;
   }
-  .events .item ul {
+  .events .item .event-details-list {
     margin-top: -40px;
   }
-  .events .item ul li:first-child {
+  .events .item .event-details-list li:first-child {
     width: 100% !important;
     margin-bottom: 30px;
     padding-bottom: 30px;
     border-bottom: 1px solid #ddd;
   }
-  .events .item ul li:nth-child(2) {
+  .events .item .event-details-list li:nth-child(2) {
     width: 40% !important;
   }
-  .events .item ul li {
+  .events .item .event-details-list li {
     display: inline-block;
     width: 28% !important;
   }
 
-  .events .item ul li:last-child {
+  .events .item .event-details-list li:last-child {
     text-align: right;
   }
   .events .item a {
     bottom: 150px;
     top: auto;
   }
-  .events .item ul li h6 {
+  .events .item .event-details-list li h6 {
     font-size: 14px;
   }
   .contact-us {

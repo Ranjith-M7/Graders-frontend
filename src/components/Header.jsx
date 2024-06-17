@@ -55,7 +55,6 @@ function Header() {
           const { Logo } = data;
           setHeaderData({
             logo: Logo,
-
           });
         } else {
           console.log("The header data was not found in the database");

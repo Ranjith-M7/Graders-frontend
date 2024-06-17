@@ -14,6 +14,7 @@ import AdminPage from "./components/AdminPage";
 import BlogEdit from "./components/BlogEdit";
 
 function App() {
+  console.log(process.env.REACT_APP_API_KEY);
   return (
     <>
       <BrowserRouter>
