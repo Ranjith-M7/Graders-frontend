@@ -59,7 +59,7 @@ function Services() {
             <div key={index} className="col-lg-4 col-md-6">
               <div className="service-item">
                 <div className="icon">
-                  <img src={imageUrls[index]} alt={`Image ${index + 1}`} />
+                  <img src={imageUrls[index]} alt="" />
                 </div>
                 <div className="main-content">
                   <h4>{service.Title}</h4>

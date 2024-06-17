@@ -55,7 +55,7 @@ function Blog() {
             </div>
           </div>
         </div>
-        <div className="container mt-4 mb-4">
+        <div className="container mt-2 mb-4">
           <div className="row justify-content-center">
             <div className="col-md-6">
               <div className="input-group">
@@ -70,11 +70,11 @@ function Blog() {
             </div>
           </div>
         </div>
-        <br />
+
         <div className="row">
           {filteredPosts.map((post, index) => (
             <>
-              <div key={index} className="blog-slider">
+              <div key={index} className="blog-slider mb-3">
                 <div className="blog-slider__wrp swiper-wrapper">
                   <div className="blog-slider__item swiper-slide">
                     <div className="blog-slider__img">
@@ -84,9 +84,10 @@ function Blog() {
                         style={{
                           backgroundImage: `url(${post.image})`,
                           width: "100%",
+                          backgroundSize: "cover",
+                          backgroundPosition: "center",
                         }}
-                      >
-                      </Link>
+                      ></Link>
                     </div>
                     <div className="blog-slider__content">
                       <span className="blog-slider__code">{post.date}</span>
@@ -96,7 +97,6 @@ function Blog() {
                           __html: `<Link to="/${post.title}">${post.title}</Link>`,
                         }}
                       />
-
                       <div
                         className="blog-slider__text"
                         style={{ maxHeight: "3em", overflow: "hidden" }}
@@ -116,12 +116,9 @@ function Blog() {
                 </div>
                 <div className="blog-slider__pagination" />
               </div>
-              <br></br>
-              <br></br>
             </>
           ))}
-        </div>{" "}
-        <br></br>
+        </div>
         <br />
       </section>
       <Footer />

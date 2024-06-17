@@ -29,7 +29,7 @@ function Footer() {
   }, []);
 
   return (
-    <footer>
+    <footer className="mt-5">
       <div className="container">
         <div className="d-flex align-items-center justify-content-center p-5">
           <p dangerouslySetInnerHTML={{ __html: footerData.text }} />

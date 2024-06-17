@@ -4,8 +4,6 @@ import "firebase/compat/database";
 import "firebase/compat/storage";
 import { storage } from "./firebaseConfig";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { Card, Form, Button, Container, Modal, Alert } from "react-bootstrap";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
