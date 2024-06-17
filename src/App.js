@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./components/HomePage";
 import AboutPage from "./components/AboutPage";
 import CoursesPage from "./components/CoursesPage";
+import Blog from "./components/Blog";
 import TeamPage from "./components/TeamPage";
 import EventsPage from "./components/EventsPage";
 import ContactPage from "./components/ContactPage";
@@ -14,7 +15,6 @@ import AdminPage from "./components/AdminPage";
 import BlogEdit from "./components/BlogEdit";
 
 function App() {
-  console.log(process.env.REACT_APP_API_KEY);
   return (
     <>
       <BrowserRouter>
@@ -25,6 +25,7 @@ function App() {
           <Route path="/courses" element={<CoursesPage />} />
           <Route path="/team" element={<TeamPage />} />
           <Route path="/events" element={<EventsPage />} />
+          <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/signin" element={<LoginForm />} />
           <Route path="/signup" element={<SignUpForm />} />

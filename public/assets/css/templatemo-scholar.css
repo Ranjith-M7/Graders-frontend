@@ -659,9 +659,9 @@ Drop down menu style
   }
 
   /* Styling for the main navigation */
-  .header-area .main-nav {
+  /* .header-area .main-nav {
     overflow: hidden;
-  }
+  } */
 
   /* Styling for the navigation list */
   .header-area .main-nav .nav {
@@ -702,7 +702,17 @@ Drop down menu style
     color: var(--primary-color);
   }
 }
-
+/* 
+---------------------------------------------
+Blog style
+--------------------------------------------- 
+*/
+.blog-section.section {
+  margin-top: 120px;
+}
+.blog-section .section-heading {
+  margin-bottom: 40px;
+}
 /* 
 ---------------------------------------------
 Profile style
@@ -764,53 +774,53 @@ Blog Edit style
   margin-top: 120px;
 } */
 
-.tags-input { 
-  display: inline-block; 
-  position: relative; 
-  border: 1px solid #ccc; 
-  border-radius: 4px; 
-  padding: 5px; 
-  box-shadow: 2px 2px 5px #00000033; 
-  width: 50%; 
-} 
+.tags-input {
+  display: inline-block;
+  position: relative;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px;
+  box-shadow: 2px 2px 5px #00000033;
+  width: 50%;
+}
 
-.tags-input ul { 
-  list-style: none; 
-  padding: 0; 
-  margin: 0; 
-} 
+.tags-input ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 
-.tags-input li { 
-  display: inline-block; 
-  background-color: #f2f2f2; 
-  color: #333; 
-  border-radius: 20px; 
-  padding: 5px 10px; 
-  margin-right: 5px; 
-  margin-bottom: 5px; 
+.tags-input li {
+  display: inline-block;
+  background-color: #f2f2f2;
+  color: #333;
+  border-radius: 20px;
+  padding: 5px 10px;
+  margin-right: 5px;
+  margin-bottom: 5px;
   font-size: 12px;
-} 
+}
 
-.tags-input input[type="text"] { 
-  border: none; 
-  outline: none; 
-  padding: 5px; 
-  font-size: 15px; 
-} 
+.tags-input input[type="text"] {
+  border: none;
+  outline: none;
+  padding: 5px;
+  font-size: 15px;
+}
 
-.tags-input input[type="text"]:focus { 
-  outline: none; 
-} 
+.tags-input input[type="text"]:focus {
+  outline: none;
+}
 
-.tags-input .delete-button { 
-  background-color: transparent; 
-  border: none; 
-  color: #999; 
-  cursor: pointer; 
-  margin-left: 5px; 
-} 
+.tags-input .delete-button {
+  background-color: transparent;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  margin-left: 5px;
+}
 
-.blog-slide{
+.blog-slide {
   position: relative;
   margin: auto;
   background: #fff;
@@ -1601,8 +1611,8 @@ Events Style
   background-color: var(--bg-color-primary);
 }
 
-.events .item .event-agenda-list li {
-  }
+/* .events .item .event-agenda-list li {
+} */
 /* 
 ---------------------------------------------
 Contact Style
@@ -1956,6 +1966,9 @@ body {
     bottom: 0px;
     position: absolute;
     left: 65px;
+  }
+  .blog-section.section {
+    margin-top: 80px;
   }
   .profile-section.section {
     margin-top: 80px;

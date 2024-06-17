@@ -474,7 +474,7 @@ function BlogEdit() {
   return (
     <>
       <Header />
-      <section className="blog-edit-section section" id="blog-edit">
+      <section className="section" id="blog-edit">
         <div className="d-flex justify-content-center my-4 main-content">
           <button
             className={`btn ${
