@@ -172,7 +172,7 @@ const AdminPage = () => {
     <>
       <Header />
       <section className="admin-section section " id="admin-page">
-        <div className="container-fluid">
+        <div className="container">
           <div className="row">
             <div className="col-lg-12 text-center">
               <div className="section-heading">
@@ -180,8 +180,11 @@ const AdminPage = () => {
               </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-9 mb-5 mb-md-0">
+          <div className="row mb-5">
+            <div className="section-title">
+              <h2>Event Calendar</h2>
+            </div>
+            <div className="col-12">
               <div className="full-calender ">
                 <FullCalendar
                   ref={calendarRef}
@@ -197,28 +200,16 @@ const AdminPage = () => {
                 />
               </div>
             </div>
+          </div>
 
-            <div className="col-md-3 mb-5 mb-md-0">
-              <div className="">
-                <form onSubmit={handleSubmit}>
-                  <div className="mb-3 col-md-12">
-                    <label htmlFor="eventCity" className="form-label">
-                      Event City
-                    </label>
-                    <select
-                      className="form-select"
-                      id="eventCity"
-                      required
-                      value={eventCity}
-                      onChange={(e) => setEventCity(e.target.value)}
-                    >
-                      <option value="">Select event city</option>
-                      <option value="Tamil Nadu">Tamil Nadu</option>
-                      <option value="Kerala">Kerala</option>
-                      <option value="Bangalore">Bangalore</option>
-                    </select>
-                  </div>
-                  <div className="mb-3 col-md-12">
+          <div className="row mb-5">
+            <div className="section-title">
+              <h2>Event Booking Form</h2>
+            </div>
+            <form onSubmit={handleSubmit}>
+              <div className="row">
+                <div className="col-md-6">
+                  <div className="mb-3">
                     <label htmlFor="eventType" className="form-label">
                       Event Type
                     </label>
@@ -239,7 +230,23 @@ const AdminPage = () => {
                       <option value="excel">Excel</option>
                     </select>
                   </div>
-                  <div className="mb-3 col-md-12">
+
+                  <div className="mb-3">
+                    <label htmlFor="eventTitle" className="form-label">
+                      Event Title
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="eventTitle"
+                      required
+                      placeholder="Enter the event title"
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="mb-3">
                     <label htmlFor="eventDate" className="form-label">
                       Event Date
                     </label>
@@ -252,7 +259,42 @@ const AdminPage = () => {
                       onChange={(e) => setEventDate(e.target.value)}
                     />
                   </div>
-                  <div className="mb-3 col-md-12">
+
+                  <div className="mb-3">
+                    <label htmlFor="imageUpload" className="mb-1">
+                      Select image to upload
+                    </label>
+                    <input
+                      type="file"
+                      required
+                      className="form-control form-control-file"
+                      id="imageUpload"
+                      accept="image/*"
+                      ref={fileInputRef}
+                      onChange={(e) => setImage(e.target.files[0])}
+                    />
+                  </div>
+                  
+                </div>
+                <div className="col-md-6">
+                  <div className="mb-3">
+                    <label htmlFor="eventCity" className="form-label">
+                      Event City
+                    </label>
+                    <select
+                      className="form-select"
+                      id="eventCity"
+                      required
+                      value={eventCity}
+                      onChange={(e) => setEventCity(e.target.value)}
+                    >
+                      <option value="">Select event city</option>
+                      <option value="Tamil Nadu">Tamil Nadu</option>
+                      <option value="Kerala">Kerala</option>
+                      <option value="Bangalore">Bangalore</option>
+                    </select>
+                  </div>
+                  <div className="mb-3">
                     <label htmlFor="duration" className="form-label">
                       Duration
                     </label>
@@ -281,36 +323,10 @@ const AdminPage = () => {
                       <option value="10+ hours">{`10+ hours`}</option>
                     </select>
                   </div>
-                  <div className="mb-3 col-md-12">
-                    <label htmlFor="title">Title</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="title"
-                      required
-                      placeholder="Enter the event title"
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="mb-3 col-md-12">
-                    <label htmlFor="imageUpload" className="label-yellow mb-1">
-                      Select image to upload
+                  <div className="mb-3">
+                    <label htmlFor="firstName" className="form-label">
+                      Price
                     </label>
-                    <input
-                      type="file"
-                      required
-                      className="form-control-file"
-                      id="imageUpload"
-                      accept="image/*"
-                      ref={fileInputRef}
-                      onChange={(e) => setImage(e.target.files[0])}
-                    />
-                  </div>
-
-                  <div className="mb-3 col-md-12">
-                    <label htmlFor="firstName">Price</label>
                     <input
                       type="text"
                       className="form-control"
@@ -321,67 +337,75 @@ const AdminPage = () => {
                       onChange={(e) => setPrice(e.target.value)}
                     />
                   </div>
+                 
 
-                  <button type="submit" className="secondary-button">
+                  <button
+                    type="submit"
+                    className="secondary-button"
+                    style={{ width: "max-content" }}
+                  >
                     Book Event
                   </button>
-                </form>
-                <ToastContainer />
+                </div>
               </div>
-            </div>
+            </form>
+            <ToastContainer />
           </div>
-        </div>
-      </section>
 
-      {/* Admin Event Booking Details's Table */}
-      <section className="event-booking-table mt-0 mt-md-5">
-        <div className="mx-2" style={{ overflowX: "auto" }}>
-          <table class="table table-striped table-hover table-bordered ">
-            <thead
-              style={{
-                backgroundColor: "rgb(23, 133, 130)",
-                color: "white",
-              }}
-            >
-              <tr>
-                <th scope="col">No</th>
-                <th scope="col">Date</th>
-                <th scope="col">Title</th>
-                <th scope="col">Event Type</th>
-                <th scope="col">Event City</th>
-                <th scope="col">Duration</th>
-                <th scope="col">Price</th>
-                <th scope="col">Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Array.isArray(eventData.events) &&
-                eventData.events.map((event, index) => (
-                  <tr key={index}>
-                    <th scope="row">{`${index + 1}`}</th>
-                    <td>{event.eventDate}</td>
-                    <td>{event.title}</td>
-                    <td>{event.eventType}</td>
-                    <td>{event.eventCity}</td>
-                    <td>{event.duration}</td>
-                    <td>₹{event.price}</td>
-                    <td>
-                      <FontAwesomeIcon
-                        icon={faTrash}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleDeleteEvent(event.eventDate, event.title);
-                        }}
-                        style={{ cursor: "pointer", color: "red" }}
-                      />
-                    </td>
+          {/* Admin Event Booking Details's Table */}
+
+          <section className="event-booking-table">
+            <div className="section-title">
+              <h2>Admin Event Bookings</h2>
+            </div>
+            <div className="" style={{ overflowX: "auto" }}>
+              <table class="table table-striped table-hover table-bordered ">
+                <thead
+                  style={{
+                    backgroundColor: "rgb(23, 133, 130)",
+                    color: "white",
+                  }}
+                >
+                  <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Event Type</th>
+                    <th scope="col">Event City</th>
+                    <th scope="col">Duration</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Delete</th>
                   </tr>
-                ))}
-            </tbody>
-          </table>
+                </thead>
+                <tbody>
+                  {Array.isArray(eventData.events) &&
+                    eventData.events.map((event, index) => (
+                      <tr key={index}>
+                        <th scope="row">{`${index + 1}`}</th>
+                        <td>{event.eventDate}</td>
+                        <td>{event.title}</td>
+                        <td>{event.eventType}</td>
+                        <td>{event.eventCity}</td>
+                        <td>{event.duration}</td>
+                        <td>₹{event.price}</td>
+                        <td>
+                          <FontAwesomeIcon
+                            icon={faTrash}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              handleDeleteEvent(event.eventDate, event.title);
+                            }}
+                            style={{ cursor: "pointer", color: "gray" }}
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
         </div>
       </section>
-
       <Footer />
     </>
   );

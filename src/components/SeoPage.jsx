@@ -101,7 +101,7 @@ function SeoPage() {
             </div>
           </div>
           <div className="row d-flex justify-content-center">
-            <div className="col-md-6">
+            <div className="col-md-8 col-lg-6">
               <form onSubmit={handleFormSubmit}>
                 <div className="row">
                   <div className="mb-3">

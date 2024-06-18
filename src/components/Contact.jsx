@@ -10,8 +10,6 @@ function Contact() {
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
-  // const [successMessage, setSuccessMessage] = useState("");
-  // const [errorMessage, setErrorMessage] = useState("");
   const [latestId, setLatestId] = useState(0);
 
   useEffect(() => {
@@ -60,14 +58,10 @@ function Contact() {
       setEmail("");
       setSubject("");
       setMessage("");
-      // setSuccessMessage("Message sent successfully!");
       toast.success(`Message sent successfully`);
-      // setErrorMessage("");
     } catch (error) {
       console.error("Error storing form data:", error);
-      // setSuccessMessage("");
       toast.error(`Failed to send message. Please try again.`);
-      // setErrorMessage("Failed to send message. Please try again.");
     }
   };
   const [contactData, setContactData] = useState({
@@ -215,12 +209,6 @@ function Contact() {
                       </button>
                     </fieldset>
                   </div>
-                  {/* {successMessage && (
-                    <div className="alert alert-success">{successMessage}</div>
-                  )}
-                  {errorMessage && (
-                    <div className="alert alert-danger">{errorMessage}</div>
-                  )} */}
                 </div>
               </form>
             </div>

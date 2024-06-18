@@ -473,245 +473,660 @@ function BlogEdit() {
     <>
       <Header />
       <section className="section" id="blog-edit">
-        <div className="d-flex justify-content-center my-4 main-content">
-          <button
-            className={`btn ${
-              activeSection === "addBlogPost"
-                ? "custom-blue-btn"
-                : "btn-primary"
-            }`}
-            onClick={() => handleTabClick("addBlogPost")}
-          >
-            Add Blog Post
-          </button>
-          <div className="mx-2"></div>
-          <button
-            className={`btn ${
-              activeSection === "updateBlogPost"
-                ? "custom-green-btn"
-                : "btn-secondary"
-            }`}
-            onClick={() => handleTabClick("updateBlogPost")}
-          >
-            Update Blog Post
-          </button>
-          <div className="mx-2"></div>
-          <button
-            className={`btn ${
-              activeSection === "deleteBlogPost"
-                ? "custom-orange-btn"
-                : "btn-warning"
-            }`}
-            onClick={() => handleTabClick("deleteBlogPost")}
-          >
-            Delete Blog Post
-          </button>
-        </div>
-        {/*blog section*/}
-        {activeSection === "addBlogPost" && (
-          <>
+        <div className="container">
+          <div className="d-flex justify-content-center my-4 main-content">
+            <button
+              className={`btn ${
+                activeSection === "addBlogPost"
+                  ? "custom-blue-btn"
+                  : "btn-primary"
+              }`}
+              onClick={() => handleTabClick("addBlogPost")}
+            >
+              Add Blog Post
+            </button>
+            <div className="mx-2"></div>
+            <button
+              className={`btn ${
+                activeSection === "updateBlogPost"
+                  ? "custom-green-btn"
+                  : "btn-secondary"
+              }`}
+              onClick={() => handleTabClick("updateBlogPost")}
+            >
+              Update Blog Post
+            </button>
+            <div className="mx-2"></div>
+            <button
+              className={`btn ${
+                activeSection === "deleteBlogPost"
+                  ? "custom-orange-btn"
+                  : "btn-warning"
+              }`}
+              onClick={() => handleTabClick("deleteBlogPost")}
+            >
+              Delete Blog Post
+            </button>
+          </div>
+          {/*blog section*/}
+          {activeSection === "addBlogPost" && (
+            <>
+              <Container className="d-flex justify-content-center">
+                <div className="p-4 bg-white  blog-slide">
+                  <h1
+                    style={{
+                      color: "rgb(23, 133, 130)",
+                      textAlign: "center",
+                      textTransform: "uppercase",
+                      fontSize: "24px",
+                    }}
+                  >
+                    Add Blog Post
+                  </h1>
+                  <div className="mx-5">
+                    <Form onSubmit={handleSubmit}>
+                      <Form.Group controlId="formTitle">
+                        <Form.Label
+                          style={{
+                            fontWeight: "bold",
+                            marginTop: "10px",
+                            outline: "none",
+                          }}
+                        >
+                          Title
+                        </Form.Label>
+                        <Form.Control
+                          style={{ borderRadius: "8px" }}
+                          type="text"
+                          name="title"
+                          value={newPost.title}
+                          onClick={handleDescriptionClickTitle}
+                          placeholder="Title"
+                          required
+                        />
+                      </Form.Group>
+                      <Form.Group controlId="formDescription">
+                        <Form.Label
+                          style={{
+                            fontWeight: "bold",
+                            marginTop: "10px",
+                            outline: "none",
+                          }}
+                        >
+                          Description
+                        </Form.Label>
+                        <Form.Control
+                          style={{ borderRadius: "8px" }}
+                          type="text"
+                          name="description"
+                          value={newPost.description}
+                          onClick={handleDescriptionClick} // Open editor modal when clicked
+                          placeholder="Description"
+                          required
+                        />
+                      </Form.Group>
+                      <Form.Group controlId="formImage">
+                        <Form.Label
+                          style={{
+                            fontWeight: "bold",
+                            marginTop: "10px",
+                            outline: "none",
+                          }}
+                        >
+                          Upload Image
+                        </Form.Label>
+                        <Form.Control
+                          style={{ borderRadius: "8px" }}
+                          type="file"
+                          onChange={handleImageChange}
+                          accept="image/*"
+                        />
+                      </Form.Group>
+                      <Form.Group controlId="formAuthor">
+                        <Form.Label
+                          style={{
+                            fontWeight: "bold",
+                            marginTop: "10px",
+                            outline: "none",
+                          }}
+                        >
+                          Author
+                        </Form.Label>
+                        <Form.Control
+                          style={{ borderRadius: "8px" }}
+                          type="text"
+                          name="author"
+                          value={newPost.author}
+                          onChange={handleInputChange}
+                          placeholder="Author"
+                          required
+                        />
+                      </Form.Group>
+                      <Form.Group controlId="formBrandName">
+                        <Form.Label
+                          style={{
+                            fontWeight: "bold",
+                            marginTop: "10px",
+                            outline: "none",
+                          }}
+                        >
+                          Brand Name
+                        </Form.Label>
+                        <Form.Control
+                          style={{ borderRadius: "8px" }}
+                          type="text"
+                          name="brandName"
+                          value={newPost.postbrand}
+                          onClick={handleDescriptionClick1} // Open editor modal when clicked
+                          placeholder="Brand Description"
+                          required
+                        />
+                      </Form.Group>
+                      <label
+                        style={{
+                          fontWeight: "bold",
+                          marginTop: "10px",
+                          outline: "none",
+                        }}
+                      >
+                        Tags
+                      </label>
+                      <br></br>
+                      <Form.Group
+                        className="tags-input"
+                        style={{ width: "500px", padding: "8px" }}
+                      >
+                        <ul id="tags" />
+                        {tags.map((tag, index) => (
+                          <li key={index}>
+                            {tag}{" "}
+                            <button
+                              className="delete-button"
+                              onClick={() => handleTagDelete(index)}
+                            >
+                              X
+                            </button>
+                          </li>
+                        ))}
+                        <input
+                          id="input-tag"
+                          type="text"
+                          value={inputValue}
+                          onChange={handleInputChange2}
+                          onKeyDown={handleKeyDown}
+                        />
+                      </Form.Group>
+                      <br></br>
+                      <label
+                        style={{
+                          fontWeight: "bold",
+                          marginTop: "10px",
+                          outline: "none",
+                        }}
+                      >
+                        Category
+                      </label>
+                      <br></br>
+                      <Form.Group
+                        className="tags-input"
+                        style={{ width: "500px", padding: "8px" }}
+                      >
+                        <ul id="categories" />
+                        {categories.map((category, index) => (
+                          <li key={index}>
+                            {category}{" "}
+                            <button
+                              className="delete-button"
+                              onClick={() => handleTagDelete1(index)}
+                            >
+                              X
+                            </button>
+                          </li>
+                        ))}
+                        <input
+                          id="input-category"
+                          type="text"
+                          value={inputValue1}
+                          onChange={handleInputChange3}
+                          onKeyDown={handleKeyDown1}
+                        />
+                      </Form.Group>
+
+                      <br></br>
+                      <br></br>
+                      <Button type="submit" className="blog-button">
+                        Add Post
+                      </Button>
+                    </Form>
+                  </div>
+                  {successMessage && (
+                    <Alert variant="success" className="mt-3">
+                      {successMessage}
+                    </Alert>
+                  )}
+                </div>
+                {/* Editor Modal */}
+                <Modal show={showEditor} onHide={() => setShowEditor(false)}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Edit Description</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <ReactQuill
+                      value={newPost.description}
+                      onChange={handleEditorChange}
+                      modules={{
+                        toolbar: [
+                          [{ header: "1" }, { header: "2" }, { font: [] }],
+                          [{ size: [] }],
+                          [
+                            "bold",
+                            "italic",
+                            "underline",
+                            "strike",
+                            "blockquote",
+                          ],
+                          [
+                            { list: "ordered" },
+                            { list: "bullet" },
+                            { indent: "-1" },
+                            { indent: "+1" },
+                          ],
+                          ["link", "image", "video"],
+                          ["clean"],
+                        ],
+                      }}
+                      formats={[
+                        "header",
+                        "font",
+                        "size",
+                        "bold",
+                        "italic",
+                        "underline",
+                        "strike",
+                        "blockquote",
+                        "list",
+                        "bullet",
+                        "indent",
+                        "link",
+                        "image",
+                        "video",
+                      ]}
+                    />
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button
+                      variant="secondary"
+                      onClick={() => setShowEditor(false)}
+                    >
+                      Cancel
+                    </Button>
+                    <Button variant="primary" onClick={handleOKClick}>
+                      OK
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+                {/* 2 Editor Modal */}
+                <Modal show={showEditor2} onHide={() => setShowEditor2(false)}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Edit Brand Description</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <ReactQuill
+                      value={newPost.postbrand}
+                      onChange={handleEditorChange2}
+                      modules={{
+                        toolbar: [
+                          [{ header: "1" }, { header: "2" }, { font: [] }],
+                          [{ size: [] }],
+                          [
+                            "bold",
+                            "italic",
+                            "underline",
+                            "strike",
+                            "blockquote",
+                          ],
+                          [
+                            { list: "ordered" },
+                            { list: "bullet" },
+                            { indent: "-1" },
+                            { indent: "+1" },
+                          ],
+                          ["link", "image", "video"],
+                          ["clean"],
+                        ],
+                      }}
+                      formats={[
+                        "header",
+                        "font",
+                        "size",
+                        "bold",
+                        "italic",
+                        "underline",
+                        "strike",
+                        "blockquote",
+                        "list",
+                        "bullet",
+                        "indent",
+                        "link",
+                        "image",
+                        "video",
+                      ]}
+                    />
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button
+                      variant="secondary"
+                      onClick={() => setShowEditor2(false)}
+                    >
+                      Cancel
+                    </Button>
+                    <Button variant="primary" onClick={handleOKClick2}>
+                      OK
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+                {/*Title modal*/}
+                <Modal
+                  show={showEditorOpen}
+                  onHide={() => setShowEditorOpen(false)}
+                >
+                  <Modal.Header closeButton>
+                    <Modal.Title>Edit Title</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <ReactQuill
+                      value={newPost.title}
+                      onChange={handleEditorChangeOpen}
+                      modules={{
+                        toolbar: [
+                          [{ header: "1" }, { header: "2" }, { font: [] }],
+                          [{ size: [] }],
+                          [
+                            "bold",
+                            "italic",
+                            "underline",
+                            "strike",
+                            "blockquote",
+                          ],
+                          [
+                            { list: "ordered" },
+                            { list: "bullet" },
+                            { indent: "-1" },
+                            { indent: "+1" },
+                          ],
+                          ["link", "image", "video"],
+                          ["clean"],
+                        ],
+                      }}
+                      formats={[
+                        "header",
+                        "font",
+                        "size",
+                        "bold",
+                        "italic",
+                        "underline",
+                        "strike",
+                        "blockquote",
+                        "list",
+                        "bullet",
+                        "indent",
+                        "link",
+                        "image",
+                        "video",
+                      ]}
+                    />
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button
+                      variant="secondary"
+                      onClick={() => setShowEditorOpen(false)}
+                    >
+                      Cancel
+                    </Button>
+                    <Button variant="primary" onClick={handleOKClickOpen}>
+                      OK
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+              </Container>
+              <br></br>
+            </>
+          )}
+
+          {/*update blog*/}
+          {activeSection === "updateBlogPost" && (
             <Container className="d-flex justify-content-center">
               <div className="p-4 bg-white  blog-slide">
                 <h1
                   style={{
-                    color: "#28a745",
+                    color: "rgb(23, 133, 130)",
                     textAlign: "center",
                     textTransform: "uppercase",
-                    fontSize: "30px",
+                    fontSize: "24px",
                   }}
                 >
-                  Add Blog Post
+                  Update Blog Post
                 </h1>
 
-                <Form onSubmit={handleSubmit}>
+                <Form>
                   <Form.Group controlId="formTitle">
-                    <Form.Label
-                      style={{
-                        fontWeight: "bold",
-                        marginTop: "10px",
-                        outline: "none",
-                      }}
-                    >
-                      Title
+                    <Form.Label style={{ fontWeight: "bold", outline: "none" }}>
+                      Select Title
                     </Form.Label>
                     <Form.Control
                       style={{ borderRadius: "8px" }}
-                      type="text"
-                      name="title"
-                      value={newPost.title}
-                      onClick={handleDescriptionClickTitle}
-                      placeholder="Title"
-                      required
-                    />
-                  </Form.Group>
-                  <Form.Group controlId="formDescription">
-                    <Form.Label
-                      style={{
-                        fontWeight: "bold",
-                        marginTop: "10px",
-                        outline: "none",
-                      }}
+                      as="select"
+                      onChange={(e) => handlePostSelect(e.target.value)}
                     >
-                      Description
-                    </Form.Label>
-                    <Form.Control
-                      style={{ borderRadius: "8px" }}
-                      type="text"
-                      name="description"
-                      value={newPost.description}
-                      onClick={handleDescriptionClick} // Open editor modal when clicked
-                      placeholder="Description"
-                      required
-                    />
+                      <option value="">Select</option>
+                      {posts.map((post) => (
+                        <option key={post.id} value={post.id}>
+                          {post.title}
+                        </option>
+                      ))}
+                    </Form.Control>
                   </Form.Group>
-                  <Form.Group controlId="formImage">
-                    <Form.Label
-                      style={{
-                        fontWeight: "bold",
-                        marginTop: "10px",
-                        outline: "none",
-                      }}
-                    >
-                      Upload Image
-                    </Form.Label>
-                    <Form.Control
-                      style={{ borderRadius: "8px" }}
-                      type="file"
-                      onChange={handleImageChange}
-                      accept="image/*"
-                    />
-                  </Form.Group>
-                  <Form.Group controlId="formAuthor">
-                    <Form.Label
-                      style={{
-                        fontWeight: "bold",
-                        marginTop: "10px",
-                        outline: "none",
-                      }}
-                    >
-                      Author
-                    </Form.Label>
-                    <Form.Control
-                      style={{ borderRadius: "8px" }}
-                      type="text"
-                      name="author"
-                      value={newPost.author}
-                      onChange={handleInputChange}
-                      placeholder="Author"
-                      required
-                    />
-                  </Form.Group>
-                  <Form.Group controlId="formBrandName">
-                    <Form.Label
-                      style={{
-                        fontWeight: "bold",
-                        marginTop: "10px",
-                        outline: "none",
-                      }}
-                    >
-                      Brand Name
-                    </Form.Label>
-                    <Form.Control
-                      style={{ borderRadius: "8px" }}
-                      type="text"
-                      name="brandName"
-                      value={newPost.postbrand}
-                      onClick={handleDescriptionClick1} // Open editor modal when clicked
-                      placeholder="Brand Description"
-                      required
-                    />
-                  </Form.Group>
-                  <label
-                    style={{
-                      fontWeight: "bold",
-                      marginTop: "10px",
-                      outline: "none",
-                    }}
-                  >
-                    Tags
-                  </label>
-                  <br></br>
-                  <Form.Group
-                    className="tags-input"
-                    style={{ width: "500px", padding: "8px" }}
-                  >
-                    <ul id="tags" />
-                    {tags.map((tag, index) => (
-                      <li key={index}>
-                        {tag}{" "}
-                        <button
-                          className="delete-button"
-                          onClick={() => handleTagDelete(index)}
+                  {selectedPost && (
+                    <>
+                      <Form.Group controlId="formTitle">
+                        <Form.Label
+                          style={{ fontWeight: "bold", outline: "none" }}
                         >
-                          X
-                        </button>
-                      </li>
-                    ))}
-                    <input
-                      id="input-tag"
-                      type="text"
-                      value={inputValue}
-                      onChange={handleInputChange2}
-                      onKeyDown={handleKeyDown}
-                    />
-                  </Form.Group>
-                  <br></br>
-                  <label
-                    style={{
-                      fontWeight: "bold",
-                      marginTop: "10px",
-                      outline: "none",
-                    }}
-                  >
-                    Category
-                  </label>
-                  <br></br>
-                  <Form.Group
-                    className="tags-input"
-                    style={{ width: "500px", padding: "8px" }}
-                  >
-                    <ul id="categories" />
-                    {categories.map((category, index) => (
-                      <li key={index}>
-                        {category}{" "}
-                        <button
-                          className="delete-button"
-                          onClick={() => handleTagDelete1(index)}
+                          Title
+                        </Form.Label>
+                        <Form.Control
+                          style={{ borderRadius: "8px" }}
+                          type="text"
+                          name="title"
+                          value={editedPost.title}
+                          onClick={handleDescriptionEditOpen}
+                          placeholder="Title"
+                          required
+                        />
+                      </Form.Group>
+                      <Form.Group controlId="formDescription">
+                        <Form.Label
+                          style={{ fontWeight: "bold", outline: "none" }}
                         >
-                          X
-                        </button>
-                      </li>
-                    ))}
-                    <input
-                      id="input-category"
-                      type="text"
-                      value={inputValue1}
-                      onChange={handleInputChange3}
-                      onKeyDown={handleKeyDown1}
-                    />
-                  </Form.Group>
+                          Description
+                        </Form.Label>
+                        <Form.Control
+                          style={{ borderRadius: "8px" }}
+                          type="text"
+                          name="description"
+                          value={editedPost.description}
+                          onClick={handleDescriptionEdit}
+                          placeholder="Description"
+                          required
+                        />
+                      </Form.Group>
+                      <Form.Group controlId="formImage">
+                        <Form.Label
+                          style={{ fontWeight: "bold", outline: "none" }}
+                        >
+                          Upload Image
+                        </Form.Label>
+                        <Form.Control
+                          style={{ borderRadius: "8px" }}
+                          type="file"
+                          onChange={handleImageChange1}
+                          accept="image/*"
+                        />
+                      </Form.Group>
+                      {editedPost.image && (
+                        <div>
+                          <p>Current Image:</p>
+                          <img
+                            src={editedPost.image}
+                            alt="Current"
+                            style={{ maxWidth: "100px" }}
+                          />
+                        </div>
+                      )}
+                      <Form.Group controlId="formAuthor">
+                        <Form.Label
+                          style={{ fontWeight: "bold", outline: "none" }}
+                        >
+                          Author
+                        </Form.Label>
+                        <Form.Control
+                          style={{ borderRadius: "8px" }}
+                          type="text"
+                          name="author"
+                          value={editedPost.author}
+                          onChange={handleInputChange1}
+                          placeholder="Author"
+                          required
+                        />
+                      </Form.Group>
+                      <Form.Group controlId="formBrandName">
+                        <Form.Label
+                          style={{ fontWeight: "bold", outline: "none" }}
+                        >
+                          Brand Description
+                        </Form.Label>
+                        <Form.Control
+                          style={{ borderRadius: "8px" }}
+                          type="text"
+                          name="brandName"
+                          value={editedPost.postbrand}
+                          onClick={handleDescriptionEdit1}
+                          placeholder="Brand Description"
+                          required
+                        />
+                      </Form.Group>
+                      <label
+                        style={{
+                          fontWeight: "bold",
+                          marginTop: "10px",
+                          outline: "none",
+                        }}
+                      >
+                        Tags
+                      </label>
+                      <br></br>
+                      <Form.Group
+                        className="tags-input"
+                        style={{ width: "400px", padding: "8px" }}
+                      >
+                        <ul id="tags" />
+                        {editedPost.tags &&
+                          editedPost.tags.map((tag, index) => (
+                            <li key={index}>
+                              <input
+                                type="text"
+                                value={tag}
+                                onChange={(e) => handleTagChange(e, index)}
+                              />
+                              <button
+                                className="delete-button"
+                                onClick={() => handleTagDelete2(index)}
+                              >
+                                X
+                              </button>
+                            </li>
+                          ))}
+                        <input
+                          id="input-tag"
+                          type="text"
+                          value={inputValue2}
+                          onChange={handleInputChange4}
+                          onKeyDown={handleKeyDown2}
+                          placeholder="Add a tag"
+                        />
+                      </Form.Group>
+                      <br></br>
 
-                  <br></br>
-                  <br></br>
-                  <Button type="submit" className="blog-button">
-                    Add Post
-                  </Button>
+                      <label
+                        style={{
+                          fontWeight: "bold",
+                          marginTop: "10px",
+                          outline: "none",
+                        }}
+                      >
+                        Categories
+                      </label>
+                      <br />
+                      <Form.Group
+                        className="tags-input"
+                        style={{ width: "500px", padding: "8px" }}
+                      >
+                        <ul id="categories">
+                          {editedPost.category &&
+                            editedPost.category.map((category, index) => (
+                              <li key={index}>
+                                <input
+                                  type="text"
+                                  value={category}
+                                  onChange={(e) =>
+                                    handleCategoryChange(e, index)
+                                  }
+                                />
+                                <button
+                                  className="delete-button"
+                                  onClick={() => handleCategoryDelete(index)}
+                                >
+                                  X
+                                </button>
+                              </li>
+                            ))}
+                        </ul>
+                        <input
+                          id="input-category"
+                          type="text"
+                          value={inputValue3}
+                          onChange={handleInputChange5}
+                          onKeyDown={handleKeyDown3}
+                          placeholder="Add a category"
+                        />
+                      </Form.Group>
+
+                      <br></br>
+                      <br></br>
+                      <Button
+                        variant="primary"
+                        onClick={handleUpdateContent}
+                        style={{
+                          textAlign: "center",
+                          marginLeft: "30%",
+                          width: "40%",
+                          borderRadius: "8px",
+                        }}
+                      >
+                        Update Post
+                      </Button>
+                    </>
+                  )}
                 </Form>
-                {successMessage && (
-                  <Alert variant="success" className="mt-3">
-                    {successMessage}
-                  </Alert>
-                )}
               </div>
-              {/* Editor Modal */}
-              <Modal show={showEditor} onHide={() => setShowEditor(false)}>
+              <Modal show={showEditor1} onHide={handleCloseEditor}>
                 <Modal.Header closeButton>
                   <Modal.Title>Edit Description</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   <ReactQuill
-                    value={newPost.description}
-                    onChange={handleEditorChange}
+                    value={editedPost.description}
+                    onChange={handleEditorChange1}
                     modules={{
                       toolbar: [
                         [{ header: "1" }, { header: "2" }, { font: [] }],
@@ -746,26 +1161,28 @@ function BlogEdit() {
                   />
                 </Modal.Body>
                 <Modal.Footer>
-                  <Button
-                    variant="secondary"
-                    onClick={() => setShowEditor(false)}
-                  >
+                  <Button variant="secondary" onClick={handleCloseEditor}>
                     Cancel
                   </Button>
-                  <Button variant="primary" onClick={handleOKClick}>
-                    OK
+                  <Button variant="primary" onClick={handleCloseEditor}>
+                    Save
                   </Button>
                 </Modal.Footer>
+                {successMessage4 && (
+                  <Alert variant="success" className="mt-3">
+                    {successMessage4}
+                  </Alert>
+                )}
               </Modal>
-              {/* 2 Editor Modal */}
-              <Modal show={showEditor2} onHide={() => setShowEditor2(false)}>
+
+              <Modal show={showEditor3} onHide={handleCloseEditor1}>
                 <Modal.Header closeButton>
                   <Modal.Title>Edit Brand Description</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   <ReactQuill
-                    value={newPost.postbrand}
-                    onChange={handleEditorChange2}
+                    value={editedPost.postbrand}
+                    onChange={handleEditorChange3}
                     modules={{
                       toolbar: [
                         [{ header: "1" }, { header: "2" }, { font: [] }],
@@ -800,29 +1217,28 @@ function BlogEdit() {
                   />
                 </Modal.Body>
                 <Modal.Footer>
-                  <Button
-                    variant="secondary"
-                    onClick={() => setShowEditor2(false)}
-                  >
+                  <Button variant="secondary" onClick={handleCloseEditor1}>
                     Cancel
                   </Button>
-                  <Button variant="primary" onClick={handleOKClick2}>
-                    OK
+                  <Button variant="primary" onClick={handleCloseEditor1}>
+                    Save
                   </Button>
                 </Modal.Footer>
+                {successMessage4 && (
+                  <Alert variant="success" className="mt-3">
+                    {successMessage4}
+                  </Alert>
+                )}
               </Modal>
-              {/*Title modal*/}
-              <Modal
-                show={showEditorOpen}
-                onHide={() => setShowEditorOpen(false)}
-              >
+              {/*title description*/}
+              <Modal show={showEditorOpen1} onHide={handleCloseEditorOpen}>
                 <Modal.Header closeButton>
-                  <Modal.Title>Edit Title</Modal.Title>
+                  <Modal.Title>Edit Description</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   <ReactQuill
-                    value={newPost.title}
-                    onChange={handleEditorChangeOpen}
+                    value={editedPost.title}
+                    onChange={handleEditorChangeOpen1}
                     modules={{
                       toolbar: [
                         [{ header: "1" }, { header: "2" }, { font: [] }],
@@ -857,46 +1273,44 @@ function BlogEdit() {
                   />
                 </Modal.Body>
                 <Modal.Footer>
-                  <Button
-                    variant="secondary"
-                    onClick={() => setShowEditorOpen(false)}
-                  >
+                  <Button variant="secondary" onClick={handleCloseEditorOpen1}>
                     Cancel
                   </Button>
-                  <Button variant="primary" onClick={handleOKClickOpen}>
-                    OK
+                  <Button variant="primary" onClick={handleCloseEditorOpen1}>
+                    Save
                   </Button>
                 </Modal.Footer>
+                {successMessage4 && (
+                  <Alert variant="success" className="mt-3">
+                    {successMessage4}
+                  </Alert>
+                )}
               </Modal>
             </Container>
-            <br></br>
-          </>
-        )}
-
-        {/*update blog*/}
-        {activeSection === "updateBlogPost" && (
-          <Container className="d-flex justify-content-center">
-            <div className="p-4 bg-white  blog-slide">
-              <h1
-                style={{
-                  color: "#28a745",
-                  textAlign: "center",
-                  textTransform: "uppercase",
-                  fontSize: "30px",
-                }}
-              >
-                Update Blog Post
-              </h1>
-
-              <Form>
-                <Form.Group controlId="formTitle">
+          )}
+          <br></br>
+          {/*delete blog*/}
+          {activeSection === "deleteBlogPost" && (
+            <Container className="d-flex justify-content-center">
+              <div className="p-4 bg-white blog-slide">
+                <h3
+                  style={{
+                    color: "rgb(23, 133, 130)",
+                    textAlign: "center",
+                    textTransform: "uppercase",
+                    fontSize: "24px",
+                  }}
+                >
+                  Delete Blog Post
+                </h3>
+                <Form.Group controlId="exampleForm.ControlSelect1">
                   <Form.Label style={{ fontWeight: "bold", outline: "none" }}>
-                    Select Title
+                    Select Post
                   </Form.Label>
                   <Form.Control
-                    style={{ borderRadius: "8px" }}
                     as="select"
-                    onChange={(e) => handlePostSelect(e.target.value)}
+                    onChange={(e) => handlePostSelect1(e.target.value)}
+                    style={{ borderRadius: "8px" }}
                   >
                     <option value="">Select</option>
                     {posts.map((post) => (
@@ -906,424 +1320,33 @@ function BlogEdit() {
                     ))}
                   </Form.Control>
                 </Form.Group>
-                {selectedPost && (
+                {selectedPost2 && (
                   <>
-                    <Form.Group controlId="formTitle">
-                      <Form.Label
-                        style={{ fontWeight: "bold", outline: "none" }}
-                      >
-                        Title
-                      </Form.Label>
-                      <Form.Control
-                        style={{ borderRadius: "8px" }}
-                        type="text"
-                        name="title"
-                        value={editedPost.title}
-                        onClick={handleDescriptionEditOpen}
-                        placeholder="Title"
-                        required
-                      />
-                    </Form.Group>
-                    <Form.Group controlId="formDescription">
-                      <Form.Label
-                        style={{ fontWeight: "bold", outline: "none" }}
-                      >
-                        Description
-                      </Form.Label>
-                      <Form.Control
-                        style={{ borderRadius: "8px" }}
-                        type="text"
-                        name="description"
-                        value={editedPost.description}
-                        onClick={handleDescriptionEdit}
-                        placeholder="Description"
-                        required
-                      />
-                    </Form.Group>
-                    <Form.Group controlId="formImage">
-                      <Form.Label
-                        style={{ fontWeight: "bold", outline: "none" }}
-                      >
-                        Upload Image
-                      </Form.Label>
-                      <Form.Control
-                        style={{ borderRadius: "8px" }}
-                        type="file"
-                        onChange={handleImageChange1}
-                        accept="image/*"
-                      />
-                    </Form.Group>
-                    {editedPost.image && (
-                      <div>
-                        <p>Current Image:</p>
-                        <img
-                          src={editedPost.image}
-                          alt="Current"
-                          style={{ maxWidth: "100px" }}
-                        />
-                      </div>
-                    )}
-                    <Form.Group controlId="formAuthor">
-                      <Form.Label
-                        style={{ fontWeight: "bold", outline: "none" }}
-                      >
-                        Author
-                      </Form.Label>
-                      <Form.Control
-                        style={{ borderRadius: "8px" }}
-                        type="text"
-                        name="author"
-                        value={editedPost.author}
-                        onChange={handleInputChange1}
-                        placeholder="Author"
-                        required
-                      />
-                    </Form.Group>
-                    <Form.Group controlId="formBrandName">
-                      <Form.Label
-                        style={{ fontWeight: "bold", outline: "none" }}
-                      >
-                        Brand Description
-                      </Form.Label>
-                      <Form.Control
-                        style={{ borderRadius: "8px" }}
-                        type="text"
-                        name="brandName"
-                        value={editedPost.postbrand}
-                        onClick={handleDescriptionEdit1}
-                        placeholder="Brand Description"
-                        required
-                      />
-                    </Form.Group>
-                    <label
-                      style={{
-                        fontWeight: "bold",
-                        marginTop: "10px",
-                        outline: "none",
-                      }}
-                    >
-                      Tags
-                    </label>
-                    <br></br>
-                    <Form.Group
-                      className="tags-input"
-                      style={{ width: "400px", padding: "8px" }}
-                    >
-                      <ul id="tags" />
-                      {editedPost.tags &&
-                        editedPost.tags.map((tag, index) => (
-                          <li key={index}>
-                            <input
-                              type="text"
-                              value={tag}
-                              onChange={(e) => handleTagChange(e, index)}
-                            />
-                            <button
-                              className="delete-button"
-                              onClick={() => handleTagDelete2(index)}
-                            >
-                              X
-                            </button>
-                          </li>
-                        ))}
-                      <input
-                        id="input-tag"
-                        type="text"
-                        value={inputValue2}
-                        onChange={handleInputChange4}
-                        onKeyDown={handleKeyDown2}
-                        placeholder="Add a tag"
-                      />
-                    </Form.Group>
-                    <br></br>
-
-                    <label
-                      style={{
-                        fontWeight: "bold",
-                        marginTop: "10px",
-                        outline: "none",
-                      }}
-                    >
-                      Categories
-                    </label>
-                    <br />
-                    <Form.Group
-                      className="tags-input"
-                      style={{ width: "500px", padding: "8px" }}
-                    >
-                      <ul id="categories">
-                        {editedPost.category &&
-                          editedPost.category.map((category, index) => (
-                            <li key={index}>
-                              <input
-                                type="text"
-                                value={category}
-                                onChange={(e) => handleCategoryChange(e, index)}
-                              />
-                              <button
-                                className="delete-button"
-                                onClick={() => handleCategoryDelete(index)}
-                              >
-                                X
-                              </button>
-                            </li>
-                          ))}
-                      </ul>
-                      <input
-                        id="input-category"
-                        type="text"
-                        value={inputValue3}
-                        onChange={handleInputChange5}
-                        onKeyDown={handleKeyDown3}
-                        placeholder="Add a category"
-                      />
-                    </Form.Group>
-
-                    <br></br>
-                    <br></br>
+                    <p>Selected Title: {selectedPost2.title}</p>
                     <Button
-                      variant="primary"
-                      onClick={handleUpdateContent}
+                      variant="danger"
+                      onClick={handleDeletePost}
                       style={{
                         textAlign: "center",
-                        marginLeft: "30%",
-                        width: "40%",
+                        marginLeft: "35%",
+                        width: "30%",
                         borderRadius: "8px",
                       }}
                     >
-                      Update Post
+                      Delete Post
                     </Button>
                   </>
                 )}
-              </Form>
-            </div>
-            <Modal show={showEditor1} onHide={handleCloseEditor}>
-              <Modal.Header closeButton>
-                <Modal.Title>Edit Description</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <ReactQuill
-                  value={editedPost.description}
-                  onChange={handleEditorChange1}
-                  modules={{
-                    toolbar: [
-                      [{ header: "1" }, { header: "2" }, { font: [] }],
-                      [{ size: [] }],
-                      ["bold", "italic", "underline", "strike", "blockquote"],
-                      [
-                        { list: "ordered" },
-                        { list: "bullet" },
-                        { indent: "-1" },
-                        { indent: "+1" },
-                      ],
-                      ["link", "image", "video"],
-                      ["clean"],
-                    ],
-                  }}
-                  formats={[
-                    "header",
-                    "font",
-                    "size",
-                    "bold",
-                    "italic",
-                    "underline",
-                    "strike",
-                    "blockquote",
-                    "list",
-                    "bullet",
-                    "indent",
-                    "link",
-                    "image",
-                    "video",
-                  ]}
-                />
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary" onClick={handleCloseEditor}>
-                  Cancel
-                </Button>
-                <Button variant="primary" onClick={handleCloseEditor}>
-                  Save
-                </Button>
-              </Modal.Footer>
-              {successMessage4 && (
-                <Alert variant="success" className="mt-3">
-                  {successMessage4}
-                </Alert>
-              )}
-            </Modal>
-
-            <Modal show={showEditor3} onHide={handleCloseEditor1}>
-              <Modal.Header closeButton>
-                <Modal.Title>Edit Brand Description</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <ReactQuill
-                  value={editedPost.postbrand}
-                  onChange={handleEditorChange3}
-                  modules={{
-                    toolbar: [
-                      [{ header: "1" }, { header: "2" }, { font: [] }],
-                      [{ size: [] }],
-                      ["bold", "italic", "underline", "strike", "blockquote"],
-                      [
-                        { list: "ordered" },
-                        { list: "bullet" },
-                        { indent: "-1" },
-                        { indent: "+1" },
-                      ],
-                      ["link", "image", "video"],
-                      ["clean"],
-                    ],
-                  }}
-                  formats={[
-                    "header",
-                    "font",
-                    "size",
-                    "bold",
-                    "italic",
-                    "underline",
-                    "strike",
-                    "blockquote",
-                    "list",
-                    "bullet",
-                    "indent",
-                    "link",
-                    "image",
-                    "video",
-                  ]}
-                />
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary" onClick={handleCloseEditor1}>
-                  Cancel
-                </Button>
-                <Button variant="primary" onClick={handleCloseEditor1}>
-                  Save
-                </Button>
-              </Modal.Footer>
-              {successMessage4 && (
-                <Alert variant="success" className="mt-3">
-                  {successMessage4}
-                </Alert>
-              )}
-            </Modal>
-            {/*title description*/}
-            <Modal show={showEditorOpen1} onHide={handleCloseEditorOpen}>
-              <Modal.Header closeButton>
-                <Modal.Title>Edit Description</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <ReactQuill
-                  value={editedPost.title}
-                  onChange={handleEditorChangeOpen1}
-                  modules={{
-                    toolbar: [
-                      [{ header: "1" }, { header: "2" }, { font: [] }],
-                      [{ size: [] }],
-                      ["bold", "italic", "underline", "strike", "blockquote"],
-                      [
-                        { list: "ordered" },
-                        { list: "bullet" },
-                        { indent: "-1" },
-                        { indent: "+1" },
-                      ],
-                      ["link", "image", "video"],
-                      ["clean"],
-                    ],
-                  }}
-                  formats={[
-                    "header",
-                    "font",
-                    "size",
-                    "bold",
-                    "italic",
-                    "underline",
-                    "strike",
-                    "blockquote",
-                    "list",
-                    "bullet",
-                    "indent",
-                    "link",
-                    "image",
-                    "video",
-                  ]}
-                />
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary" onClick={handleCloseEditorOpen1}>
-                  Cancel
-                </Button>
-                <Button variant="primary" onClick={handleCloseEditorOpen1}>
-                  Save
-                </Button>
-              </Modal.Footer>
-              {successMessage4 && (
-                <Alert variant="success" className="mt-3">
-                  {successMessage4}
-                </Alert>
-              )}
-            </Modal>
-          </Container>
-        )}
-        <br></br>
-        {/*delete blog*/}
-        {activeSection === "deleteBlogPost" && (
-          <Container className="d-flex justify-content-center">
-            <div className="p-4 bg-white blog-slide">
-              <h3
-                style={{
-                  color: "#28a745",
-                  textAlign: "center",
-                  textTransform: "uppercase",
-                  fontSize: "30px",
-                }}
-              >
-                Delete Blog Post
-              </h3>
-              <Form.Group controlId="exampleForm.ControlSelect1">
-                <Form.Label style={{ fontWeight: "bold", outline: "none" }}>
-                  Select Post
-                </Form.Label>
-                <Form.Control
-                  as="select"
-                  onChange={(e) => handlePostSelect1(e.target.value)}
-                  style={{ borderRadius: "8px" }}
-                >
-                  <option value="">Select</option>
-                  {posts.map((post) => (
-                    <option key={post.id} value={post.id}>
-                      {post.title}
-                    </option>
-                  ))}
-                </Form.Control>
-              </Form.Group>
-              {selectedPost2 && (
-                <>
-                  <p>Selected Title: {selectedPost2.title}</p>
-                  <Button
-                    variant="danger"
-                    onClick={handleDeletePost}
-                    style={{
-                      textAlign: "center",
-                      marginLeft: "35%",
-                      width: "30%",
-                      borderRadius: "8px",
-                    }}
-                  >
-                    Delete Post
-                  </Button>
-                </>
-              )}
-              {successMessage3 && (
-                <Alert variant="success" className="mt-3">
-                  {successMessage3}
-                </Alert>
-              )}
-            </div>
-          </Container>
-        )}
-        <br></br>
+                {successMessage3 && (
+                  <Alert variant="success" className="mt-3">
+                    {successMessage3}
+                  </Alert>
+                )}
+              </div>
+            </Container>
+          )}
+          <br></br>
+        </div>
       </section>
       <Footer />
     </>
