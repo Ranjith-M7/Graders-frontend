@@ -8,14 +8,14 @@ import Header from "./Header";
 import Footer from "./Footer";
 
 function Blog() {
+  //post
   const [posts, setPosts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredPosts, setFilteredPosts] = useState([]);
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      const postsRef = firebase.database().ref("posts");
-      const snapshot = await postsRef.once("value");
+    const postsRef = firebase.database().ref("posts");
+    postsRef.once("value", (snapshot) => {
       const postsData = snapshot.val();
       if (postsData) {
         const postsArray = Object.values(postsData).filter(
@@ -25,9 +25,31 @@ function Blog() {
         setPosts(postsArray);
         setFilteredPosts(postsArray);
       }
+    });
+  }, []);
+
+  //title name change
+  const [brandName, setBrandName] = useState("");
+
+  useEffect(() => {
+    const fetchBrandName = async () => {
+      try {
+        const snapshot = await firebase
+          .database()
+          .ref("Title/Title_name")
+          .once("value");
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          setBrandName(data);
+        } else {
+          console.error("Brand name not found in database");
+        }
+      } catch (error) {
+        console.error("Error fetching brand name:", error);
+      }
     };
 
-    fetchPosts();
+    fetchBrandName();
   }, []);
 
   const handleSearchInputChange = (e) => {

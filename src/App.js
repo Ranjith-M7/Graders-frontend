@@ -3,6 +3,7 @@ import HomePage from "./components/HomePage";
 import AboutPage from "./components/AboutPage";
 import CoursesPage from "./components/CoursesPage";
 import Blog from "./components/Blog";
+import BlogDetails from "./components/BlogDetails";
 import TeamPage from "./components/TeamPage";
 import EventsPage from "./components/EventsPage";
 import ContactPage from "./components/ContactPage";
@@ -26,6 +27,7 @@ function App() {
           <Route path="/team" element={<TeamPage />} />
           <Route path="/events" element={<EventsPage />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/:title" element={<BlogDetails />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/signin" element={<LoginForm />} />
           <Route path="/signup" element={<SignUpForm />} />
