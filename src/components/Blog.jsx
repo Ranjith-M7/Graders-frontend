@@ -29,28 +29,28 @@ function Blog() {
   }, []);
 
   //title name change
-  const [brandName, setBrandName] = useState("");
+  // const [brandName, setBrandName] = useState("");
 
-  useEffect(() => {
-    const fetchBrandName = async () => {
-      try {
-        const snapshot = await firebase
-          .database()
-          .ref("Title/Title_name")
-          .once("value");
-        if (snapshot.exists()) {
-          const data = snapshot.val();
-          setBrandName(data);
-        } else {
-          console.error("Brand name not found in database");
-        }
-      } catch (error) {
-        console.error("Error fetching brand name:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchBrandName = async () => {
+  //     try {
+  //       const snapshot = await firebase
+  //         .database()
+  //         .ref("Title/Title_name")
+  //         .once("value");
+  //       if (snapshot.exists()) {
+  //         const data = snapshot.val();
+  //         setBrandName(data);
+  //       } else {
+  //         console.error("Brand name not found in database");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching brand name:", error);
+  //     }
+  //   };
 
-    fetchBrandName();
-  }, []);
+  //   fetchBrandName();
+  // }, []);
 
   const handleSearchInputChange = (e) => {
     const query = e.target.value.toLowerCase();
@@ -61,6 +61,12 @@ function Blog() {
     setFilteredPosts(filtered);
   };
 
+  // funtion to parse HTML and extract the text content
+  const parseHTML = (htmlString) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlString, "text/html");
+    return doc.body.textContent || "";
+  };
   return (
     <>
       <Header />
@@ -111,6 +117,7 @@ function Blog() {
                         }}
                       ></Link>
                     </div>
+
                     <div className="blog-slider__content">
                       <span className="blog-slider__code">{post.date}</span>
                       <div
@@ -128,7 +135,7 @@ function Blog() {
                         />
                       </div>
                       <Link
-                        to={`/${post.title}`}
+                        to={`/${parseHTML(post.title)}`}
                         className="blog-slider__button"
                       >
                         READ MORE

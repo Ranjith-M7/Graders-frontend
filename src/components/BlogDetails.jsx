@@ -2,10 +2,8 @@ import React, { useState, useEffect } from "react";
 import firebase from "firebase/compat/app";
 import "firebase/compat/database";
 import "firebase/compat/storage";
-import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsUp as farThumbsUp } from "@fortawesome/free-regular-svg-icons";
 import { faThumbsUp as fasThumbsUp } from "@fortawesome/free-solid-svg-icons";
 
@@ -14,86 +12,95 @@ import Footer from "./Footer";
 
 const BlogDetails = () => {
   const [post, setPost] = useState(null); // Change to null initially
-
   const { title } = useParams();
+  const [liked, setLiked] = useState(false);
+  const [postId, setPostId] = useState(null);
+  const [comments, setComments] = useState([]);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [comment, setComment] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [posts, setPosts] = useState([]);
+
   console.log("Title:", title);
 
   useEffect(() => {
     // Fetch posts from Firebase Realtime Database
-    const postsRef = firebase.database().ref("posts");
-    postsRef.once("value", (snapshot) => {
-      const postsData = snapshot.val();
-      // console.log(`posts data: ${postsData}`);
-      if (postsData) {
-        // Filter posts based on title
-        const filteredPost = Object.entries(postsData).find(
-          ([postId, post]) => post.title === title
-        );
-        if (filteredPost) {
-          // Set the found post
-          const [postId, post] = filteredPost;
-          setPost(post);
-          setPostId(postId);
+    const fetchData = async () => {
+      const postsRef = firebase.database().ref("posts");
+      postsRef.once("value", (snapshot) => {
+        const postsData = snapshot.val();
+        if (postsData) {
+          // Filter posts based on title
+          const filteredPost = Object.entries(postsData).find(
+            ([postId, post]) =>
+              post.title.replace(/<\/?[^>]+(>|$)/g, "") === title
+          );
+          if (filteredPost) {
+            // Set the found post
+            const [postId, post] = filteredPost;
+            setPost(post);
+            setPostId(postId);
 
-          // Push value to posts/{postId}/users/ only if current user hasn't been recorded
-          const currentUser = firebase.auth().currentUser;
-          if (currentUser) {
-            const userId = currentUser.uid;
-            const postUsersRef = firebase
-              .database()
-              .ref(`posts/${postId}/users`);
+            // Push value to posts/{postId}/users/ only if current user hasn't been recorded
+            const currentUser = firebase.auth().currentUser;
+            if (currentUser) {
+              const userId = currentUser.uid;
+              const postUsersRef = firebase
+                .database()
+                .ref(`posts/${postId}/users`);
 
-            // Check if current user has already been recorded
-            postUsersRef.once("value", (snapshot) => {
-              const usersData = snapshot.val();
-              const userAlreadyRecorded =
-                usersData &&
-                Object.values(usersData).some(
-                  (user) => user.user_id === userId
-                );
-              if (!userAlreadyRecorded) {
-                const currentDate = new Date().toLocaleDateString(); // Format date as desired
+              // Check if current user has already been recorded
+              postUsersRef.once("value", (snapshot) => {
+                const usersData = snapshot.val();
+                const userAlreadyRecorded =
+                  usersData &&
+                  Object.values(usersData).some(
+                    (user) => user.user_id === userId
+                  );
+                if (!userAlreadyRecorded) {
+                  const currentDate = new Date().toLocaleDateString(); // Format date as desired
 
-                // Fetch the latest ID from the users
-                let latestId = 0;
-                if (usersData) {
-                  // Find the latest ID
-                  Object.keys(usersData).forEach((userId) => {
-                    const id = parseInt(userId);
-                    if (id > latestId) {
-                      latestId = id;
-                    }
+                  // Fetch the latest ID from the users
+                  let latestId = 0;
+                  if (usersData) {
+                    // Find the latest ID
+                    Object.keys(usersData).forEach((userId) => {
+                      const id = parseInt(userId);
+                      if (id > latestId) {
+                        latestId = id;
+                      }
+                    });
+                  }
+
+                  // Increment the latest ID by 1
+                  const newId = latestId + 1;
+
+                  // Set the user data with the new ID
+                  postUsersRef.child(newId).set({
+                    id: newId, // Add index value
+                    Date: currentDate,
+                    user_id: userId,
+                    // Add any other data you want to push
                   });
+                  const postRef = firebase.database().ref(`posts/${postId}`);
+                  postRef.update({ id: newId });
+                } else {
+                  console.log("User already recorded for this post.");
                 }
-
-                // Increment the latest ID by 1
-                const newId = latestId + 1;
-
-                // Set the user data with the new ID
-                postUsersRef.child(newId).set({
-                  id: newId, // Add index value
-                  Date: currentDate,
-                  user_id: userId,
-                  // Add any other data you want to push
-                });
-                const postRef = firebase.database().ref(`posts/${postId}`);
-                postRef.update({ id: newId });
-              } else {
-                console.log("User already recorded for this post.");
-              }
-            });
+              });
+            } else {
+              console.log("User not authenticated.");
+            }
           } else {
-            console.log("User not authenticated.");
+            console.log("Post not found.");
           }
-        } else {
-          console.log("Post not found.");
         }
-      }
-    });
+      });
+    };
+    fetchData();
   }, [title]);
-
-  const [liked, setLiked] = useState(false);
-  const [postId, setPostId] = useState(null);
 
   const handleLike = () => {
     setLiked(!liked);
@@ -221,7 +228,7 @@ const BlogDetails = () => {
     }
   }, [postData]);
 
-  console.log(postData);
+  console.log(`postData: ${postData}`);
 
   //handle authentication
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -264,7 +271,6 @@ const BlogDetails = () => {
   };
 
   //post
-  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     // Fetch posts from Firebase Realtime Database
@@ -282,12 +288,6 @@ const BlogDetails = () => {
   }, []);
 
   //comments
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [comment, setComment] = useState("");
-
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -322,8 +322,6 @@ const BlogDetails = () => {
         setSuccessMessage("");
       });
   };
-
-  const [comments, setComments] = useState([]);
 
   // Function to fetch comments from Firebase database
   const fetchComments = async () => {
@@ -395,7 +393,14 @@ const BlogDetails = () => {
       }
     });
   }, [title]);
-  console.log(`post: ${post}`);
+
+  // funtion to parse HTML and extract the text content
+  const parseHTML = (htmlString) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlString, "text/html");
+    return doc.body.textContent || "";
+  };
+
   return (
     <>
       <Header />
@@ -490,7 +495,12 @@ const BlogDetails = () => {
                             </div>
                           </div>
                           <h2 className="mb-4 text-md">
-                            <a href="blog-single.html">{post.title}</a>
+                            <a
+                              href="blog-single.html"
+                              dangerouslySetInnerHTML={{
+                                __html: post.title,
+                              }}
+                            ></a>
                           </h2>
                           {/*<p className="lead mb-4">
                   Non illo quas blanditiis repellendus laboriosam minima animi.
@@ -711,7 +721,10 @@ const BlogDetails = () => {
                               {post.date}
                             </span>
                             <h6 className="my-2">
-                              <a href={`/${post.title}`}>{post.title}</a>
+                              {/* <a href={`/${post.title}`}>{post.title}</a> */}
+                              <Link
+                                to={`/${parseHTML(post.title)}`}
+                              >{`${parseHTML(post.title)}`}</Link>
                             </h6>
                           </div>
                         </>
