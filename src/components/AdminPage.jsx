@@ -274,7 +274,6 @@ const AdminPage = () => {
                       onChange={(e) => setImage(e.target.files[0])}
                     />
                   </div>
-                  
                 </div>
                 <div className="col-md-6">
                   <div className="mb-3">
@@ -337,7 +336,6 @@ const AdminPage = () => {
                       onChange={(e) => setPrice(e.target.value)}
                     />
                   </div>
-                 
 
                   <button
                     type="submit"

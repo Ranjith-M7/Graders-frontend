@@ -22,7 +22,9 @@ const BlogDetails = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [posts, setPosts] = useState([]);
+  const [likesCount, setLikesCount] = useState(null);
 
+  const [darkLike, setDarkLike] = useState(true);
   console.log("Title:", title);
 
   useEffect(() => {
@@ -102,35 +104,71 @@ const BlogDetails = () => {
     fetchData();
   }, [title]);
 
+  // check if current user is liked, changed the ThumbsUp icon clicked
+  useEffect(() => {
+    const fetchUserLikedStatus = async () => {
+      const currentUser = firebase.auth().currentUser;
+      if (currentUser) {
+        const userId = currentUser.uid;
+        const postUserRef = firebase.database().ref(`posts/${postId}/users`);
+
+        // Check if the current user has liked this post
+        postUserRef.once("value", (snapshot) => {
+          const usersData = snapshot.val();
+          if (usersData) {
+            const userLiked = Object.values(usersData).some(
+              (user) => user.user_id === userId && user.liked
+            );
+            setLiked(userLiked);
+          }
+        });
+      }
+    };
+
+    fetchUserLikedStatus();
+  }, [postId]);
+
   const handleLike = () => {
-    setLiked(!liked);
     const currentUser = firebase.auth().currentUser;
     if (currentUser) {
       const userId = currentUser.uid;
-      const postRef = firebase
-        .database()
-        .ref("posts")
-        .child(postId)
-        .child("users");
+      const postRef = firebase.database().ref(`posts/${postId}/users`);
 
-      // Fetch the users array
       postRef.once("value", (snapshot) => {
         const usersData = snapshot.val();
+        let countLikes = likesCount;
+
         if (usersData) {
-          // Find the index of the user object with the matching user_id
-          const userIndex1 = Object.values(usersData).findIndex(
+          const userIndex = Object.values(usersData).findIndex(
             (user) => user.user_id === userId
           );
 
-          const userIndex = userIndex1 + 1;
-          console.log("userIndex:", userIndex);
           if (userIndex !== -1) {
-            // Update liked status for the current user
-            const userRef = postRef.child(userIndex);
-            userRef.update({ liked: !liked });
+            const userKey = Object.keys(usersData)[userIndex];
+            const userRef = postRef.child(userKey);
+
+            // Toggle liked status for the current user
+            const newLikedStatus = !liked;
+            userRef.update({ liked: newLikedStatus });
+
+            // Update local likes count
+            if (newLikedStatus) {
+              countLikes++;
+            } else {
+              countLikes--;
+            }
+
+            setLiked(newLikedStatus);
+            setLikesCount(countLikes);
           } else {
-            console.log("User not found in the users array.");
+            // If user not found, add them to the post's users list
+            postRef.push({ user_id: userId, liked: true });
+            setLikesCount(countLikes + 1);
           }
+        } else {
+          // If no users data exists, add the current user as the first user
+          postRef.push({ user_id: userId, liked: true });
+          setLikesCount(1);
         }
       });
     } else {
@@ -323,6 +361,25 @@ const BlogDetails = () => {
       });
   };
 
+  useEffect(() => {
+    const databaseRef = firebase.database().ref("posts");
+
+    // Retrieve data from the database
+    databaseRef
+      .once("value", (snapshot) => {
+        const posts = snapshot.val(); // Retrieve all posts from the database
+        const filteredPosts = Object.keys(posts).map((id) => {
+          const { date, title } = posts[id];
+          return { id, date, title };
+        });
+
+        console.log(filteredPosts);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
   // Function to fetch comments from Firebase database
   const fetchComments = async () => {
     try {
@@ -344,24 +401,6 @@ const BlogDetails = () => {
     fetchComments();
   }, [title]);
 
-  useEffect(() => {
-    const databaseRef = firebase.database().ref("posts");
-
-    // Retrieve data from the database
-    databaseRef
-      .once("value", (snapshot) => {
-        const posts = snapshot.val(); // Retrieve all posts from the database
-        const filteredPosts = Object.keys(posts).map((id) => {
-          const { date, title } = posts[id];
-          return { id, date, title };
-        });
-
-        console.log(filteredPosts);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
   useEffect(() => {
     // Fetch posts from Firebase Realtime Database
     const postsRef = firebase.database().ref("posts");
@@ -393,6 +432,29 @@ const BlogDetails = () => {
       }
     });
   }, [title]);
+
+  // count post likes
+  useEffect(() => {
+    const postUsersRef = firebase.database().ref(`posts/${postId}/users`);
+
+    let countLikes = 0;
+
+    // Fetch users data for the post
+    postUsersRef.once("value", (snapshot) => {
+      const usersData = snapshot.val();
+      if (usersData) {
+        // Iterate through users array and count likes
+        Object.values(usersData).forEach((user) => {
+          if (user.liked === true) {
+            countLikes++;
+          }
+        });
+
+        setLikesCount(countLikes);
+        // console.log("Number of likes:", countLikes);
+      }
+    });
+  }, [postId, title]);
 
   // funtion to parse HTML and extract the text content
   const parseHTML = (htmlString) => {
@@ -472,21 +534,23 @@ const BlogDetails = () => {
                             <span className="text-color-2 text-capitalize mr-3">
                               <i className="icofont-book-mark mr-2" /> Equipment{" "}
                             </span>
-                            {/* <span className="text-muted text-capitalize mr-3">
+                            <span className="text-muted text-capitalize mr-3">
                               <i className="icofont-comment mr-2" />
                               {comments.length} Comments
-                            </span> */}
-                            Comments
+                            </span>
+
                             <span
                               id={`likes-${postId}`}
                               className="text-muted text-capitalize mr-3"
                             >
-                              <i className="icofont-comment mr-2" /> likes
+                              <i className="icofont-comment mr-2" />{" "}
+                              {likesCount} likes
                             </span>
                             <span className="text-black text-capitalize mr-3">
                               <i className="icofont-calendar mr-2" />{" "}
                               {post.date}
                             </span>
+
                             <div>
                               <button onClick={handleLike}>
                                 <FontAwesomeIcon
@@ -497,7 +561,8 @@ const BlogDetails = () => {
                           </div>
                           <h2 className="mb-4 text-md">
                             <a
-                              href="blog-single.html"
+                              // href="blog-single.html"
+                              href={`/${parseHTML(post.title)}`}
                               dangerouslySetInnerHTML={{
                                 __html: post.title,
                               }}
@@ -531,7 +596,7 @@ const BlogDetails = () => {
                           <div className="mt-5 clearfix">
                             <ul className="float-left list-inline tag-option">
                               <li className="list-inline-item">
-                                <a href="#">Advancher</a>
+                                <a href="#">Adventure</a>
                               </li>
                               <li className="list-inline-item">
                                 <a href="#">Landscape</a>
@@ -726,9 +791,12 @@ const BlogDetails = () => {
                             </span>
                             <h6 className="my-2">
                               {/* <a href={`/${post.title}`}>{post.title}</a> */}
-                              <Link
+                              {/* <Link
                                 to={`/${parseHTML(post.title)}`}
-                              >{`${parseHTML(post.title)}`}</Link>
+                              >{`${parseHTML(post.title)}`}</Link> */}
+                              <a href={`/${parseHTML(post.title)}`}>
+                                {parseHTML(post.title)}
+                              </a>
                             </h6>
                           </div>
                         </>
