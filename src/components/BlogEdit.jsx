@@ -249,8 +249,9 @@ function BlogEdit() {
   }); // State to store the edited post
   const [showEditor1, setShowEditor1] = useState(false);
   const [successMessage2, setSuccessMessage2] = useState("");
-
+  const [showEditorOpen1, setShowEditorOpen1] = useState("");
   const [showEditor3, setShowEditor3] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       const postsRef = firebase.database().ref("posts");
@@ -269,8 +270,18 @@ function BlogEdit() {
 
   const [successMessage4, setSuccessMessage4] = useState("");
 
+  // selected posts
   const handlePostSelect = (postId) => {
-    const selected = posts.find((post) => post.id === postId);
+    console.log(`postId: ${typeof postId}`);
+    const selected = posts.find((post) => post.id == postId);
+
+    // const selectedd = posts.find((post) =>
+    //   console.log(
+    //     `post.id: ${typeof post.id}, postId: ${typeof postId}, post.id = postId: ${
+    //       post.id == postId
+    //     })}`
+    //   )
+    // );
     setSelectedPost(selected);
     setEditedPost({ ...selected, statusUpdate: "edited" });
   };
@@ -298,8 +309,7 @@ function BlogEdit() {
       });
   };
 
-  const [showEditorOpen1, setShowEditorOpen1] = useState("");
-
+  // Handle input changes
   const handleInputChange1 = (e) => {
     const { name, value } = e.target;
     setEditedPost({ ...editedPost, [name]: value });
@@ -308,30 +318,15 @@ function BlogEdit() {
     setShowEditor1(true);
   };
 
-  const handleDescriptionEditOpen = () => {
-    setShowEditorOpen1(true);
-  };
-
   const handleDescriptionEdit1 = () => {
     setShowEditor3(true);
-  };
-
-  const handleCloseEditor = () => {
-    setShowEditor1(false);
-  };
-
-  const handleCloseEditorOpen1 = () => {
-    setShowEditorOpen1(false);
   };
 
   const handleCloseEditorOpen = () => {
     setShowEditorOpen1(false);
   };
 
-  const handleCloseEditor1 = () => {
-    setShowEditor3(false);
-  };
-
+  // Handle editor changes
   const handleEditorChange1 = (value) => {
     setEditedPost({ ...editedPost, description: value });
   };
@@ -344,11 +339,26 @@ function BlogEdit() {
     setEditedPost({ ...editedPost, postbrand: value });
   };
 
+  // Handle modal open/close
+  const handleCloseEditor = () => {
+    setShowEditor1(false);
+  };
+
+  const handleCloseEditorOpen1 = () => {
+    setShowEditorOpen1(false);
+  };
+  const handleCloseEditor1 = () => {
+    setShowEditor3(false);
+  };
+  const handleDescriptionEditOpen = () => {
+    setShowEditorOpen1(true);
+  };
+
   const [selectedPost2, setSelectedPost2] = useState(null);
   const [successMessage3, setSuccessMessage3] = useState("");
 
   const handlePostSelect1 = (postId) => {
-    setSelectedPost2(posts.find((post) => post.id === postId));
+    setSelectedPost2(posts.find((post) => post.id == postId));
   };
 
   const handleImageChange1 = (e) => {
@@ -469,9 +479,16 @@ function BlogEdit() {
     setActiveSection(section);
   };
 
+  // funtion to parse HTML and extract the text content
+  const parseHTML = (htmlString) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlString, "text/html");
+    return doc.body.textContent || "";
+  };
   return (
     <>
       <Header />
+
       <section className="section" id="blog-edit">
         <div className="container">
           <div className="d-flex justify-content-center my-4 main-content">
@@ -622,10 +639,12 @@ function BlogEdit() {
                           required
                         />
                       </Form.Group>
+
                       <label
                         style={{
                           fontWeight: "bold",
                           marginTop: "10px",
+                          marginBottom: "10px",
                           outline: "none",
                         }}
                       >
@@ -634,7 +653,11 @@ function BlogEdit() {
                       <br></br>
                       <Form.Group
                         className="tags-input"
-                        style={{ width: "500px", padding: "8px" }}
+                        style={{
+                          width: "100%",
+                          padding: "8px",
+                          boxShadow: "none",
+                        }}
                       >
                         <ul id="tags" />
                         {tags.map((tag, index) => (
@@ -661,6 +684,7 @@ function BlogEdit() {
                         style={{
                           fontWeight: "bold",
                           marginTop: "10px",
+                          marginBottom: "10px",
                           outline: "none",
                         }}
                       >
@@ -669,7 +693,11 @@ function BlogEdit() {
                       <br></br>
                       <Form.Group
                         className="tags-input"
-                        style={{ width: "500px", padding: "8px" }}
+                        style={{
+                          width: "100%",
+                          padding: "8px",
+                          boxShadow: "none",
+                        }}
                       >
                         <ul id="categories" />
                         {categories.map((category, index) => (
@@ -910,18 +938,25 @@ function BlogEdit() {
 
                 <Form>
                   <Form.Group controlId="formTitle">
-                    <Form.Label style={{ fontWeight: "bold", outline: "none" }}>
+                    <Form.Label
+                      style={{
+                        fontWeight: "bold",
+                        outline: "none",
+                        marginTop: "10px",
+                      }}
+                    >
                       Select Title
                     </Form.Label>
                     <Form.Control
-                      style={{ borderRadius: "8px" }}
+                      style={{ borderRadius: "8px", marginBottom: "10px" }}
                       as="select"
                       onChange={(e) => handlePostSelect(e.target.value)}
                     >
                       <option value="">Select</option>
                       {posts.map((post) => (
                         <option key={post.id} value={post.id}>
-                          {post.title}
+                          {/* {post.title} */}
+                          {`${parseHTML(post.title)}`}
                         </option>
                       ))}
                     </Form.Control>
@@ -1019,6 +1054,7 @@ function BlogEdit() {
                         style={{
                           fontWeight: "bold",
                           marginTop: "10px",
+                          marginBottom: "10px",
                           outline: "none",
                         }}
                       >
@@ -1027,7 +1063,11 @@ function BlogEdit() {
                       <br></br>
                       <Form.Group
                         className="tags-input"
-                        style={{ width: "400px", padding: "8px" }}
+                        style={{
+                          width: "100%",
+                          padding: "8px",
+                          boxShadow: "none",
+                        }}
                       >
                         <ul id="tags" />
                         {editedPost.tags &&
@@ -1061,6 +1101,7 @@ function BlogEdit() {
                         style={{
                           fontWeight: "bold",
                           marginTop: "10px",
+                          marginBottom: "10px",
                           outline: "none",
                         }}
                       >
@@ -1069,7 +1110,11 @@ function BlogEdit() {
                       <br />
                       <Form.Group
                         className="tags-input"
-                        style={{ width: "500px", padding: "8px" }}
+                        style={{
+                          width: "100%",
+                          padding: "8px",
+                          boxShadow: "none",
+                        }}
                       >
                         <ul id="categories">
                           {editedPost.category &&
@@ -1304,7 +1349,13 @@ function BlogEdit() {
                   Delete Blog Post
                 </h3>
                 <Form.Group controlId="exampleForm.ControlSelect1">
-                  <Form.Label style={{ fontWeight: "bold", outline: "none" }}>
+                  <Form.Label
+                    style={{
+                      fontWeight: "bold",
+                      outline: "none",
+                      marginTop: "10px",
+                    }}
+                  >
                     Select Post
                   </Form.Label>
                   <Form.Control
@@ -1315,7 +1366,8 @@ function BlogEdit() {
                     <option value="">Select</option>
                     {posts.map((post) => (
                       <option key={post.id} value={post.id}>
-                        {post.title}
+                        {/* {post.title} */}
+                        {`${parseHTML(post.title)}`}
                       </option>
                     ))}
                   </Form.Control>

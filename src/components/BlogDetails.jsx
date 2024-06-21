@@ -457,7 +457,7 @@ const BlogDetails = () => {
         </div>
       </section> */}
       {/*bootstrap code*/} <br></br>
-      <section className="section blog-wrap">
+      <section className="blog-wrap">
         <div className="container">
           <div className="row">
             {post && (
@@ -470,12 +470,13 @@ const BlogDetails = () => {
                         <div className="blog-item-content mt-5">
                           <div className="blog-item-meta mb-3">
                             <span className="text-color-2 text-capitalize mr-3">
-                              <i className="icofont-book-mark mr-2" /> Equipment
+                              <i className="icofont-book-mark mr-2" /> Equipment{" "}
                             </span>
-                            <span className="text-muted text-capitalize mr-3">
+                            {/* <span className="text-muted text-capitalize mr-3">
                               <i className="icofont-comment mr-2" />
                               {comments.length} Comments
-                            </span>
+                            </span> */}
+                            Comments
                             <span
                               id={`likes-${postId}`}
                               className="text-muted text-capitalize mr-3"
@@ -637,7 +638,7 @@ const BlogDetails = () => {
                         onSubmit={handleSubmit}
                       >
                         <h4 className="mb-4">Write a comment</h4>
-                        <div className="row">
+                        <div className="row g-2">
                           <div className="col-md-6">
                             <div className="form-group">
                               <input
@@ -666,18 +667,21 @@ const BlogDetails = () => {
                               />
                             </div>
                           </div>
+                          <div className="col-md-12">
+                            <textarea
+                              className="form-control mb-4"
+                              name="comment"
+                              id="comment"
+                              cols={30}
+                              rows={5}
+                              placeholder="Comment"
+                              value={comment}
+                              onChange={(e) => setComment(e.target.value)}
+                              required
+                            />
+                          </div>
                         </div>
-                        <textarea
-                          className="form-control mb-4"
-                          name="comment"
-                          id="comment"
-                          cols={30}
-                          rows={5}
-                          placeholder="Comment"
-                          value={comment}
-                          onChange={(e) => setComment(e.target.value)}
-                          required
-                        />
+
                         <input
                           className="btn btn-main-2 btn-round-full"
                           type="submit"
@@ -750,7 +754,7 @@ const BlogDetails = () => {
                         post.tags &&
                         post.tags.map((tag, index) => (
                           <a key={index} href="#">
-                            {tag}
+                            {tag}{" "}
                           </a>
                         ))}
                     </div>
