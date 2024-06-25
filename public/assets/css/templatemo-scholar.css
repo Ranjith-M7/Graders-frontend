@@ -189,6 +189,7 @@ body {
   --bg-color-primary: rgb(23, 133, 130);
   --bg-color-secondary: rgb(215, 255, 253);
   --primary-color: rgb(23, 133, 130);
+  --secondary-color: rgb(215, 255, 253);
 }
 
 ::selection {
@@ -837,21 +838,158 @@ Blog Edit style
   width: 50%;
   margin-top: 40px;
 }
+
+/* 
+---------------------------------------------
+Blog Page style
+--------------------------------------------- 
+*/
+.blog-item {
+  background-color: var(--bg-color-secondary);
+  border-radius: 25px;
+}
+.blogs .blog-item .blog-image {
+  position: relative;
+}
+.blogs .blog-item .blog-image img {
+  position: absolute;
+  top: -70px;
+  left: 0px;
+  border-radius: 25px;
+  width: 100%;
+  max-width: 260px;
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
+}
+.blogs .blog-item .blog-content {
+  margin-top: 150px;
+}
+.blogs .blog-item .blog-content .blog-date {
+  display: block;
+  color: #7b7992;
+  font-weight: 500;
+  font-size: 14px;
+}
+.blogs .blog-item .blog-content .blog-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0d0925;
+}
+.blogs .blog-item .blog-content .blog-description {
+  color: #4e4a67;
+  max-height: 3.5em;
+  overflow: hidden;
+}
+
+.blogs .blog-item .blog-content .blog-button {
+  display: inline-block;
+  background-color: #fff;
+  color: var(--primary-color);
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  line-height: 40px;
+  padding: 0px 20px;
+  border-radius: 20px;
+  transition: all 0.3s;
+}
+.blogs .blog-item .blog-content .blog-button:hover,
+.blogs .blog-item .blog-content .blog-button:hover {
+  background-color: var(--bg-color-primary);
+  color: #fff;
+}
+@media screen and (min-width: 576px) {
+  .blog-item {
+    height: 300px;
+  }
+  .blogs .blog-item .blog-image img {
+    top: 0;
+    left: -90px;
+  }
+  .blogs .blog-item .blog-content {
+    margin-top: 0px;
+    margin-left: 200px;
+  }
+}
+@media screen and (min-width: 992px) {
+  .blogs .blog-item .blog-content {
+    margin-top: 0px;
+    margin-left: -90px;
+  }
+}
+
+/* 
+---------------------------------------------
+Blog Details style
+--------------------------------------------- 
+*/
+
+.quote {
+  font-size: 1.2rem; 
+  font-style: italic; 
+  color: #333; 
+  background-color: #f9f9f9; 
+  padding: 10px; 
+  border-left: 5px solid #ccc; 
+}
+
+/* 
+---------------------------------------------
+Pagination style
+--------------------------------------------- 
+*/
+
+/* Pagination item container */
+.page-item {
+  display: inline-block;
+  margin: 0 5px;
+}
+/* Pagination link styling */
+.page-link {
+  border-radius: 25px;
+  padding: 5px 15px;
+  text-decoration: none;
+  background-color: var(--bg-color-secondary);
+  color: var(--primary-color);
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover effect for pagination links */
+.page-link:hover,
+.page-link:focus {
+  background-color: var(--bg-color-primary);
+  color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Active pagination link styling */
+.active > .page-link,
+.page-link.active {
+  z-index: 3;
+  color: var(--secondary-color);
+  background-color: var(--bg-color-primary);
+  border-color: var(--bg-color-primary);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
 /* 
 ---------------------------------------------
 Blog Page style
 --------------------------------------------- 
 */
 
-.blog-slider {
+/* .blog-slider {
   width: 40%;
   height: 350px;
   position: relative;
   max-width: 800px;
   margin: auto;
-  background: #fff;
-  /* box-shadow: 0px 10px 20px rgba(0, 123, 255, 0.5); */
-  box-shadow: rgba(23, 133, 130, 0.7) 0px 8px 24px;
+  background: #fff; */
+/* box-shadow: 0px 10px 20px rgba(0, 123, 255, 0.5); */
+/* box-shadow: rgba(23, 133, 130, 0.7) 0px 8px 24px;
   padding: 30px;
   border-radius: 25px;
   transition: all 0.3s;
@@ -954,9 +1092,9 @@ Blog Page style
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  /*background-image: linear-gradient(147deg, #fe8a39 0%, #fd3838 74%);*/
-  border-radius: 20px;
+  height: 100%; */
+/*background-image: linear-gradient(147deg, #fe8a39 0%, #fd3838 74%);*/
+/* border-radius: 20px;
   opacity: 0.8;
   background-size: contain;
 }
@@ -1022,14 +1160,14 @@ Blog Page style
   line-height: 1.5em;
 }
 .blog-slider__button {
-  display: inline-flex;
-  /* background-image: linear-gradient(147deg, blue 0%, #007bff 74%); */
-  background-color: var(--bg-color-primary);
+  display: inline-flex; */
+/* background-image: linear-gradient(147deg, blue 0%, #007bff 74%); */
+/* background-color: var(--bg-color-primary);
   padding: 15px 35px;
   border-radius: 50px;
-  color: #fff;
-  /* box-shadow: 0px 10px 20px rgba(0, 123, 255, 0.5); */
-  box-shadow: rgba(23, 133, 130, 0.7) 0px 8px 24px;
+  color: #fff; */
+/* box-shadow: 0px 10px 20px rgba(0, 123, 255, 0.5); */
+/* box-shadow: rgba(23, 133, 130, 0.7) 0px 8px 24px;
   text-decoration: none;
   font-weight: 500;
   justify-content: center;
@@ -1098,7 +1236,7 @@ Blog Page style
     height: 11px;
     width: 30px;
   }
-}
+} */
 
 /* 
 ---------------------------------------------
@@ -2097,8 +2235,11 @@ Footer Style
 */
 
 footer {
+  position: static;
+  bottom: 0;
+  left: 0;
+  right: 0;
   margin-top: 150px;
-  position: relative;
   background-color: var(--bg-color-primary);
   border-radius: 150px 150px 0px 0px;
   z-index: 1;

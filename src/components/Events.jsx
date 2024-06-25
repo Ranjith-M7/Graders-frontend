@@ -250,7 +250,8 @@ function Events() {
                                   <div className="mt-3">
                                     <p>
                                       For registration and inquiries, please
-                                      contact us at learn@thegraders.in / +91 80561 95554
+                                      contact us at learn@thegraders.in / +91
+                                      80561 95554
                                     </p>
                                   </div>
                                 </div>

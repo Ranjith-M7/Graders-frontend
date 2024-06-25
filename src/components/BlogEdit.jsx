@@ -45,19 +45,18 @@ function BlogEdit() {
       month: "long",
       year: "numeric",
     });
-    console.log("formattedDate:", formattedDate);
-    // Upload image to Firebase Storage
+
+    // Upload image to Firebase Storage if imageFile exists and newPost.title is defined
     if (imageFile && newPost.title) {
       const fileExtension = imageFile.name.split(".").pop(); // Extract file extension
       const imageName = `image_${Date.now()}.${fileExtension}`; // Generate a unique image name
       const imagePath = `images/${newPost.title}/${imageName}`; // Construct the path with dynamic extension
       const uploadTask = storage.ref(imagePath).put(imageFile); // Uploading to the specified path
-      console.log("uploadTask:", uploadTask);
-      console.log("imageName:", imageName);
+
       uploadTask.on(
         "state_changed",
         (snapshot) => {
-          // Progress function
+          // Progress function if needed
         },
         (error) => {
           console.error(error);
@@ -70,38 +69,64 @@ function BlogEdit() {
             .child(imageName)
             .getDownloadURL()
             .then((url) => {
-              setNewPost({
+              // Prepare the new post object with image URL and other details
+              const postToAdd = {
                 ...newPost,
+                id: "", // Will be assigned after fetching latest ID
                 image: url,
                 date: formattedDate,
                 tags: tags,
                 category: categories,
-              });
+                statusUpdate: "Created",
+              };
 
-              // Add post to the database with push() to generate a unique postId
+              // Fetch the latest ID from the database
               firebase
                 .database()
                 .ref("posts")
-                .push({
-                  ...newPost,
-                  image: url,
-                  statusUpdate: "Created",
-                  date: formattedDate,
-                  tags: tags,
-                  category: categories,
+                .once("value", (snapshot) => {
+                  let latestId = 0;
+                  const postsData = snapshot.val();
+
+                  if (postsData) {
+                    // Find the latest ID
+                    Object.keys(postsData).forEach((postId) => {
+                      const id = postsData[postId].id;
+                      if (id > latestId) {
+                        latestId = id;
+                      }
+                    });
+                  }
+
+                  // Assign the new ID for the next post
+                  const newId = latestId + 1;
+                  postToAdd.id = newId;
+
+                  // Add post to the database
+                  firebase
+                    .database()
+                    .ref("posts")
+                    .push(postToAdd)
+                    .then(() => {
+                      // Reset form fields and state variables upon successful post addition
+                      setNewPost({
+                        title: "",
+                        description: "",
+                        image: "",
+                        author: "",
+                        date: "",
+                        postbrand: "",
+                      });
+                      setImageFile(null);
+                      setTags([]);
+                      setCategories([]);
+                      setSuccessMessage("Post added successfully."); // Set success message
+                    })
+                    .catch((error) => {
+                      console.error(error);
+                      setFailureMessage("Failed to add post."); // Set failure message
+                    });
                 });
-              setNewPost({
-                title: "",
-                description: "",
-                image: "",
-                author: "",
-                date: "",
-                postbrand: "",
-              });
-              setImageFile(null);
-              setTags([]);
-              setCategories([]);
-              setSuccessMessage("Post added successfully."); // Set success message
             })
             .catch((error) => {
               console.error(error);
@@ -111,32 +136,60 @@ function BlogEdit() {
       );
     } else {
       // If no image is uploaded, add post to database without image
+      const postToAdd = {
+        ...newPost,
+        id: "", // Will be assigned after fetching latest ID
+        statusUpdate: "Pending",
+        date: formattedDate,
+        tags: tags,
+        category: categories,
+      };
+
+      // Fetch the latest ID from the database
       firebase
         .database()
         .ref("posts")
-        .push({
-          ...newPost,
-          statusUpdate: "Pending",
-          date: formattedDate,
-          tags: tags,
-          category: categories,
-        })
-        .then(() => {
-          setNewPost({
-            title: "",
-            description: "",
-            image: "",
-            author: "",
-            date: "",
-            postbrand: "",
-          });
-          setTags([]);
-          setCategories([]);
-          setSuccessMessage("Post added successfully."); // Set success message
-        })
-        .catch((error) => {
-          console.error(error);
-          setFailureMessage("Failed to add post."); // Set failure message
+        .once("value", (snapshot) => {
+          let latestId = 0;
+          const postsData = snapshot.val();
+
+          if (postsData) {
+            // Find the latest ID
+            Object.keys(postsData).forEach((post) => {
+              const id = post.id;
+              if (id > latestId) {
+                latestId = id;
+              }
+            });
+          }
+
+          // Assign the new ID for the next post
+          const newId = latestId + 1;
+          postToAdd.id = newId;
+
+          // Add post to the database
+          firebase
+            .database()
+            .ref("posts")
+            .push(postToAdd)
+            .then(() => {
+              // Reset form fields and state variables upon successful post addition
+              setNewPost({
+                title: "",
+                description: "",
+                image: "",
+                author: "",
+                date: "",
+                postbrand: "",
+              });
+              setTags([]);
+              setCategories([]);
+              setSuccessMessage("Post added successfully."); // Set success message
+            })
+            .catch((error) => {
+              console.error(error);
+              setFailureMessage("Failed to add post."); // Set failure message
+            });
         });
     }
   };
@@ -272,16 +325,8 @@ function BlogEdit() {
 
   // selected posts
   const handlePostSelect = (postId) => {
-    console.log(`postId: ${typeof postId}`);
+    // console.log(`postId: ${typeof postId}`);
     const selected = posts.find((post) => post.id == postId);
-
-    // const selectedd = posts.find((post) =>
-    //   console.log(
-    //     `post.id: ${typeof post.id}, postId: ${typeof postId}, post.id = postId: ${
-    //       post.id == postId
-    //     })}`
-    //   )
-    // );
     setSelectedPost(selected);
     setEditedPost({ ...selected, statusUpdate: "edited" });
   };

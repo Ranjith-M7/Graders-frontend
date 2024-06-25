@@ -156,7 +156,7 @@ function Header() {
             <div className="col-12">
               <nav className="main-nav">
                 {/* ***** Logo Start ***** */}
-                <a href="index.html" className="logo">
+                <a href="/" className="logo">
                   <h1>{headerData.logo.Text}</h1>
                 </a>
                 {/* ***** Logo End ***** */}
@@ -211,60 +211,83 @@ function Header() {
                     </NavLink>
                     {/* User login */}
                     {isLoggedIn && (
-                     <div className="dropdown">
-                     {/* Dropdown Button */}
-                     <button
-                       className="btn py-2 px-4 ms-3 dropdown-toggle"
-                       type="button"
-                       id="dropdownMenuButton"
-                       data-bs-toggle="dropdown"
-                       aria-expanded="false"
-                       style={{
-                         outline: "none",
-                         boxShadow: "none",
-                         border: "none",
-                       }}
-                     >
-                       <FontAwesomeIcon
-                         className="user-icon"
-                         icon={faUser}
-                         aria-hidden="true"
-                         style={{
-                           marginRight: "10px",
-                           cursor: "pointer",
-                         }}
-                       />
-                     </button>
-                     {/* Dropdown Menu */}
-                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                       <li>
-                         <NavLink to="/profile" className="dropdown-item" activeClassName="active">
-                           Profile
-                         </NavLink>
-                       </li>
-                       <li>
-                         <NavLink to="/seo-settings" className="dropdown-item" activeClassName="active">
-                           SEO Settings
-                         </NavLink>
-                       </li>
-                       <li>
-                         <NavLink to="/adminpage" className="dropdown-item" activeClassName="active">
-                           Admin Page
-                         </NavLink>
-                       </li>
-                       <li>
-                         <NavLink to="/blogedit" className="dropdown-item" activeClassName="active">
-                           Blog Edit
-                         </NavLink>
-                       </li>
-                       <li>
-                         <NavLink to="home" className="dropdown-item" activeClassName="active" onClick={handleLogout}>
-                           Sign out
-                         </NavLink>
-                       </li>
-                     </ul>
-                   </div>
-                   
+                      <div className="dropdown">
+                        {/* Dropdown Button */}
+                        <button
+                          className="btn py-2 px-4 ms-3 dropdown-toggle"
+                          type="button"
+                          id="dropdownMenuButton"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                          style={{
+                            outline: "none",
+                            boxShadow: "none",
+                            border: "none",
+                          }}
+                        >
+                          <FontAwesomeIcon
+                            className="user-icon"
+                            icon={faUser}
+                            aria-hidden="true"
+                            style={{
+                              marginRight: "10px",
+                              cursor: "pointer",
+                            }}
+                          />
+                        </button>
+                        {/* Dropdown Menu */}
+                        <ul
+                          className="dropdown-menu"
+                          aria-labelledby="dropdownMenuButton"
+                        >
+                          <li>
+                            <NavLink
+                              to="/profile"
+                              className="dropdown-item"
+                              activeClassName="active"
+                            >
+                              Profile
+                            </NavLink>
+                          </li>
+                          <li>
+                            <NavLink
+                              to="/seo-settings"
+                              className="dropdown-item"
+                              activeClassName="active"
+                            >
+                              SEO Settings
+                            </NavLink>
+                          </li>
+                          <li>
+                            <NavLink
+                              to="/adminpage"
+                              className="dropdown-item"
+                              activeClassName="active"
+                            >
+                              Admin Page
+                            </NavLink>
+                          </li>
+                          <li>
+                            <NavLink
+                              to="/blogedit"
+                              className="dropdown-item"
+                              activeClassName="active"
+                            >
+                              Blog Edit
+                            </NavLink>
+                          </li>
+                          <li>
+                            <NavLink
+                              to="home"
+                              className="dropdown-item"
+                              activeClassName="active"
+                              onClick={handleLogout}
+                            >
+                              Sign out
+                            </NavLink>
+                          </li>
+                        </ul>
+                      </div>
                     )}
                     {/* User login */}
                   </li>

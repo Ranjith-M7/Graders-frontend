@@ -24,7 +24,6 @@ const BlogDetails = () => {
   const [posts, setPosts] = useState([]);
   const [likesCount, setLikesCount] = useState(null);
 
-  const [darkLike, setDarkLike] = useState(true);
   console.log("Title:", title);
 
   useEffect(() => {
@@ -81,13 +80,10 @@ const BlogDetails = () => {
 
                   // Set the user data with the new ID
                   postUsersRef.child(newId).set({
-                    id: newId, // Add index value
+                    id: newId,
                     Date: currentDate,
                     user_id: userId,
-                    // Add any other data you want to push
                   });
-                  const postRef = firebase.database().ref(`posts/${postId}`);
-                  postRef.update({ id: newId });
                 } else {
                   console.log("User already recorded for this post.");
                 }
@@ -578,7 +574,7 @@ const BlogDetails = () => {
                             }}
                           ></p>
                           <blockquote
-                            className="quote"
+                            className="quote mt-3"
                             dangerouslySetInnerHTML={{ __html: post.postbrand }}
                           ></blockquote>
                           {/*<p className="lead mb-4 font-weight-normal text-black">
@@ -593,9 +589,20 @@ const BlogDetails = () => {
                   autem eos animi laborum iusto expedita sapiente.
                 </p>
                 */}
-                          <div className="mt-5 clearfix">
+                          <div className="mt-3 clearfix">
                             <ul className="float-left list-inline tag-option">
-                              <li className="list-inline-item">
+                              {post &&
+                                post.tags &&
+                                post.tags.map((tag, index) => (
+                                  <a
+                                    key={index}
+                                    href="#"
+                                    className="list-inline-item"
+                                  >
+                                    {tag}{" "}
+                                  </a>
+                                ))}
+                              {/* <li className="list-inline-item">
                                 <a href="#">Adventure</a>
                               </li>
                               <li className="list-inline-item">
@@ -603,9 +610,9 @@ const BlogDetails = () => {
                               </li>
                               <li className="list-inline-item">
                                 <a href="#">Travel</a>
-                              </li>
+                              </li> */}
                             </ul>
-                            <ul className="float-right list-inline">
+                            <ul className="float-right list-inline mt-2">
                               <li className="list-inline-item"> Share: </li>
                               <li className="list-inline-item">
                                 <a href="#" target="_blank">
