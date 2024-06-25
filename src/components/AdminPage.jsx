@@ -20,10 +20,17 @@ const AdminPage = () => {
   const calendarRef = useRef(null);
   const fileInputRef = useRef(null);
   const [eventType, setEventType] = useState("");
-  const [eventDate, setEventDate] = useState("");
+  const [eventDate, setEventDate] = useState(() => {
+    const today = new Date();
+    return today.toISOString().split("T")[0];
+  });
   const [duration, setDuration] = useState("");
   const [eventCity, setEventCity] = useState("");
   const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+  const [agendaList, setAgendaList] = useState("");
+  const [contactInformation, setContactInformation] = useState("");
+
   const [title, setTitle] = useState("");
   const [image, setImage] = useState(null);
   const [calendarEvents, setCalendarEvents] = useState([]);
@@ -37,6 +44,9 @@ const AdminPage = () => {
       eventCity: "",
       duration: "",
       price: "",
+      description: "",
+      agendaList: "",
+      contactInformation: "",
     },
   });
 
@@ -114,6 +124,9 @@ const AdminPage = () => {
         price,
         eventCity,
         imageUrl,
+        description,
+        agendaList,
+        contactInformation,
       });
 
       setEventType("");
@@ -122,6 +135,9 @@ const AdminPage = () => {
       setTitle("");
       setPrice("");
       setEventCity("");
+      setDescription("");
+      setAgendaList("");
+      setContactInformation("");
       setImage(null);
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
@@ -210,7 +226,7 @@ const AdminPage = () => {
               <div className="row">
                 <div className="col-md-6">
                   <div className="mb-3">
-                    <label htmlFor="eventType" className="form-label">
+                    <label htmlFor="eventType" className="form-label" >
                       Event Type
                     </label>
                     <select
@@ -261,18 +277,31 @@ const AdminPage = () => {
                   </div>
 
                   <div className="mb-3">
-                    <label htmlFor="imageUpload" className="mb-1">
-                      Select image to upload
+                    <label htmlFor="description" className="form-label">
+                      Description
                     </label>
-                    <input
-                      type="file"
+                    <textarea
+                      id="description"
+                      className="form-control"
+                      rows={4}
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
                       required
-                      className="form-control form-control-file"
-                      id="imageUpload"
-                      accept="image/*"
-                      ref={fileInputRef}
-                      onChange={(e) => setImage(e.target.files[0])}
-                    />
+                    ></textarea>
+                  </div>
+
+                  <div className="mb-3">
+                    <label htmlFor="agendaList" className="form-label">
+                      Agenda
+                    </label>
+                    <textarea
+                      id="agendaList"
+                      className="form-control"
+                      rows={4}
+                      value={agendaList}
+                      onChange={(e) => setAgendaList(e.target.value)}
+                      required
+                    ></textarea>
                   </div>
                 </div>
                 <div className="col-md-6">
@@ -334,6 +363,35 @@ const AdminPage = () => {
                       placeholder="Enter the price"
                       value={price}
                       onChange={(e) => setPrice(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="mb-3">
+                    <label htmlFor="contactInformation" className="form-label">
+                      Contact Information
+                    </label>
+                    <textarea
+                      id="contactInformation"
+                      className="form-control"
+                      rows={4}
+                      value={contactInformation}
+                      onChange={(e) => setContactInformation(e.target.value)}
+                      required
+                    ></textarea>
+                  </div>
+
+                  <div className="mb-3">
+                    <label htmlFor="imageUpload" className="mb-1">
+                      Select image to upload
+                    </label>
+                    <input
+                      type="file"
+                      required
+                      className="form-control form-control-file"
+                      id="imageUpload"
+                      accept="image/*"
+                      ref={fileInputRef}
+                      onChange={(e) => setImage(e.target.files[0])}
                     />
                   </div>
 

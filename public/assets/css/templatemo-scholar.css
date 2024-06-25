@@ -772,6 +772,10 @@ Admin style
   font-size: 1rem;
 }
 
+.admin-section label {
+  font-weight: 500;
+  color: var(--primary-color);
+}
 /* 
 ---------------------------------------------
 Blog Edit style
@@ -835,8 +839,59 @@ Blog Edit style
   box-shadow: 0px 0px 20px rgba(23, 133, 130, 0.6);
   border-radius: 40px;
   transition: all 0.3s;
-  width: 50%;
+  width: 100%;
+  max-width: 600px;
+  /* width: 50%; */
   margin-top: 40px;
+}
+
+/* Add-Update-Delete Blog Buttons  */
+.blog-buttons {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 12px 20px;
+  border-radius: 25px;
+  transition: all 0.3s;
+}
+.add-blog-button,
+.add-submit-button {
+  border: 2px solid var(--primary-color);
+  background-color: var(--bg-color-primary);
+  color: var(--secondary-color);
+}
+.add-blog-button-active,
+.add-submit-button:hover,
+.btn-primary.add-submit-button:active {
+  border: 2px solid var(--primary-color);
+  background-color: transparent;
+  color: var(--primary-color);
+}
+.update-blog-button,
+.update-submit-button {
+  border: 2px solid #577b8d;
+  background-color: #577b8d;
+  color: #fff;
+}
+.update-blog-button-active,
+.update-submit-button:hover,
+.btn-primary.update-submit-button:active {
+  border: 2px solid #577b8d;
+  background-color: transparent;
+  color: #577b8d;
+}
+.delete-blog-button,
+.delete-submit-button {
+  border: 2px solid #ef4040;
+  background-color: #ef4040;
+  color: #fff;
+}
+.delete-blog-button-active,
+.delete-submit-button:hover,
+.btn-primary.delete-submit-button:active {
+  border: 2px solid #ef4040;
+  background-color: transparent;
+  color: #ef4040;
 }
 
 /* 
@@ -926,12 +981,12 @@ Blog Details style
 */
 
 .quote {
-  font-size: 1.2rem; 
-  font-style: italic; 
-  color: #333; 
-  background-color: #f9f9f9; 
-  padding: 10px; 
-  border-left: 5px solid #ccc; 
+  font-size: 1.2rem;
+  font-style: italic;
+  color: #333;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-left: 5px solid #ccc;
 }
 
 /* 

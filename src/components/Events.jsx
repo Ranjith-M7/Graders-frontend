@@ -17,6 +17,9 @@ function Events() {
       eventCity: "",
       duration: "",
       price: "",
+      description: "",
+      agendaList: "",
+      contactInformation: "",
     },
   });
 
@@ -190,7 +193,7 @@ function Events() {
                                   </div>
 
                                   <div className="mt-3">
-                                    <span
+                                    <span className="more-info-topic-title"
                                       style={{
                                         color: "rgb(23, 133, 130)",
                                         fontWeight: "bold",
@@ -198,19 +201,10 @@ function Events() {
                                     >
                                       Description:
                                     </span>
-                                    <p>
-                                      Join us for an immersive session on
-                                      backend development where you'll dive into
-                                      the fundamentals of building robust
-                                      server-side applications. Whether you're a
-                                      beginner or looking to deepen your
-                                      understanding, this workshop is designed
-                                      to equip you with essential skills and
-                                      practical knowledge.
-                                    </p>
+                                    <p>{event.description}</p>
                                   </div>
                                   <div className="mt-3">
-                                    <span
+                                  <span className="more-info-topic-title"
                                       style={{
                                         color: "rgb(23, 133, 130)",
                                         fontWeight: "bold",
@@ -218,41 +212,18 @@ function Events() {
                                     >
                                       Agenda:
                                     </span>
-                                    <ul className="event-agenda-list">
-                                      <li>
-                                        <p>
-                                          - Introduction to backend development
-                                        </p>
-                                      </li>
-                                      <li>
-                                        <p>
-                                          - Setting up a development environment
-                                        </p>
-                                      </li>
-                                      <li>
-                                        <p>
-                                          - Exploring databases and data
-                                          modeling
-                                        </p>
-                                      </li>
-                                    </ul>
+                                    <p>{event.agendaList}</p>
                                   </div>
                                   <div className="mt-3">
-                                    <p>
-                                      Expand your programming horizons and learn
-                                      from experienced developers in a
-                                      supportive environment. Don't miss out on
-                                      this opportunity to enhance your backend
-                                      skills and advance your career in software
-                                      development.
-                                    </p>
-                                  </div>
-                                  <div className="mt-3">
-                                    <p>
-                                      For registration and inquiries, please
-                                      contact us at learn@thegraders.in / +91
-                                      80561 95554
-                                    </p>
+                                    <span className="more-info-topic-title"
+                                      style={{
+                                        color: "rgb(23, 133, 130)",
+                                        fontWeight: "bold",
+                                      }}
+                                    >
+                                      Contact Information:
+                                    </span>
+                                    <p>{event.contactInformation}</p>
                                   </div>
                                 </div>
                               </div>

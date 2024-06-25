@@ -10,6 +10,8 @@ import "react-quill/dist/quill.snow.css";
 
 import Header from "./Header";
 import Footer from "./Footer";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function BlogEdit() {
   //post blog
@@ -121,10 +123,12 @@ function BlogEdit() {
                       setTags([]);
                       setCategories([]);
                       setSuccessMessage("Post added successfully."); // Set success message
+                      toast.success(`Post added successfully.`);
                     })
                     .catch((error) => {
                       console.error(error);
                       setFailureMessage("Failed to add post."); // Set failure message
+                      toast.error(`Failed to add post.`);
                     });
                 });
             })
@@ -184,11 +188,13 @@ function BlogEdit() {
               });
               setTags([]);
               setCategories([]);
-              setSuccessMessage("Post added successfully."); // Set success message
+              setSuccessMessage("Post added successfully.");
+              toast.success(`Post added successfully.`);
             })
             .catch((error) => {
               console.error(error);
-              setFailureMessage("Failed to add post."); // Set failure message
+              setFailureMessage("Failed to add post.");
+              toast.error(`Failed to add post.`);
             });
         });
     }
@@ -345,6 +351,7 @@ function BlogEdit() {
       .set({ ...editedPost, date: formattedDate, tags: editedPost.tags })
       .then(() => {
         setSuccessMessage4("Post updated successfully.");
+        toast.success(`Post updated successfully.`);
         console.log("Post updated successfully.");
         // Optionally, you can clear the form fields or show a success message
       })
@@ -509,6 +516,7 @@ function BlogEdit() {
       .update({ statusUpdate: "Deleted" })
       .then(() => {
         setSuccessMessage3("Post deleted successfully.");
+        toast.success(`Post deleted successfully.`);
         setPosts(posts.filter((post) => post.id !== selectedPost2.id));
         setSelectedPost2(null);
       })
@@ -538,10 +546,10 @@ function BlogEdit() {
         <div className="container">
           <div className="d-flex justify-content-center my-4 main-content">
             <button
-              className={`btn ${
+              className={`blog-buttons ${
                 activeSection === "addBlogPost"
-                  ? "custom-blue-btn"
-                  : "btn-primary"
+                  ? "add-blog-button-active"
+                  : "add-blog-button"
               }`}
               onClick={() => handleTabClick("addBlogPost")}
             >
@@ -549,10 +557,10 @@ function BlogEdit() {
             </button>
             <div className="mx-2"></div>
             <button
-              className={`btn ${
+              className={`blog-buttons ${
                 activeSection === "updateBlogPost"
-                  ? "custom-green-btn"
-                  : "btn-secondary"
+                  ? "update-blog-button-active"
+                  : "update-blog-button"
               }`}
               onClick={() => handleTabClick("updateBlogPost")}
             >
@@ -560,10 +568,10 @@ function BlogEdit() {
             </button>
             <div className="mx-2"></div>
             <button
-              className={`btn ${
+              className={`blog-buttons ${
                 activeSection === "deleteBlogPost"
-                  ? "custom-orange-btn"
-                  : "btn-warning"
+                  ? "delete-blog-button-active"
+                  : "delete-blog-button"
               }`}
               onClick={() => handleTabClick("deleteBlogPost")}
             >
@@ -767,16 +775,22 @@ function BlogEdit() {
 
                       <br></br>
                       <br></br>
-                      <Button type="submit" className="blog-button">
-                        Add Post
-                      </Button>
+                      <div className="text-center">
+                        <Button
+                          type="submit"
+                          className="blog-buttons add-submit-button"
+                        >
+                          Add Post
+                        </Button>
+                      </div>
                     </Form>
+                    <ToastContainer />
                   </div>
-                  {successMessage && (
+                  {/* {successMessage && (
                     <Alert variant="success" className="mt-3">
                       {successMessage}
                     </Alert>
-                  )}
+                  )} */}
                 </div>
                 {/* Editor Modal */}
                 <Modal show={showEditor} onHide={() => setShowEditor(false)}>
@@ -1193,21 +1207,18 @@ function BlogEdit() {
 
                       <br></br>
                       <br></br>
-                      <Button
-                        variant="primary"
-                        onClick={handleUpdateContent}
-                        style={{
-                          textAlign: "center",
-                          marginLeft: "30%",
-                          width: "40%",
-                          borderRadius: "8px",
-                        }}
-                      >
-                        Update Post
-                      </Button>
+                      <div className="text-center">
+                        <Button
+                          className="blog-buttons update-submit-button"
+                          onClick={handleUpdateContent}
+                        >
+                          Update Post
+                        </Button>
+                      </div>
                     </>
                   )}
                 </Form>
+                <ToastContainer />
               </div>
               <Modal show={showEditor1} onHide={handleCloseEditor}>
                 <Modal.Header closeButton>
@@ -1258,11 +1269,11 @@ function BlogEdit() {
                     Save
                   </Button>
                 </Modal.Footer>
-                {successMessage4 && (
+                {/* {successMessage4 && (
                   <Alert variant="success" className="mt-3">
                     {successMessage4}
                   </Alert>
-                )}
+                )} */}
               </Modal>
 
               <Modal show={showEditor3} onHide={handleCloseEditor1}>
@@ -1314,11 +1325,11 @@ function BlogEdit() {
                     Save
                   </Button>
                 </Modal.Footer>
-                {successMessage4 && (
+                {/* {successMessage4 && (
                   <Alert variant="success" className="mt-3">
                     {successMessage4}
                   </Alert>
-                )}
+                )} */}
               </Modal>
               {/*title description*/}
               <Modal show={showEditorOpen1} onHide={handleCloseEditorOpen}>
@@ -1370,11 +1381,11 @@ function BlogEdit() {
                     Save
                   </Button>
                 </Modal.Footer>
-                {successMessage4 && (
+                {/* {successMessage4 && (
                   <Alert variant="success" className="mt-3">
                     {successMessage4}
                   </Alert>
-                )}
+                )} */}
               </Modal>
             </Container>
           )}
@@ -1417,28 +1428,25 @@ function BlogEdit() {
                     ))}
                   </Form.Control>
                 </Form.Group>
+                <ToastContainer />
                 {selectedPost2 && (
                   <>
                     <p>Selected Title: {selectedPost2.title}</p>
-                    <Button
-                      variant="danger"
-                      onClick={handleDeletePost}
-                      style={{
-                        textAlign: "center",
-                        marginLeft: "35%",
-                        width: "30%",
-                        borderRadius: "8px",
-                      }}
-                    >
-                      Delete Post
-                    </Button>
+                    <div className="text-center">
+                      <Button
+                        className="blog-buttons delete-submit-button"
+                        onClick={handleDeletePost}
+                      >
+                        Delete Post
+                      </Button>
+                    </div>
                   </>
                 )}
-                {successMessage3 && (
+                {/* {successMessage3 && (
                   <Alert variant="success" className="mt-3">
                     {successMessage3}
                   </Alert>
-                )}
+                )} */}
               </div>
             </Container>
           )}
