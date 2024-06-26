@@ -292,7 +292,8 @@ function BlogEdit() {
     setCategories(categories.filter((_, index) => index !== tagIndex));
   };
 
-  //update blog
+  
+  // update blog
   const [posts, setPosts] = useState([]); // State to store fetched blog posts
   const [selectedPost, setSelectedPost] = useState(null); // State to store the selected post
 
@@ -317,15 +318,41 @@ function BlogEdit() {
       postsRef.on("value", (snapshot) => {
         const posts = snapshot.val();
         const postsList = [];
-        for (let id in posts) {
-          postsList.push({ id, ...posts[id] });
+        const postIds = []; // Array to store post IDs
+  
+        for (let postId in posts) {
+          postsList.push({ id: postId, ...posts[postId] });
+          postIds.push(postId); // Push each post ID into the array
         }
+  
         setPosts(postsList);
+        console.log(postIds); // Log the array of post IDs
       });
     };
-
+  
     fetchData();
+  
+    // Clean up the event listener when component unmounts
+    return () => {
+      firebase.database().ref("posts").off();
+    };
   }, []);
+  
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const postsRef = firebase.database().ref("posts");
+  //     postsRef.on("value", (snapshot) => {
+  //       const posts = snapshot.val();
+  //       const postsList = [];
+  //       for (let id in posts) {
+  //         postsList.push({ id, ...posts[id] });
+  //       }
+  //       setPosts(postsList);
+  //     });
+  //   };
+
+  //   fetchData();
+  // }, []);
 
   const [successMessage4, setSuccessMessage4] = useState("");
 
@@ -347,8 +374,8 @@ function BlogEdit() {
     // Update the post in the database
     firebase
       .database()
-      .ref(`posts/${selectedPost.id}`)
-      .set({ ...editedPost, date: formattedDate, tags: editedPost.tags })
+      .ref(`posts/-O0Eqm9ZSQv2qHrx6TCO`)
+      .update({ ...editedPost, date: formattedDate, tags: editedPost.tags })
       .then(() => {
         setSuccessMessage4("Post updated successfully.");
         toast.success(`Post updated successfully.`);
