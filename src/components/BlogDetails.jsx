@@ -24,7 +24,7 @@ const BlogDetails = () => {
   const [posts, setPosts] = useState([]);
   const [likesCount, setLikesCount] = useState(null);
 
-  console.log("Title:", title);
+  // console.log("Title:", title);
 
   useEffect(() => {
     // Fetch posts from Firebase Realtime Database
@@ -187,7 +187,7 @@ const BlogDetails = () => {
           .orderByChild("postTitle")
           .equalTo(title)
           .once("value");
-        console.log("snapshot", snapshot);
+        // console.log("snapshot", snapshot);
         if (snapshot.exists()) {
           setPostData(snapshot.val());
           console.log(setPostData);
@@ -262,7 +262,7 @@ const BlogDetails = () => {
     }
   }, [postData]);
 
-  console.log(`postData: ${postData}`);
+  // console.log(`postData: ${postData}`);
 
   //handle authentication
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -369,7 +369,7 @@ const BlogDetails = () => {
           return { id, date, title };
         });
 
-        console.log(filteredPosts);
+        // console.log(filteredPosts);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -451,6 +451,46 @@ const BlogDetails = () => {
       }
     });
   }, [postId, title]);
+
+  const [topPosts, setTopPosts] = useState([]);
+  console.log("topposts: ", topPosts);
+  useEffect(() => {
+    // Fetch posts from Firebase Realtime Database
+    const fetchPosts = async () => {
+      const postsRef = firebase.database().ref("posts");
+      postsRef.once("value", (snapshot) => {
+        const postsData = snapshot.val();
+        console.log("postsdata: ", postsData);
+        if (postsData) {
+          // convert postsdata to an array
+          const postsArray = Object.entries(postsData).map(
+            ([postId, post]) => ({
+              postId,
+              ...post,
+            })
+          );
+
+          // Calculate likes count for each post
+          postsArray.forEach((post) => {
+            post.likesCount = 0;
+            if (post.users) {
+              post.likesCount = Object.values(post.users).filter(
+                (user) => user.liked
+              ).length;
+            }
+          });
+
+          // Sort posts by likes count in descending order
+          postsArray.sort((a, b) => b.likesCount - a.likesCount);
+
+          // select top 5 posts
+          const top5Posts = postsArray.slice(0, 5);
+          setTopPosts(top5Posts);
+        }
+      });
+    };
+    fetchPosts();
+  }, []);
 
   // funtion to parse HTML and extract the text content
   const parseHTML = (htmlString) => {
@@ -790,17 +830,13 @@ const BlogDetails = () => {
           </div>*/}
                     <div className="sidebar-widget latest-post mb-3">
                       <h5>Popular Posts</h5>
-                      {posts.map((post, index) => (
+                      {topPosts.map((post, index) => (
                         <>
                           <div className="py-2">
                             <span className="text-sm text-muted">
                               {post.date}
                             </span>
                             <h6 className="my-2">
-                              {/* <a href={`/${post.title}`}>{post.title}</a> */}
-                              {/* <Link
-                                to={`/${parseHTML(post.title)}`}
-                              >{`${parseHTML(post.title)}`}</Link> */}
                               <a href={`/${parseHTML(post.title)}`}>
                                 {parseHTML(post.title)}
                               </a>
@@ -808,6 +844,20 @@ const BlogDetails = () => {
                           </div>
                         </>
                       ))}
+                      {/* {posts.map((post, index) => (
+                        <>
+                          <div className="py-2">
+                            <span className="text-sm text-muted">
+                              {post.date}
+                            </span>
+                            <h6 className="my-2">
+                              <a href={`/${parseHTML(post.title)}`}>
+                                {parseHTML(post.title)}
+                              </a>
+                            </h6>
+                          </div>
+                        </>
+                      ))} */}
                     </div>
                     <div className="sidebar-widget category mb-3">
                       <h5 className="mb-4">Categories</h5>

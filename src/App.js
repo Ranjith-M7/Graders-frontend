@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./components/HomePage";
 import AboutPage from "./components/AboutPage";
 import CoursesPage from "./components/CoursesPage";
+import CourseDetails from "./components/CourseDetails";
+
 import Blog from "./components/Blog";
 import BlogDetails from "./components/BlogDetails";
 import TeamPage from "./components/TeamPage";
@@ -24,6 +26,8 @@ function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/courses" element={<CoursesPage />} />
+          <Route path="/course-details/:id" element={<CourseDetails />} />
+
           <Route path="/team" element={<TeamPage />} />
           <Route path="/events" element={<EventsPage />} />
           <Route path="/blog" element={<Blog />} />

@@ -5,6 +5,10 @@ import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.min.css";
 import "owl.carousel/dist/assets/owl.theme.default.min.css";
 
+import tempImg1 from "../assets/images/banner-item-03.jpg";
+import tempImg2 from "../assets/images/banner-item-02.jpg";
+import tempImg3 from "../assets/images/banner-item-01.jpg";
+
 function MainBanner() {
   const [mainBannerData, setMainBannerData] = useState({
     mainBannerContent: [],
@@ -79,6 +83,295 @@ function MainBanner() {
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
+            <OwlCarousel
+              className="owl-carousel owl-theme"
+              center={true}
+              items="1"
+              autoplay={false}
+              loop
+              dots={true}
+              nav={false}
+              smartSpeed="1500"
+              responsive={{
+                992: {
+                  items: 1,
+                },
+                1200: {
+                  items: 1,
+                },
+              }}
+            >
+              {/* Item 1 */}
+
+              <div
+                className="item d-flex justify-content-between align-content-center mx-5"
+                style={{ backgroundImage: "white" }}
+              >
+                {/* Card 1 */}
+                <div
+                  className="card p-2"
+                  style={{
+                    width: "18rem",
+                    backgroundColor: "rgb(215, 255, 253",
+
+                    color: "black",
+                  }}
+                >
+                  <img
+                    className="card-img-top"
+                    src={tempImg1}
+                    alt="Card image cap"
+                  />
+                  <div className="card-body text-center">
+                    <h5 className="card-title">Card title</h5>
+                    <p className="card-text  text-black w-100 mb-3">
+                      Some quick example text to build on the card title and
+                      make up the bulk of t the bulk of th he card's
+                      content.Some quick
+                    </p>
+                    <a href="#" className="secondary-button">
+                      Go somewhere
+                    </a>
+                  </div>
+                </div>
+                {/* Card 2 */}
+                <div
+                  className="card p-2"
+                  style={{
+                    width: "18rem",
+                    backgroundColor: "rgb(215, 255, 253",
+
+                    color: "black",
+                  }}
+                >
+                  <img
+                    className="card-img-top"
+                    src={tempImg1}
+                    alt="Card image cap"
+                  />
+                  <div className="card-body text-center">
+                    <h5 className="card-title">Card title</h5>
+                    <p className="card-text  text-black w-100 mb-3">
+                      Some quick example text to build on the card title and
+                      make up the bulk of t the bulk of th he card's
+                      content.Some quick
+                    </p>
+                    <a href="#" className="secondary-button">
+                      Go somewhere
+                    </a>
+                  </div>
+                </div>
+                {/* Card 3 */}
+                <div
+                  className="card p-2"
+                  style={{
+                    width: "18rem",
+                    backgroundColor: "rgb(215, 255, 253",
+
+                    color: "black",
+                  }}
+                >
+                  <img
+                    className="card-img-top"
+                    src={tempImg1}
+                    alt="Card image cap"
+                  />
+                  <div className="card-body text-center">
+                    <h5 className="card-title">Card title</h5>
+                    <p className="card-text  text-black w-100 mb-3">
+                      Some quick example text to build on the card title and
+                      make up the bulk of t the bulk of th he card's
+                      content.Some quick
+                    </p>
+                    <a href="#" className="secondary-button">
+                      Go somewhere
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Item 2 */}
+
+              <div
+                className="item d-flex justify-content-between align-content-center mx-5"
+                style={{ backgroundImage: "white" }}
+              >
+                {/* Card 1 */}
+                <div
+                  className="card p-2"
+                  style={{
+                    width: "18rem",
+                    backgroundColor: "rgb(215, 255, 253",
+
+                    color: "black",
+                  }}
+                >
+                  <img
+                    className="card-img-top"
+                    src={tempImg1}
+                    alt="Card image cap"
+                  />
+                  <div className="card-body text-center">
+                    <h5 className="card-title">Card title</h5>
+                    <p className="card-text  text-black w-100 mb-3">
+                      Some quick example text to build on the card title and
+                      make up the bulk of t the bulk of th he card's
+                      content.Some quick
+                    </p>
+                    <a href="#" className="secondary-button">
+                      Go somewhere
+                    </a>
+                  </div>
+                </div>
+                {/* Card 2 */}
+                <div
+                  className="card p-2"
+                  style={{
+                    width: "18rem",
+                    backgroundColor: "rgb(215, 255, 253",
+
+                    color: "black",
+                  }}
+                >
+                  <img
+                    className="card-img-top"
+                    src={tempImg1}
+                    alt="Card image cap"
+                  />
+                  <div className="card-body text-center">
+                    <h5 className="card-title">Card title</h5>
+                    <p className="card-text  text-black w-100 mb-3">
+                      Some quick example text to build on the card title and
+                      make up the bulk of t the bulk of th he card's
+                      content.Some quick
+                    </p>
+                    <a href="#" className="secondary-button">
+                      Go somewhere
+                    </a>
+                  </div>
+                </div>
+                {/* Card 3 */}
+                <div
+                  className="card p-2"
+                  style={{
+                    width: "18rem",
+                    backgroundColor: "rgb(215, 255, 253",
+
+                    color: "black",
+                  }}
+                >
+                  <img
+                    className="card-img-top"
+                    src={tempImg1}
+                    alt="Card image cap"
+                  />
+                  <div className="card-body text-center">
+                    <h5 className="card-title">Card title</h5>
+                    <p className="card-text  text-black w-100 mb-3">
+                      Some quick example text to build on the card title and
+                      make up the bulk of t the bulk of th he card's
+                      content.Some quick
+                    </p>
+                    <a href="#" className="secondary-button">
+                      Go somewhere
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Item 3 */}
+
+              <div
+                className="item d-flex justify-content-between align-content-center mx-5"
+                style={{ backgroundImage: "white" }}
+              >
+                {/* Card 1 */}
+                <div
+                  className="card p-2"
+                  style={{
+                    width: "18rem",
+                    backgroundColor: "rgb(215, 255, 253",
+
+                    color: "black",
+                  }}
+                >
+                  <img
+                    className="card-img-top"
+                    src={tempImg1}
+                    alt="Card image cap"
+                  />
+                  <div className="card-body text-center">
+                    <h5 className="card-title">Card title</h5>
+                    <p className="card-text  text-black w-100 mb-3">
+                      Some quick example text to build on the card title and
+                      make up the bulk of t the bulk of th he card's
+                      content.Some quick
+                    </p>
+                    <a href="#" className="secondary-button">
+                      Go somewhere
+                    </a>
+                  </div>
+                </div>
+                {/* Card 2 */}
+                <div
+                  className="card p-2"
+                  style={{
+                    width: "18rem",
+                    backgroundColor: "rgb(215, 255, 253",
+
+                    color: "black",
+                  }}
+                >
+                  <img
+                    className="card-img-top"
+                    src={tempImg1}
+                    alt="Card image cap"
+                  />
+                  <div className="card-body text-center">
+                    <h5 className="card-title">Card title</h5>
+                    <p className="card-text  text-black w-100 mb-3">
+                      Some quick example text to build on the card title and
+                      make up the bulk of t the bulk of th he card's
+                      content.Some quick
+                    </p>
+                    <a href="#" className="secondary-button">
+                      Go somewhere
+                    </a>
+                  </div>
+                </div>
+                {/* Card 3 */}
+                <div
+                  className="card p-2"
+                  style={{
+                    width: "18rem",
+                    backgroundColor: "rgb(215, 255, 253",
+
+                    color: "black",
+                  }}
+                >
+                  <img
+                    className="card-img-top"
+                    src={tempImg1}
+                    alt="Card image cap"
+                  />
+                  <div className="card-body text-center">
+                    <h5 className="card-title">Card title</h5>
+                    <p className="card-text  text-black w-100 mb-3">
+                      Some quick example text to build on the card title and
+                      make up the bulk of t the bulk of th he card's
+                      content.Some quick
+                    </p>
+                    <a href="#" className="secondary-button">
+                      Go somewhere
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </OwlCarousel>
+          </div>
+
+          {/* will delete this code later */}
+          {/* <div className="col-lg-12">
             {dataLoaded && (
               <OwlCarousel
                 className="owl-carousel owl-banner"
@@ -90,8 +383,8 @@ function MainBanner() {
                 smartSpeed="1500"
                 nav={true}
                 navText={[
-                  `<i class="fa fa-angle-left" aria-hidden="true"></i>`,
-                  `<i class="fa fa-angle-right" aria-hidden="true"></i>`,
+                  `<i className="fa fa-angle-left" aria-hidden="true"></i>`,
+                  `<i className="fa fa-angle-right" aria-hidden="true"></i>`,
                 ]}
                 responsive={{
                   992: {
@@ -130,7 +423,7 @@ function MainBanner() {
                 ))}
               </OwlCarousel>
             )}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

@@ -239,6 +239,13 @@ body {
   line-height: 44px;
   color: var(--primary-color);
   font-style: normal;
+
+  /* font-size: 1.2rem;
+  font-style: italic;
+  color: #333; */
+  /* background-color: var(--bg-color-secondary); */
+  padding: 10px;
+  border-left: 5px solid var(--bg-color-primary);
 }
 
 .main-button a {
@@ -1305,6 +1312,7 @@ Banner Style
   background-repeat: no-repeat;
   background-size: cover;
   padding: 130px 0px 120px 0px;
+  border-bottom-right-radius: 100px;
 }
 
 .main-banner .item {
@@ -1312,8 +1320,8 @@ Banner Style
   background-position: center center;
   background-size: cover;
   border-radius: 25px;
-  padding: 100px 100px;
-  margin-left: 130px;
+  padding: 50px 100px 0px;
+  /* margin-left: 130px; */
 }
 
 .main-banner .item span.category {
@@ -1381,37 +1389,24 @@ Banner Style
   font-weight: 500;
 }
 
-.main-banner .owl-nav {
-  position: absolute;
-  max-width: 1320px;
-  bottom: 23px;
-  left: 0;
-  text-align: right;
+/* Customize OwlCarousel Dots Navigation */
+.owl-theme .owl-dots {
+  text-align: center;
+  margin-top: 20px;
 }
 
-.main-banner .owl-nav .owl-prev i,
-.main-banner .owl-nav .owl-next i {
-  width: 50px;
-  height: 50px;
-  line-height: 50px;
-  font-size: 24px;
+.owl-theme .owl-dots .owl-dot {
   display: inline-block;
-  color: #fff;
-  background-color: rgba(255, 255, 255, 0.2);
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+  /* background-color: rgba(0, 0, 0, 0.2); */
   border-radius: 50%;
-  opacity: 1;
-  transition: all 0.3s;
+  transition: background-color 0.3s ease;
 }
 
-.main-banner .owl-nav .owl-prev i {
-  position: absolute;
-  bottom: 65px;
-}
-
-.main-banner .owl-nav .owl-prev i:hover,
-.main-banner .owl-nav .owl-next i:hover {
-  opacity: 1;
-  background-color: rgba(255, 255, 255, 0.5);
+.owl-theme .owl-dots .owl-dot.active {
+  /* background-color: rgba(0, 0, 0, 0.5);  */
 }
 
 /* 
@@ -2353,13 +2348,13 @@ body {
   .header-area .main-nav .logo h1 {
     border-right: none;
   }
-  .main-banner .item {
+  /* .main-banner .item {
     padding: 80px 30px 120px 30px !important;
     margin-left: 30px;
   }
   .main-banner .owl-nav {
     left: 30px !important;
-  }
+  } */
   .event_filter {
     padding: 15px 20px;
   }

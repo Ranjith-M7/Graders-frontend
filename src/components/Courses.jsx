@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import Masonry from "react-masonry-css";
+import { Link } from "react-router-dom";
 import { database, storage } from "./firebaseConfig";
 
 function Courses() {
@@ -133,7 +134,11 @@ function Courses() {
                 key={index}
                 className={`align-self-center mb-30 event_outer ${course.Category.toLowerCase()}`}
               >
-                <div className="events_item">
+                <Link
+                  className="events_item"
+                  // to={`/course-details/${course._id}`}
+                  to={`/course-details/1`}
+                >
                   <div className="thumb">
                     <a href="#">
                       <img src={imageUrls[index]} alt={`Image ${index + 1}`} />
@@ -150,7 +155,7 @@ function Courses() {
                     <span className="author">{course.Author}</span>
                     <h4>{course.Title}</h4>
                   </div>
-                </div>
+                </Link>
               </div>
             ))}
           </Masonry>
