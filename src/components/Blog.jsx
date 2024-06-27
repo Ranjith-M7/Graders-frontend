@@ -13,7 +13,7 @@ function Blog() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 8;
+  const itemsPerPage = 10;
 
   //post
   useEffect(() => {
@@ -118,7 +118,7 @@ function Blog() {
                             />
                           </div>
                           <Link
-                            to={`/${parseHTML(post.title)}`}
+                            to={`/blog/blog-details/${parseHTML(post.title)}`}
                             className="blog-button"
                           >
                             READ MORE

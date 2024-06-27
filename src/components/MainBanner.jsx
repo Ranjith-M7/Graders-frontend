@@ -87,7 +87,7 @@ function MainBanner() {
               className="owl-carousel owl-theme"
               center={true}
               items="1"
-              autoplay={false}
+              autoplay={true}
               loop
               dots={true}
               nav={false}

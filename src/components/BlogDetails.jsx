@@ -6,12 +6,13 @@ import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp as farThumbsUp } from "@fortawesome/free-regular-svg-icons";
 import { faThumbsUp as fasThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import "icofont/dist/icofont.css";
 
 import Header from "./Header";
 import Footer from "./Footer";
 
 const BlogDetails = () => {
-  const [post, setPost] = useState(null); // Change to null initially
+  const [post, setPost] = useState(null);
   const { title } = useParams();
   const [liked, setLiked] = useState(false);
   const [postId, setPostId] = useState(null);
@@ -85,7 +86,7 @@ const BlogDetails = () => {
                     user_id: userId,
                   });
                 } else {
-                  console.log("User already recorded for this post.");
+                  // console.log("User already recorded for this post.");
                 }
               });
             } else {
@@ -177,7 +178,7 @@ const BlogDetails = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log("posttitle:", title);
+    // console.log("posttitle:", title);
 
     const fetchData = async () => {
       try {
@@ -452,15 +453,14 @@ const BlogDetails = () => {
     });
   }, [postId, title]);
 
+  // Popular Posts
   const [topPosts, setTopPosts] = useState([]);
-  console.log("topposts: ", topPosts);
   useEffect(() => {
     // Fetch posts from Firebase Realtime Database
     const fetchPosts = async () => {
       const postsRef = firebase.database().ref("posts");
       postsRef.once("value", (snapshot) => {
         const postsData = snapshot.val();
-        console.log("postsdata: ", postsData);
         if (postsData) {
           // convert postsdata to an array
           const postsArray = Object.entries(postsData).map(
@@ -469,6 +469,7 @@ const BlogDetails = () => {
               ...post,
             })
           );
+          // console.log(postsArray);
 
           // Calculate likes count for each post
           postsArray.forEach((post) => {
@@ -541,7 +542,7 @@ const BlogDetails = () => {
                       </a>
                     </div>
                     <h5 className="card-title">
-                      <Link to={`/${post.title}`}>{post.title}</Link>
+                      <Link to={`/blog/blog-details/${post.title}`}>{post.title}</Link>
                     </h5>
                     <p
                       className="card-text"
@@ -566,43 +567,40 @@ const BlogDetails = () => {
                       <div className="single-blog-item">
                         <img src={post.image} alt="" className="img-fluid" />
                         <div className="blog-item-content mt-5">
-                          <div className="blog-item-meta mb-3">
-                            <span className="text-color-2 text-capitalize mr-3">
-                              <i className="icofont-book-mark mr-2" /> Equipment{" "}
-                            </span>
-                            <span className="text-muted text-capitalize mr-3">
-                              <i className="icofont-comment mr-2" />
+                          <div className="blog-item-meta mb-2 d-flex">
+                            <div className="me-2 text-color-2 text-capitalize ">
+                              <i className="icofont-book-mark" /> Equipment
+                            </div>
+                            <div className="me-2 text-muted text-capitalize">
+                              <i className="icofont-comment me-1" />
                               {comments.length} Comments
-                            </span>
+                            </div>
 
-                            <span
-                              id={`likes-${postId}`}
-                              className="text-muted text-capitalize mr-3"
-                            >
-                              <i className="icofont-comment mr-2" />{" "}
+                            <div className="text-muted text-capitalize me-2">
+                              <i className="icofont-like me-1" />
                               {likesCount} likes
-                            </span>
-                            <span className="text-black text-capitalize mr-3">
-                              <i className="icofont-calendar mr-2" />{" "}
-                              {post.date}
-                            </span>
+                            </div>
 
-                            <div>
-                              <button onClick={handleLike}>
-                                <FontAwesomeIcon
-                                  icon={liked ? fasThumbsUp : farThumbsUp}
-                                />
-                              </button>
+                            <div className="text-muted text-capitalize mr-3 d-flex flex-column d-sm-block">
+                              <i className="icofont-calendar me-1" />
+                              {post.date}
                             </div>
                           </div>
-                          <h2 className="mb-4 text-md">
-                            <a
+                          <div>
+                            <button onClick={handleLike}>
+                              <FontAwesomeIcon
+                                icon={liked ? fasThumbsUp : farThumbsUp}
+                              />
+                            </button>
+                          </div>
+                          <h2 className=" mt-2 mb-2 text-md">
+                            <Link
                               // href="blog-single.html"
-                              href={`/${parseHTML(post.title)}`}
+                              to={`/blog/blog-details/${parseHTML(post.title)}`}
                               dangerouslySetInnerHTML={{
                                 __html: post.title,
                               }}
-                            ></a>
+                            ></Link>
                           </h2>
                           {/*<p className="lead mb-4">
                   Non illo quas blanditiis repellendus laboriosam minima animi.
@@ -718,7 +716,7 @@ const BlogDetails = () => {
                                   </div>
                                   <div className="comment-meta mt-2">
                                     <a href="#">
-                                      <i className="icofont-reply mr-2 text-muted" />
+                                      <i className="icofont-reply me-2 text-muted" />
                                       Reply
                                     </a>
                                   </div>
@@ -832,14 +830,18 @@ const BlogDetails = () => {
                       <h5>Popular Posts</h5>
                       {topPosts.map((post, index) => (
                         <>
-                          <div className="py-2">
+                          <div key={index} className="py-2">
                             <span className="text-sm text-muted">
                               {post.date}
                             </span>
                             <h6 className="my-2">
-                              <a href={`/${parseHTML(post.title)}`}>
+                              <Link 
+                                to={`/blog/blog-details/${parseHTML(
+                                  post.title
+                                )}`}
+                              >
                                 {parseHTML(post.title)}
-                              </a>
+                              </Link>
                             </h6>
                           </div>
                         </>

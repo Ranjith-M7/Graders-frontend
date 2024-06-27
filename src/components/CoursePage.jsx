@@ -4,7 +4,7 @@ import Header from "./Header";
 import Courses from "./Courses";
 import Footer from "./Footer";
 
-function CoursesPage() {
+function CoursePage() {
   return (
     <>
       <Header />
@@ -14,4 +14,4 @@ function CoursesPage() {
   );
 }
 
-export default CoursesPage;
+export default CoursePage;

@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./components/HomePage";
 import AboutPage from "./components/AboutPage";
-import CoursesPage from "./components/CoursesPage";
+import CoursePage from "./components/CoursePage";
 import CourseDetails from "./components/CourseDetails";
 
 import Blog from "./components/Blog";
@@ -25,13 +25,13 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/courses" element={<CoursesPage />} />
+          <Route path="/course-list" element={<CoursePage />} />
           <Route path="/course-details/:id" element={<CourseDetails />} />
 
           <Route path="/team" element={<TeamPage />} />
           <Route path="/events" element={<EventsPage />} />
           <Route path="/blog" element={<Blog />} />
-          <Route path="/:title" element={<BlogDetails />} />
+          <Route path="/blog/blog-details/:title" element={<BlogDetails />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/signin" element={<LoginForm />} />
           <Route path="/signup" element={<SignUpForm />} />

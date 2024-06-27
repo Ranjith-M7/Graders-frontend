@@ -186,7 +186,7 @@ function Header() {
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to="/courses" activeClassName="active">
+                    <NavLink to="/course-list" activeClassName="active">
                       Courses
                     </NavLink>
                   </li>
