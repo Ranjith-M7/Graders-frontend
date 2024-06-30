@@ -1,187 +1,177 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import firebase from "firebase/compat/app";
+import "firebase/compat/database";
 
 import tempImg1 from "../assets/images/course-01.jpg";
-import tempImg2 from "../assets/images/course-02.jpg";
 
 import Header from "./Header";
 import Footer from "./Footer";
+
 function CourseDetails() {
   const { id } = useParams();
+  const [course, setCourse] = useState({
+    title: "",
+    author: "",
+    description: "",
+    about: "",
+    whatYouLearn: [],
+    modules: [],
+    learners: "",
+    price: "",
+    duration: "",
+    hoursPerWeek: "",
+    level: "",
+    language: "",
+    rupeeSign: "",
+    subtitles: [],
+  });
+
+  useEffect(() => {
+    // Fetch selected course from firebase realtime database
+    const fetchCourse = async () => {
+      try {
+        const snapshot = await firebase
+          .database()
+          .ref("Courses Section/Courses")
+          .once("value");
+
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          if (data) {
+            // Find the course with the matching ID
+            const coursesData = Object.values(data);
+            const selectedCourse = coursesData.find(
+              (course) => course.Id === parseInt(id)
+            );
+            if (selectedCourse) {
+              setCourse({
+                title: selectedCourse.Title || "",
+                author: selectedCourse.Author || "",
+                description: selectedCourse.Description || "",
+                about: selectedCourse.About || "",
+                whatYouLearn: selectedCourse.WhatYouLearn || [],
+                modules: selectedCourse.Modules || [],
+                learners: selectedCourse.Learners || "",
+                price: selectedCourse.Price || "",
+                duration: selectedCourse.Duration || "",
+                hoursPerWeek: selectedCourse.HoursPerWeek || "",
+                level: selectedCourse.Level || "",
+                language: selectedCourse.Language || "",
+                rupeeSign: selectedCourse.Rupee_Sign || "",
+                subtitles: selectedCourse.Subtitles || [],
+              });
+            } else {
+              console.log(`Course with ID ${id} not found`);
+            }
+          }
+        } else {
+          console.log("No courses found in the database");
+        }
+      } catch (error) {
+        console.error("Error fetching courses: ", error);
+      }
+    };
+    fetchCourse();
+  }, [id]);
 
   return (
     <>
-      <section
-        className="course-details"
-        style={{ backgroundColor: "rgb(215, 255, 253)" }}
-      >
+      <Header />
+      <section className="course-details-section" id="course-details">
         <div className="container">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="row my-5">
-                <div className="col-lg-8 d-flex">
-                  <div className="row ">
-                    <div className="col-lg-4">
-                      <img src={tempImg1} className="img-fluid" alt="" />
-                    </div>
-                    <div className="col-lg-8 d-flex flex-column justify-content-center">
-                      <h2 className="mb-2">
-                        UX Design: From Concept to Wireframe
-                      </h2>
-                      <span className="d-inline-block mb-2">by MichiganX</span>
-                      <p>
-                        Gain first-hand experiences of the UX design process as
-                        you take a UX design project from an initial sketch and
-                        develop it into a wireframe project from an initial
-                        sketch and develop it into a wireframe into a wireframe.
-                      </p>
-                      {/* you can add star rating and reviews if needs */}
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-4 d-flex flex-column justify-content-center align-items-center">
-                  <span className="mb-1">March 21, 2017</span>
-                  <span className="mb-3">Self-Paced</span>
-                  <button className="secondary-button w-50">ENROLL</button>
+          {/* Row 1 */}
+          <div className="row py-5">
+            <div className="col-lg-4 d-flex align-items-center justify-content-center">
+              <div className="image">
+                <img src={tempImg1} className="img-fluid" alt="" />
+              </div>
+            </div>
+            <div className="col-lg-8 ">
+              <div className="d-lg-flex justify-content-between align-items-center p-lg-5 p-3 bg-white">
+                <div className="content py-2">
+                  <h2 className="mb-2">{course.title}</h2>
+                  <span className="d-inline-block mb-2">{course.author}</span>
+                  <p>{course.description}</p>
+                  {/* you can add star rating and reviews if needs */}
                 </div>
               </div>
             </div>
-            <div className="col-lg-12">
-              <div className="row">
-                <div
-                  className="col-lg-8 p-4 me-4 bg-white"
-                  style={{ color: "white" }}
-                >
-                  <div className="mb-4">
-                    <h2 className="mb-3">About this course</h2>
-                    <p>
-                      Creat designs don't come out of nowhere, they are born,
-                      nurtured, and grow. In this UX course, you will explore
-                      the process of taking a basic concept, grounded in user
-                      needs, and develop it into a design that will address
-                      those needs. Using ideation techniques, comparative
-                      research, sketching, storyboarding, architecting, and
-                    </p>
-                  </div>
-                  <div>
-                    <h2>What you'll learn</h2>
-                    <ul style={{ color: "red" }}>
-                      <li>
-                        Learn to produce initial sketches that capture the
-                        process of ideation
-                      </li>
-                      <li>
-                        Create user stories and storyboards to support the
-                        concept
-                      </li>
-                      <li>
-                        Develop interface wireframes to provide an engaging test
-                        example
-                      </li>
-                      <li>Use comparative analysis techniques</li>
-                      <li>Run a design walkthrough to test the concept</li>
-                    </ul>
-                  </div>
-                  <div className="instructors-container">
-                    <h2>Instructors</h2>
-                    <div>
-                      {/* Instruct 1 */}
-                      <div>
-                        <div className="image">
-                          <img src={tempImg1} alt="" />
-                        </div>
-                        <h4>Predrag Klasnja</h4>
-                        <p>
-                          Assistant Professor, School of Information, University
-                          of Michigan
-                        </p>
-                      </div>
-                      {/* Instruct 2 */}
-                      <div>
-                        <div className="image">
-                          <img src={tempImg1} alt="" />
-                        </div>
-                        <h4>Light Yagami</h4>
-                        <p>
-                          Associate Professor, School of Information, University
-                          of Michigan
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+          </div>
+
+          {/* Row 2 */}
+          <div className="row pb-5">
+            {/* Left side */}
+
+            <div className="col-lg-9 ">
+              <div className="about-course p-5 bg-white ">
+                <h2 className="mb-3">{course.subtitles[0]}</h2>
+                <p>{course.about}</p>
+              </div>
+              <div className="what-you-learn px-5  bg-white">
+                <h2 className="mb-3">{course.subtitles[1]}</h2>
+
+                <ul className="learning-list">
+                  {course.whatYouLearn.map((list, index) => (
+                    <li key={index}>{list}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="course-content p-5  bg-white">
+                <h2 className="mb-3">{course.subtitles[2]}</h2>
+                <ul className="content-list">
+                  {course.modules.map((list, index) => (
+                    <li key={index}>
+                      <h3>{list.Title}</h3>
+                      <p>{list.Description}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {/* Right side */}
+            <div className="col-lg-3 mt-5 mt-lg-0">
+              <div
+                className="course-info p-5 bg-white d-flex flex-column"
+                style={{ color: "#777" }}
+              >
+                
+                <div className="info-item">
+                  <i className="fa-solid fa-user-group"></i>
+                  <span>{course.learners}</span>
                 </div>
-                <div className="col-lg-3 p-4 bg-white">
-                  <div>
-                    <span>
-                      <i className="icofont-comment me-1" /> 146 learners
-                    </span>
-
-                    <span>
-                      <i className="icofont-comment me-1" /> $ 120
-                    </span>
-
-                    <span>
-                      <i className="icofont-comment me-1" /> 3 Weeks
-                    </span>
-
-                    <span>
-                      <i className="icofont-comment me-1" /> 3-4 hours per week
-                    </span>
-
-                    <span>
-                      <i className="icofont-comment me-1" /> Intermediate
-                    </span>
-
-                    <span>
-                      <i className="icofont-comment " />
-                    </span>
-                  </div>
-                  <div className="other-courses">
-                    <ul>
-                      <li>
-                        Mobile Applicators Experiences Part I - From a Domain to
-                        an App Idea
-                      </li>
-                      <li>
-                        User Fxperence (UX) Design: Human Factors ard Culture in
-                        Design
-                      </li>
-                      <li>Mobile Applicator Part Z Mobile App Design</li>
-                      <li>IntrcdLCtion to user Experience</li>
-                      <li>Professional Android Developer</li>
-                    </ul>
-                  </div>
-                  {/* <div className="share-course">
-                    <h4>Share this Course with a friend</h4>
-                    <ul>
-                      <li>
-                        <a href="#" target="_blank">
-                          <i className="icofont-facebook" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#" target="_blank">
-                          <i className="icofont-twitter" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#" target="_blank">
-                          <i className="icofont-pinterest" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#" target="_blank">
-                          <i className="icofont-linkedin" aria-hidden="true" />
-                        </a>
-                      </li>
-                    </ul>
-                  </div> */}
+                <div className="info-item">
+                  <i className="fa-solid fa-tag"></i>
+                  <span>
+                    {course.rupeeSign}
+                    {course.price}
+                  </span>
                 </div>
+                <div className="info-item">
+                  <i className="fa-solid fa-stopwatch"></i>
+                  <span>{course.duration}</span>
+                </div>
+                <div className="info-item">
+                  <i className="fa-solid fa-clock"></i>
+                  <span>{course.hoursPerWeek}</span>
+                </div>
+                <div className="info-item">
+                  <i className="fa-solid fa-signal"></i>
+                  <span>{course.level}</span>
+                </div>
+                <div className="info-item">
+                  <i className="fa-solid fa-language"></i>
+                  <span>{course.language}</span>
+                </div>
+
               </div>
             </div>
           </div>
         </div>
       </section>
+      <Footer />
     </>
   );
 }

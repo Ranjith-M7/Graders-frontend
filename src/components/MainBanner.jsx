@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { database, firestore, storage } from "./firebaseConfig";
+import { database } from "./firebaseConfig";
 
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.min.css";
@@ -13,32 +13,8 @@ function MainBanner() {
   const [mainBannerData, setMainBannerData] = useState({
     mainBannerContent: [],
   });
-  const [imageUrls, setImageUrls] = useState([]);
+
   const [dataLoaded, setDataLoaded] = useState(false);
-
-  // Fetch images from storage
-  useEffect(() => {
-    const fetchImageUrls = async () => {
-      try {
-        const storageRef = storage.ref("Main Banner");
-
-        // Get list of items (images) in the directory
-        const listResult = await storageRef.listAll();
-
-        // Fetch download URL for each item (image) in the directory
-        const urls = await Promise.all(
-          listResult.items.map(async (itemRef) => {
-            return await itemRef.getDownloadURL();
-          })
-        );
-        setImageUrls(urls);
-      } catch (error) {
-        console.error("Error fetching image URLs:", error);
-      }
-    };
-
-    fetchImageUrls();
-  }, []);
 
   useEffect(() => {
     const fetchMainBannerData = async () => {
@@ -67,16 +43,6 @@ function MainBanner() {
 
     fetchMainBannerData();
   }, []);
-
-  //check if all data is loaded
-  useEffect(() => {
-    if (
-      mainBannerData.mainBannerContent.length > 0 &&
-      mainBannerData.mainBannerContent.length === imageUrls.length
-    ) {
-      setDataLoaded(true);
-    }
-  }, [mainBannerData, imageUrls]);
 
   return (
     <div className="main-banner" id="top">
@@ -123,15 +89,15 @@ function MainBanner() {
                     alt="Card image cap"
                   />
                   <div className="card-body text-center">
-                    <h5 className="card-title">Card title</h5>
-                    <p className="card-text  text-black w-100 mb-3">
-                      Some quick example text to build on the card title and
-                      make up the bulk of t the bulk of th he card's
-                      content.Some quick
+                    <h5 className="card-title">Full Stack Courses</h5>
+                    <p className="card-text  text-black w-100">
+                      Full Stack Developers earn an average salary of $112,000
+                      per year, significantly higher than many other tech roles.
+                      (Source: Indeed)
                     </p>
-                    <a href="#" className="secondary-button">
+                    {/* <a href="#" className="secondary-button">
                       Go somewhere
-                    </a>
+                    </a> */}
                   </div>
                 </div>
                 {/* Card 2 */}
@@ -146,19 +112,18 @@ function MainBanner() {
                 >
                   <img
                     className="card-img-top"
-                    src={tempImg1}
+                    src={tempImg2}
                     alt="Card image cap"
                   />
                   <div className="card-body text-center">
-                    <h5 className="card-title">Card title</h5>
-                    <p className="card-text  text-black w-100 mb-3">
-                      Some quick example text to build on the card title and
-                      make up the bulk of t the bulk of th he card's
-                      content.Some quick
+                    <h5 className="card-title">Expert Workshops</h5>
+                    <p className="card-text  text-black w-100">
+                      Attendees of our Expert Workshops report a 40% increase in
+                      their technical skills proficiency
                     </p>
-                    <a href="#" className="secondary-button">
+                    {/* <a href="#" className="secondary-button">
                       Go somewhere
-                    </a>
+                    </a> */}
                   </div>
                 </div>
                 {/* Card 3 */}
@@ -173,19 +138,18 @@ function MainBanner() {
                 >
                   <img
                     className="card-img-top"
-                    src={tempImg1}
+                    src={tempImg3}
                     alt="Card image cap"
                   />
                   <div className="card-body text-center">
-                    <h5 className="card-title">Card title</h5>
-                    <p className="card-text  text-black w-100 mb-3">
-                      Some quick example text to build on the card title and
-                      make up the bulk of t the bulk of th he card's
-                      content.Some quick
+                    <h5 className="card-title">Career Sessions</h5>
+                    <p className="card-text  text-black w-100">
+                      Students who attend our Career Sessions see a 50% higher
+                      interview success rate.
                     </p>
-                    <a href="#" className="secondary-button">
+                    {/* <a href="#" className="secondary-button">
                       Go somewhere
-                    </a>
+                    </a> */}
                   </div>
                 </div>
               </div>
@@ -212,17 +176,17 @@ function MainBanner() {
                     alt="Card image cap"
                   />
                   <div className="card-body text-center">
-                    <h5 className="card-title">Card title</h5>
+                    <h5 className="card-title">Full Stack Courses</h5>
                     <p className="card-text  text-black w-100 mb-3">
-                      Some quick example text to build on the card title and
-                      make up the bulk of t the bulk of th he card's
-                      content.Some quick
+                      95% of our Full Stack graduates secure a job within six
+                      months of completing the course
                     </p>
-                    <a href="#" className="secondary-button">
+                    {/* <a href="#" className="secondary-button">
                       Go somewhere
-                    </a>
+                    </a> */}
                   </div>
                 </div>
+
                 {/* Card 2 */}
                 <div
                   className="card p-2"
@@ -235,21 +199,22 @@ function MainBanner() {
                 >
                   <img
                     className="card-img-top"
-                    src={tempImg1}
+                    src={tempImg2}
                     alt="Card image cap"
                   />
                   <div className="card-body text-center">
-                    <h5 className="card-title">Card title</h5>
+                    <h5 className="card-title">Expert Workshops</h5>
                     <p className="card-text  text-black w-100 mb-3">
-                      Some quick example text to build on the card title and
-                      make up the bulk of t the bulk of th he card's
-                      content.Some quick
+                      80% of participants feel more confident in applying their
+                      knowledge in real-world scenarios after attending our
+                      workshops.
                     </p>
-                    <a href="#" className="secondary-button">
+                    {/* <a href="#" className="secondary-button">
                       Go somewhere
-                    </a>
+                    </a> */}
                   </div>
                 </div>
+
                 {/* Card 3 */}
                 <div
                   className="card p-2"
@@ -262,19 +227,18 @@ function MainBanner() {
                 >
                   <img
                     className="card-img-top"
-                    src={tempImg1}
+                    src={tempImg3}
                     alt="Card image cap"
                   />
                   <div className="card-body text-center">
-                    <h5 className="card-title">Card title</h5>
+                    <h5 className="card-title">Career Sessions</h5>
                     <p className="card-text  text-black w-100 mb-3">
-                      Some quick example text to build on the card title and
-                      make up the bulk of t the bulk of th he card's
-                      content.Some quick
+                      70% of our attendees receive job offers within three
+                      months of participating in our Career Sessions.
                     </p>
-                    <a href="#" className="secondary-button">
+                    {/* <a href="#" className="secondary-button">
                       Go somewhere
-                    </a>
+                    </a> */}
                   </div>
                 </div>
               </div>
@@ -301,17 +265,17 @@ function MainBanner() {
                     alt="Card image cap"
                   />
                   <div className="card-body text-center">
-                    <h5 className="card-title">Card title</h5>
+                    <h5 className="card-title">Full Stack Courses</h5>
                     <p className="card-text  text-black w-100 mb-3">
-                      Some quick example text to build on the card title and
-                      make up the bulk of t the bulk of th he card's
-                      content.Some quick
+                      The demand for Full Stack Developers has increased by 30%
+                      year over year" (Source: LinkedIn)
                     </p>
-                    <a href="#" className="secondary-button">
+                    {/* <a href="#" className="secondary-button">
                       Go somewhere
-                    </a>
+                    </a> */}
                   </div>
                 </div>
+
                 {/* Card 2 */}
                 <div
                   className="card p-2"
@@ -324,21 +288,21 @@ function MainBanner() {
                 >
                   <img
                     className="card-img-top"
-                    src={tempImg1}
+                    src={tempImg2}
                     alt="Card image cap"
                   />
                   <div className="card-body text-center">
-                    <h5 className="card-title">Card title</h5>
+                    <h5 className="card-title">Expert Workshops</h5>
                     <p className="card-text  text-black w-100 mb-3">
-                      Some quick example text to build on the card title and
-                      make up the bulk of t the bulk of th he card's
-                      content.Some quick
+                      90% of students believe that industry expert insights
+                      significantly impact their learning and career growth.
                     </p>
-                    <a href="#" className="secondary-button">
+                    {/* <a href="#" className="secondary-button">
                       Go somewhere
-                    </a>
+                    </a> */}
                   </div>
                 </div>
+
                 {/* Card 3 */}
                 <div
                   className="card p-2"
@@ -351,79 +315,23 @@ function MainBanner() {
                 >
                   <img
                     className="card-img-top"
-                    src={tempImg1}
+                    src={tempImg3}
                     alt="Card image cap"
                   />
                   <div className="card-body text-center">
-                    <h5 className="card-title">Card title</h5>
+                    <h5 className="card-title">Career Sessions</h5>
                     <p className="card-text  text-black w-100 mb-3">
-                      Some quick example text to build on the card title and
-                      make up the bulk of t the bulk of th he card's
-                      content.Some quick
+                      Over 85% of students find the personalized advice from our
+                      Career Sessions crucial for their job search strategy
                     </p>
-                    <a href="#" className="secondary-button">
+                    {/* <a href="#" className="secondary-button">
                       Go somewhere
-                    </a>
+                    </a> */}
                   </div>
                 </div>
               </div>
             </OwlCarousel>
           </div>
-
-          {/* will delete this code later */}
-          {/* <div className="col-lg-12">
-            {dataLoaded && (
-              <OwlCarousel
-                className="owl-carousel owl-banner"
-                center={true}
-                items="1"
-                autoplay={true}
-                loop
-                dots={false}
-                smartSpeed="1500"
-                nav={true}
-                navText={[
-                  `<i className="fa fa-angle-left" aria-hidden="true"></i>`,
-                  `<i className="fa fa-angle-right" aria-hidden="true"></i>`,
-                ]}
-                responsive={{
-                  992: {
-                    items: 1,
-                  },
-                  1200: {
-                    items: 1,
-                  },
-                }}
-              >
-                {mainBannerData.mainBannerContent.map((banner, index) => (
-                  <div
-                    key={index}
-                    className="item"
-                    style={{ backgroundImage: `url("${imageUrls[index]}")` }}
-                  >
-                    <div className="header-text">
-                      <span className="category">{banner.Category}</span>
-                      <h2>{banner.Title}</h2>
-                      <p>{banner.Description}</p>
-                      <div className="buttons">
-                        <div className="main-button">
-                          <a href={banner.Buttons.Main_Button.Link}>
-                            {banner.Buttons.Main_Button.Text}
-                          </a>
-                        </div>
-                        <div className="icon-button">
-                          <a href={banner.Buttons.Main_Button.Link}>
-                            <i className="fa fa-play" />{" "}
-                            {banner.Buttons.Icon_Button.Text}
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </OwlCarousel>
-            )}
-          </div> */}
         </div>
       </div>
     </div>

@@ -1423,7 +1423,6 @@ Services Style
   position: relative;
   margin-top: 95px;
 }
-
 .services .service-item .icon {
   width: 190px;
   height: 190px;
@@ -1449,6 +1448,7 @@ Services Style
   margin-bottom: 30px;
   margin-right: 80px;
   transition: all 0.4s;
+  height: 400px;
 }
 
 .services .service-item h4 {
@@ -1560,6 +1560,15 @@ h2.accordion-header button {
   margin-top: 50px;
 }
 
+
+.point-list {
+  margin-left: 25px;
+}
+.point-list li {
+  list-style: disc;
+  font-size: 14px;
+  margin-top: 0.5rem;
+}
 /* 
 ---------------------------------------------
 Courses Style
@@ -1654,7 +1663,7 @@ Courses Style
 }
 
 .events_item {
-  background-color: var(--bg-color-secondary);
+  /* background-color: var(--bg-color-secondary); */
   border-radius: 25px;
   margin-bottom: 30px;
   position: relative;
@@ -1701,6 +1710,75 @@ Courses Style
 /* Style for individual items */
 .my-masonry-grid_column > div {
   margin-bottom: 30px;
+}
+
+/* 
+---------------------------------------------
+Course Details Style
+--------------------------------------------- 
+*/
+
+.course-details-section {
+  padding-top: 120px;
+  background-color: rgb(215, 255, 253);
+}
+.course-details-section .image {
+  width: 100%;
+  max-width: 450px;
+}
+
+.course-info .info-item {
+  position: relative;
+}
+
+.course-info .info-item i {
+  position: absolute;
+  font-size: 14px;
+  top: 25%;
+  left: 5px;
+}
+.course-info .info-item span {
+  margin-left: 2rem;
+  font-size: 14px;
+}
+
+
+
+.what-you-learn .learning-list {
+  margin-left: 25px;
+}
+.what-you-learn .learning-list li {
+  list-style: disc;
+  font-size: 14px;
+  margin-top: 0.5rem;
+}
+
+.course-content .content-list{
+  margin-left: 25px;
+}
+.course-content .content-list li{
+  list-style: decimal;
+  font-weight: bold;
+}
+.course-content .content-list li p{
+  font-weight: normal;
+}
+
+.about-course h2,
+.what-you-learn h2,
+.course-content h2 {
+  font-size: 1.4rem;
+}
+
+.course-content h3 {
+  font-size: 1.1rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 992px) {
+  .course-details-section {
+    padding-top: 60px;
+  }
 }
 
 /* 
