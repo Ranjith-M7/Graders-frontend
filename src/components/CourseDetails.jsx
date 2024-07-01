@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import firebase from "firebase/compat/app";
-import "firebase/compat/database";
 
-import tempImg1 from "../assets/images/course-01.jpg";
+import { database, storage } from "./firebaseConfig";
+import { getStorage, ref, getDownloadURL, listAll } from "firebase/storage";
 
 import Header from "./Header";
 import Footer from "./Footer";
 
 function CourseDetails() {
   const { id } = useParams();
+  const [imageUrl, setImageUrl] = useState(null);
   const [course, setCourse] = useState({
     title: "",
     author: "",
@@ -31,8 +31,7 @@ function CourseDetails() {
     // Fetch selected course from firebase realtime database
     const fetchCourse = async () => {
       try {
-        const snapshot = await firebase
-          .database()
+        const snapshot = await database
           .ref("Courses Section/Courses")
           .once("value");
 
@@ -75,6 +74,27 @@ function CourseDetails() {
     fetchCourse();
   }, [id]);
 
+  useEffect(() => {
+    const fetchCourseImage = async (courseId) => {
+      const imageRef = ref(storage, `Course Images/${courseId}`);
+
+      try {
+        const listResult = await listAll(imageRef);
+        if (listResult.items.length > 0) {
+          const firstImageRef = listResult.items[0];
+          const url = await getDownloadURL(firstImageRef);
+          setImageUrl(url);
+        } else {
+          console.log("No images found for course ID: ", courseId);
+        }
+      } catch (error) {
+        console.error("Error fetching image URL:", error);
+      }
+    };
+
+    fetchCourseImage(id);
+  }, [id]);
+
   return (
     <>
       <Header />
@@ -84,7 +104,7 @@ function CourseDetails() {
           <div className="row py-5">
             <div className="col-lg-4 d-flex align-items-center justify-content-center">
               <div className="image">
-                <img src={tempImg1} className="img-fluid" alt="" />
+                <img src={imageUrl} className="img-fluid" alt="" />
               </div>
             </div>
             <div className="col-lg-8 ">
@@ -137,7 +157,6 @@ function CourseDetails() {
                 className="course-info p-5 bg-white d-flex flex-column"
                 style={{ color: "#777" }}
               >
-                
                 <div className="info-item">
                   <i className="fa-solid fa-user-group"></i>
                   <span>{course.learners}</span>
@@ -165,7 +184,6 @@ function CourseDetails() {
                   <i className="fa-solid fa-language"></i>
                   <span>{course.language}</span>
                 </div>
-
               </div>
             </div>
           </div>

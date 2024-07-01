@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Masonry from "react-masonry-css";
 import { Link } from "react-router-dom";
 import { database, storage } from "./firebaseConfig";
+import { ref, listAll, getDownloadURL } from "firebase/storage";
 
 function Courses() {
   const [coursesData, setCoursesData] = useState({
@@ -11,7 +12,6 @@ function Courses() {
     coursesContent: [],
     filtersContent: [],
   });
-
   const [dataLoaded, setDataLoaded] = useState(false);
   const [imageUrls, setImageUrls] = useState([]);
   const [activeFilter, setActiveFilter] = useState("*");
@@ -25,19 +25,21 @@ function Courses() {
           const data = snapshot.val();
           const { Title, Subtitle, Rupee_Sign, Courses, Filters } = data;
 
+          const coursesContent = Courses
+            ? Object.values(Courses).map((course) => ({
+                id: course.Id || "",
+                category: course.Category || "",
+                price: course.Price || "",
+                title: course.Title || "",
+                author: course.Author || "",
+              }))
+            : [];
+
           setCoursesData({
             title: Title || "",
             subtitle: Subtitle || "",
             rupeeSign: Rupee_Sign || "",
-            coursesContent: Courses
-              ? Object.values(Courses).map((course) => ({
-                  id: course.Id || "",
-                  category: course.Category || "",
-                  price: course.Price || "",
-                  title: course.Title || "",
-                  author: course.Author || "",
-                }))
-              : [],
+            coursesContent: coursesContent,
             filtersContent: Filters
               ? Object.values(Filters).map((filter) => ({
                   category: filter.Category || "",
@@ -45,6 +47,23 @@ function Courses() {
                 }))
               : [],
           });
+
+          // Fetch image URLs for each course
+          const urls = await Promise.all(
+            coursesContent.map(async (course) => {
+              const imageRef = ref(storage, `Course Images/${course.id}`);
+              const listResult = await listAll(imageRef);
+
+              if (listResult.items.length > 0) {
+                const firstImageRef = listResult.items[0];
+                const url = await getDownloadURL(firstImageRef);
+                return url;
+              } else {
+                return "";
+              }
+            })
+          );
+          setImageUrls(urls);
         } else {
           console.log("The courses section data was not found in the database");
         }
