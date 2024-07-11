@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { database, firestore, storage } from "./firebaseConfig";
 
 function Events() {
@@ -10,6 +11,7 @@ function Events() {
 
   const [eventData, setEventData] = useState({
     events: {
+      id: "",
       imageUrl: "",
       title: "",
       eventType: "",
@@ -113,137 +115,9 @@ function Events() {
                         </li>
                       </ul>
 
-                      <a
-                        href="#"
-                        data-bs-toggle="modal"
-                        data-bs-target={`#more${index}`}
-                      >
+                      <Link to={`/events/event-details/${event.id}`}>
                         <i className="fa fa-angle-right" />
-                      </a>
-
-                      {/* Modal */}
-                      <div
-                        className="modal fade"
-                        id={`more${index}`}
-                        tabIndex={-1}
-                        role="dialog"
-                        aria-labelledby="exampleModalCenterTitle"
-                        aria-hidden="true"
-                      >
-                        <div
-                          className="modal-dialog modal-dialog-centered"
-                          role="document"
-                        >
-                          <div className="modal-content">
-                            <div className="modal-header event-modal-header">
-                              <h5
-                                className="modal-title"
-                                id="exampleModalLongTitle"
-                              >
-                                More Details
-                              </h5>
-                              <button
-                                type="button"
-                                className="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                              ></button>
-                            </div>
-
-                            <div className="modal-body  event-modal-body">
-                              <div className="d-flex flex-column">
-                                <div className="text-center">
-                                  <img
-                                    src={event.imageUrl}
-                                    alt="Event"
-                                    className="img-fluid mb-3 w-50"
-                                    style={{ borderRadius: "8px" }}
-                                  />
-                                </div>
-                                <div className="d-flex flex-column">
-                                  <div className="">
-                                    <div>
-                                      <span className="category ">
-                                        {event.eventType}
-                                      </span>
-                                      <h4>{event.title}</h4>
-                                    </div>
-                                  </div>
-
-                                  <div className="d-flex justify-content-between mt-3  ">
-                                    <div>
-                                      <span>Date</span>
-                                      <h6>{event.eventDate}</h6>
-                                    </div>
-                                    <div>
-                                      <span>City</span>
-                                      <h6>{event.eventCity}</h6>
-                                    </div>
-                                    <div>
-                                      <span>Duration</span>
-                                      <h6>{event.duration}</h6>
-                                    </div>
-                                  </div>
-
-                                  <div className="mt-3 ">
-                                    <div>
-                                      <span>Price</span>
-                                      <h6>₹{event.price}</h6>
-                                    </div>
-                                  </div>
-
-                                  <div className="mt-3">
-                                    <span className="more-info-topic-title"
-                                      style={{
-                                        color: "rgb(23, 133, 130)",
-                                        fontWeight: "bold",
-                                      }}
-                                    >
-                                      Description:
-                                    </span>
-                                    <p>{event.description}</p>
-                                  </div>
-                                  <div className="mt-3">
-                                  <span className="more-info-topic-title"
-                                      style={{
-                                        color: "rgb(23, 133, 130)",
-                                        fontWeight: "bold",
-                                      }}
-                                    >
-                                      Agenda:
-                                    </span>
-                                    <p>{event.agendaList}</p>
-                                  </div>
-                                  <div className="mt-3">
-                                    <span className="more-info-topic-title"
-                                      style={{
-                                        color: "rgb(23, 133, 130)",
-                                        fontWeight: "bold",
-                                      }}
-                                    >
-                                      Contact Information:
-                                    </span>
-                                    <p>{event.contactInformation}</p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="modal-footer event-modal-footer">
-                              <button
-                                type="button"
-                                className="primary-button"
-                                data-bs-dismiss="modal"
-                              >
-                                Close
-                              </button>
-                              <button type="button" class="primary-button">
-                                For Booking
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      </Link>
                     </div>
                   </div>
                 </div>

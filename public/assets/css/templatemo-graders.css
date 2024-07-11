@@ -1306,12 +1306,13 @@ Banner Style
 --------------------------------------------- 
 */
 .main-banner {
-  background-color: var(--bg-color-primary);
+  /* background-color: var(--bg-color-primary); */
   /* background-image: url(../images/banner-bg.jpg); */
   background-position: right top;
   background-repeat: no-repeat;
   background-size: cover;
-  padding: 130px 0px 120px 0px;
+  /* padding: 130px 0px 120px 0px; */
+  padding: 130px 0px 0px 0px;
   border-bottom-right-radius: 100px;
 }
 
@@ -1405,8 +1406,8 @@ Banner Style
   transition: background-color 0.3s ease;
 }
 
-.owl-theme .owl-dots .owl-dot.active {
-  /* background-color: rgba(0, 0, 0, 0.5);  */
+.main-banner .item .card {
+  margin-bottom: 1.5rem;
 }
 
 /* 
@@ -1448,7 +1449,8 @@ Services Style
   margin-bottom: 30px;
   margin-right: 80px;
   transition: all 0.4s;
-  height: 400px;
+  height: 350px;
+  min-height: 350px;
 }
 
 .services .service-item h4 {
@@ -1464,6 +1466,11 @@ Services Style
   margin-bottom: 25px;
 }
 
+@media screen and (max-width: 425px) {
+  .services .service-item .main-content {
+    height: 100%;
+  }
+}
 /* 
 ---------------------------------------------
 About Style
@@ -1559,7 +1566,6 @@ h2.accordion-header button {
 .about-us .section-heading .main-button {
   margin-top: 50px;
 }
-
 
 .point-list {
   margin-left: 25px;
@@ -1742,8 +1748,6 @@ Course Details Style
   font-size: 14px;
 }
 
-
-
 .what-you-learn .learning-list {
   margin-left: 25px;
 }
@@ -1753,14 +1757,14 @@ Course Details Style
   margin-top: 0.5rem;
 }
 
-.course-content .content-list{
+.course-content .content-list {
   margin-left: 25px;
 }
-.course-content .content-list li{
+.course-content .content-list li {
   list-style: decimal;
   font-weight: bold;
 }
-.course-content .content-list li p{
+.course-content .content-list li p {
   font-weight: normal;
 }
 
@@ -2129,8 +2133,77 @@ Events Style
   background-color: var(--bg-color-primary);
 }
 
-/* .events .item .event-agenda-list li {
-} */
+/* 
+---------------------------------------------
+Event Details Style
+--------------------------------------------- 
+*/
+
+.event-details-section {
+  padding-top: 120px;
+}
+
+.event-details-section h2.title {
+  font-size: 24px;
+  color: var(--primary-color);
+  border-left: 2px solid var(--primary-color);
+  padding: 8px 20px;
+  font-weight: 500;
+}
+
+.event-details-section span.category {
+  font-size: 14px;
+  text-transform: uppercase;
+  color: var(--primary-color);
+  background-color: #fff;
+  padding: 8px 20px;
+  border-radius: 25px;
+  font-weight: 500;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.background-secondary {
+  background-color: var(--bg-color-secondary);
+}
+
+.event-details-section .image {
+  width: 100%;
+  max-width: 450px;
+}
+
+.event-info .info-item {
+  position: relative;
+}
+
+.event-info .info-item i {
+  position: absolute;
+  font-size: 14px;
+  top: 25%;
+  left: 5px;
+}
+.event-info .info-item span {
+  margin-left: 2rem;
+  font-size: 14px;
+}
+
+.agenda .agenda-list,
+.key-takeaways .key-takeaways-list {
+  margin-left: 25px;
+}
+.agenda .agenda-list li,
+.key-takeaways .key-takeaways-list li {
+  list-style-type: disc;
+  font-size: 14px;
+  margin-top: 0.5rem;
+}
+
+
+@media (max-width: 992px) {
+  .event-details-section {
+    padding-top: 60px;
+  }
+}
 /* 
 ---------------------------------------------
 Contact Style
@@ -2404,6 +2477,68 @@ footer::before {
   z-index: 2;
 } */
 
+/* Social Buttons */
+
+footer .social-icons {
+  padding: 0;
+  list-style: none;
+  /* margin: 1em; */
+}
+
+footer .social-icons li {
+  display: inline-block;
+  margin: 0.15em;
+  position: relative;
+  font-size: 1.2em;
+}
+
+footer .social-icons i {
+  color: rgb(23, 133, 130);
+  position: absolute;
+  top: 21px;
+  left: 21px;
+  transition: all 265ms ease-out;
+}
+
+footer .social-icons a {
+  display: inline-block;
+}
+
+footer .social-icons a:before {
+  transform: scale(1);
+  -ms-transform: scale(1);
+  -webkit-transform: scale(1);
+  content: " ";
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  display: block;
+  background: rgb(215, 255, 253);
+  transition: all 265ms ease-out;
+}
+
+footer .social-icons a:hover:before {
+  transform: scale(0);
+  transition: all 265ms ease-in;
+}
+
+footer .social-icons a:hover i {
+  transform: scale(2.2);
+  -ms-transform: scale(2.2);
+  -webkit-transform: scale(2.2);
+  color: #00b5f5;
+  background: rgb(215, 255, 253);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 265ms ease-in;
+}
+
+@media (max-width: 767px) {
+  footer {
+    border-radius: 0px;
+  }
+}
+
 /* 
 ---------------------------------------------
 Responsive Style
@@ -2426,13 +2561,6 @@ body {
   .header-area .main-nav .logo h1 {
     border-right: none;
   }
-  /* .main-banner .item {
-    padding: 80px 30px 120px 30px !important;
-    margin-left: 30px;
-  }
-  .main-banner .owl-nav {
-    left: 30px !important;
-  } */
   .event_filter {
     padding: 15px 20px;
   }
@@ -2454,12 +2582,14 @@ body {
     border-right: none;
   }
   .main-banner {
-    padding-top: 100px;
+    padding-top: 120px;
+    padding-bottom: 50px;
   }
   .main-banner .item {
-    padding: 100px 60px 140px 60px;
+    padding: 0;
+    /* padding: 0;
     margin-left: 30px;
-    text-align: center;
+    text-align: center; */
   }
   .main-banner .item h2,
   .main-banner .item p {

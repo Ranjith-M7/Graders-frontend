@@ -4,7 +4,7 @@ import Header from "./Header";
 import Events from "./Events";
 import Footer from "./Footer";
 
-function EventsPage() {
+function EventPage() {
   return (
     <>
       <Header />
@@ -14,4 +14,4 @@ function EventsPage() {
   );
 }
 
-export default EventsPage;
+export default EventPage;

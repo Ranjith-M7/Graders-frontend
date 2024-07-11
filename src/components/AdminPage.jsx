@@ -96,9 +96,10 @@ const AdminPage = () => {
   }, []);
 
   //handle image upload
-  const handleImageUpload = async (file) => {
-    const storageRef = firebase.storage().ref();
-    const fileRef = storageRef.child(`Event Images/${file.name}`);
+  const handleImageUpload = async (file, eventId) => {
+    const fileExtension = file.name.split(".").pop();
+    const imageName = `image_${Date.now()}.${fileExtension}`;
+    const fileRef = storage.ref().child(`Event Images/${eventId}/${imageName}`);
     await fileRef.put(file);
     return await fileRef.getDownloadURL();
   };
@@ -107,16 +108,33 @@ const AdminPage = () => {
     event.preventDefault();
 
     try {
-      let imageUrl = "";
-      if (image) {
-        imageUrl = await handleImageUpload(image);
+      // Fetch the latest ID from the database
+      const snapshot = await database.ref("Events").once("value");
+      let latestId = 0;
+
+      if (snapshot.exists()) {
+        const eventsData = snapshot.val();
+        if (eventsData) {
+          // Find the latest ID
+          Object.values(eventsData).forEach((event) => {
+            if (event.id > latestId) {
+              latestId = event.id;
+            }
+          });
+        }
       }
 
-      const database = firebase.database();
-      const ref = database.ref("Events");
-      const newEventRef = ref.push();
+      const newEventId = latestId + 1;
+
+      let imageUrl = "";
+      if (image) {
+        imageUrl = await handleImageUpload(image, newEventId);
+      }
+
+      const newEventRef = database.ref(`Events/${newEventId}`);
 
       await newEventRef.set({
+        id: newEventId,
         eventType,
         eventDate,
         duration,
@@ -129,6 +147,7 @@ const AdminPage = () => {
         contactInformation,
       });
 
+      // Reset form fields
       setEventType("");
       setEventDate("");
       setDuration("");
@@ -226,7 +245,7 @@ const AdminPage = () => {
               <div className="row">
                 <div className="col-md-6">
                   <div className="mb-3">
-                    <label htmlFor="eventType" className="form-label" >
+                    <label htmlFor="eventType" className="form-label">
                       Event Type
                     </label>
                     <select

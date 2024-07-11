@@ -93,7 +93,7 @@ function CourseDetails() {
     };
 
     fetchCourseImage(id);
-  }, [id]);
+  }, []);
 
   return (
     <>
@@ -101,13 +101,21 @@ function CourseDetails() {
       <section className="course-details-section" id="course-details">
         <div className="container">
           {/* Row 1 */}
-          <div className="row py-5">
+          <div className="row py-5 mt-md-4 mt-lg-0">
             <div className="col-lg-4 d-flex align-items-center justify-content-center">
-              <div className="image">
-                <img src={imageUrl} className="img-fluid" alt="" />
+              <div
+                className="image mb-4 my-lg-0 bg-white"
+                style={{ padding: "8px", borderRadius: "10px" }}
+              >
+                <img
+                  src={imageUrl}
+                  className="img-fluid"
+                  alt=""
+                  style={{ borderRadius: "10px" }}
+                />
               </div>
             </div>
-            <div className="col-lg-8 ">
+            <div className="col-lg-8">
               <div className="d-lg-flex justify-content-between align-items-center p-lg-5 p-3 bg-white">
                 <div className="content py-2">
                   <h2 className="mb-2">{course.title}</h2>

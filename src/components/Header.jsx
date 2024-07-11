@@ -180,11 +180,11 @@ function Header() {
                       Home
                     </NavLink>
                   </li>
-                  <li>
+                  {/* <li>
                     <NavLink to="/about" activeClassName="active">
                       About Us
                     </NavLink>
-                  </li>
+                  </li> */}
                   <li>
                     <NavLink to="/course-list" activeClassName="active">
                       Courses

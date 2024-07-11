@@ -9,7 +9,7 @@ function Testimonial() {
     title: "",
     subtitle: "",
     description: "",
-    testimonialContent: [],
+    testimonials: [],
   });
   const [imageUrls, setImageUrls] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
@@ -48,17 +48,13 @@ function Testimonial() {
           const data = snapshot.val();
           const { Title, Subtitle, Description, Testimonials } = data;
 
-          // Filter out empty testimonial items
-          const filteredTestimonialContent = Testimonials
-            ? Testimonials.filter((item) => item.Name && item.Category)
-            : [];
-
           setTestimonialData({
             title: Title || "",
             subtitle: Subtitle || "",
             description: Description || "",
-            testimonialContent: filteredTestimonialContent || [],
+            testimonials: Testimonials || [],
           });
+          setDataLoaded(true);
         } else {
           console.log("The testimonial data was not found in the database");
         }
@@ -69,16 +65,6 @@ function Testimonial() {
 
     fetchTestimonialData();
   }, []);
-
-  useEffect(() => {
-    //check if all data is loaded
-    if (
-      testimonialData.testimonialContent.length > 0 &&
-      testimonialData.testimonialContent.length === imageUrls.length
-    ) {
-      setDataLoaded(true);
-    }
-  }, [testimonialData, imageUrls]);
 
   const options = {
     center: true,
@@ -110,13 +96,13 @@ function Testimonial() {
           <div className="col-lg-7">
             {dataLoaded && (
               <OwlCarousel className="owl-carousel" {...options}>
-                {testimonialData.testimonialContent.map((item, index) => (
+                {testimonialData.testimonials.map((item, index) => (
                   <div key={index} className="item">
-                    <p>{item.Description}</p>
+                    <p>{item.description}</p>
                     <div className="author">
-                      <img src={imageUrls[index]} alt={`Image ${index + 1}`} />
-                      <span className="category">{item.Category}</span>
-                      <h4>{item.Name}</h4>
+                      {/* <img src={imageUrls[index]} alt={`Image ${index + 1}`} /> */}
+                      {/* <span className="category">{item.Category}</span> */}
+                      <h4>{item.name}</h4>
                     </div>
                   </div>
                 ))}

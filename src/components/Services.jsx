@@ -55,48 +55,26 @@ function Services() {
     <div className="services section" id="services">
       <div className="container">
         <div className="row">
-          {/* {servicesData.map((service, index) => (
+          {servicesData.map((item, index) => (
             <div key={index} className="col-lg-4 col-md-6">
               <div className="service-item">
                 <div className="icon">
                   <img src={imageUrls[index]} alt="" />
                 </div>
                 <div className="main-content">
-                  <h4>{service.Title}</h4>
-                  <p>{service.Description}</p>
-                  <div className="main-button">
-                    <a href={service.Button.Link}>{service.Button.Text}</a>
-                  </div>
+                  <h4>{item.title}</h4>
+                  <p>{item.description}</p>
                 </div>
               </div>
             </div>
-  ))} */}
-          <div className="col-lg-4 col-md-6">
-            <div className="service-item">
-              <div className="icon">
-                <img src={imageUrls[0]} alt="" />
-              </div>
-              <div className="main-content d-flex flex-column justify-content-between">
-                <h4>Full Stack Courses</h4>
-                <p>
-                  Dive into our Full Stack Courses and master both front-end and
-                  back-end development. Gain hands-on experience with the latest
-                  technologies and build real-world projects to enhance your
-                  portfolio.
-                </p>
-                <div className="main-button">
-                  <a href="">Read More</a>
-                </div>
-              </div>
-            </div>
-          </div>
+          ))}
 
-          <div className="col-lg-4 col-md-6">
+          {/* <div className="col-lg-4 col-md-6">
             <div className="service-item">
               <div className="icon">
                 <img src={imageUrls[1]} alt="" />
               </div>
-              <div className="main-content d-flex flex-column justify-content-between">
+              <div className="main-content">
                 <h4>Expert Workshops</h4>
                 <p>
                   Join our Expert Workshops to learn from industry leaders.
@@ -104,18 +82,15 @@ function Services() {
                   provide valuable insights to boost your skills and career
                   prospects.
                 </p>
-                <div className="main-button">
-                  <a href="">Read More</a>
-                </div>
               </div>
             </div>
-          </div>
-          <div className="col-lg-4 col-md-6">
+          </div> */}
+          {/* <div className="col-lg-4 col-md-6">
             <div className="service-item">
               <div className="icon">
                 <img src={imageUrls[2]} alt="" />
               </div>
-              <div className="main-content d-flex flex-column justify-content-between">
+              <div className="main-content">
                 <h4>Career Sessions</h4>
                 <p>
                   Attend our Career Sessions to get guidance on crafting the
@@ -123,12 +98,10 @@ function Services() {
                   market. Get personalized advice to kickstart your professional
                   journey.
                 </p>
-                <div className="main-button">
-                  <a href="">Read More</a>
-                </div>
+
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

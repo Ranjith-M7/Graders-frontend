@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { database, firestore, storage } from "./firebaseConfig";
 
-import img from "../assets/images/member-04.jpg";
-
 function Team() {
   const [teamData, setTeamData] = useState([]);
   const [imageUrls, setImageUrls] = useState([]);
@@ -57,7 +55,7 @@ function Team() {
       <div className="container">
         <div className="row">
           {teamData.map((member, index) => (
-            <div key={index} className="col-lg-3 col-md-6">
+            <div key={index} className="col-lg-6 col-md-6">
               <div className="team-member">
                 <div className="main-content">
                   <img src={imageUrls[index]} alt="" />

@@ -25,6 +25,10 @@ function Blog() {
           (post) =>
             post.statusUpdate === "Created" || post.statusUpdate === "edited"
         );
+        
+         // Sort posts by date in descending order
+         postsArray.sort((a, b) => new Date(b.date) - new Date(a.date));
+         
         setPosts(postsArray);
         setFilteredPosts(postsArray);
       }
