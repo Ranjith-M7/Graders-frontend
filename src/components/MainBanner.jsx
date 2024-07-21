@@ -66,11 +66,12 @@ function MainBanner() {
                     {Object.values(slide).map((card, cardIndex) => (
                       <div
                         key={cardIndex}
-                        className="card p-2 mx-2"
+                        className="card  mx-2 p-1 shadow"
                         style={{
                           width: "18rem",
                           backgroundColor: "rgb(215, 255, 253)",
                           color: "black",
+                          border: "3px solid rgb(23, 133, 130)"
                         }}
                       >
                         <img
@@ -82,7 +83,7 @@ function MainBanner() {
                               ? tempImg2
                               : tempImg3
                           }
-                          alt="Card image cap"
+                          alt="Card image"
                           style={{
                             height: "150px",
                             width: "100%",

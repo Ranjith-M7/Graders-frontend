@@ -121,7 +121,7 @@ function Courses() {
   // console.log(filteredCourses);
 
   return (
-    <section className="section courses" id="courses">
+    <section className="section" id="courses">
       <div className="container">
         <div className="row">
           <div className="col-lg-12 text-center">

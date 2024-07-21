@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import Pagination from "react-js-pagination";
+import Loader from "./Loader";
 
 function Blog() {
   const [posts, setPosts] = useState([]);
@@ -25,10 +26,10 @@ function Blog() {
           (post) =>
             post.statusUpdate === "Created" || post.statusUpdate === "edited"
         );
-        
-         // Sort posts by date in descending order
-         postsArray.sort((a, b) => new Date(b.date) - new Date(a.date));
-         
+
+        // Sort posts by date in descending order
+        postsArray.sort((a, b) => new Date(b.date) - new Date(a.date));
+
         setPosts(postsArray);
         setFilteredPosts(postsArray);
       }
@@ -61,6 +62,7 @@ function Blog() {
   };
   return (
     <>
+      <Loader />
       <Header />
       <section className="blog-section section" id="blog">
         <div className="hero-wrap">
@@ -144,7 +146,6 @@ function Blog() {
                 itemClass="page-item"
                 linkClass="page-link"
               />
-
             </div>
           </div>
         </section>

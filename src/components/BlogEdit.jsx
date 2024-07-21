@@ -12,6 +12,8 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { post } from "jquery";
+import Loader from "./Loader";
 
 function BlogEdit() {
   //post blog
@@ -292,9 +294,9 @@ function BlogEdit() {
     setCategories(categories.filter((_, index) => index !== tagIndex));
   };
 
-  
   // update blog
   const [posts, setPosts] = useState([]); // State to store fetched blog posts
+  const [postIds, setPostIds] = useState();
   const [selectedPost, setSelectedPost] = useState(null); // State to store the selected post
 
   const [editedPost, setEditedPost] = useState({
@@ -318,47 +320,29 @@ function BlogEdit() {
       postsRef.on("value", (snapshot) => {
         const posts = snapshot.val();
         const postsList = [];
-        const postIds = []; // Array to store post IDs
-  
+        const firebasePostIds = [];
+
         for (let postId in posts) {
-          postsList.push({ id: postId, ...posts[postId] });
-          postIds.push(postId); // Push each post ID into the array
+          postsList.push({ firebaseId: postId, ...posts[postId] });
+          firebasePostIds.push(postId); // Store the Firebase ID
         }
-  
+
         setPosts(postsList);
-        console.log(postIds); // Log the array of post IDs
+        setPostIds(firebasePostIds);
       });
     };
-  
+
     fetchData();
-  
-    // Clean up the event listener when component unmounts
+
     return () => {
       firebase.database().ref("posts").off();
     };
   }, []);
-  
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const postsRef = firebase.database().ref("posts");
-  //     postsRef.on("value", (snapshot) => {
-  //       const posts = snapshot.val();
-  //       const postsList = [];
-  //       for (let id in posts) {
-  //         postsList.push({ id, ...posts[id] });
-  //       }
-  //       setPosts(postsList);
-  //     });
-  //   };
-
-  //   fetchData();
-  // }, []);
 
   const [successMessage4, setSuccessMessage4] = useState("");
 
   // selected posts
   const handlePostSelect = (postId) => {
-    // console.log(`postId: ${typeof postId}`);
     const selected = posts.find((post) => post.id == postId);
     setSelectedPost(selected);
     setEditedPost({ ...selected, statusUpdate: "edited" });
@@ -371,21 +355,33 @@ function BlogEdit() {
       month: "long",
       year: "numeric",
     });
-    // Update the post in the database
-    firebase
-      .database()
-      .ref(`posts/-O0Eqm9ZSQv2qHrx6TCO`)
-      .update({ ...editedPost, date: formattedDate, tags: editedPost.tags })
-      .then(() => {
-        setSuccessMessage4("Post updated successfully.");
-        toast.success(`Post updated successfully.`);
-        console.log("Post updated successfully.");
-        // Optionally, you can clear the form fields or show a success message
-      })
-      .catch((error) => {
-        console.error("Error updating post:", error);
-        // Optionally, you can show an error message
-      });
+
+    // Ensure postId is available for the selected post
+    if (selectedPost) {
+      const postId = selectedPost.id;
+      const firebaseId = posts.find((post) => post.id == postId).firebaseId;
+
+      console.log(`postId: ${postId}, firebaseId: ${firebaseId}`);
+
+      // Update the post in the database
+      firebase
+        .database()
+        .ref(`posts/${firebaseId}`)
+        .update({ ...editedPost, date: formattedDate, tags: editedPost.tags })
+        .then(() => {
+          setSuccessMessage4("Post updated successfully.");
+          toast.success("Post updated successfully.");
+          console.log("Post updated successfully.");
+          // Optionally, clear form fields or show a success message
+        })
+        .catch((error) => {
+          console.error("Error updating post:", error);
+          // Optionally, show an error message
+        });
+    } else {
+      console.error("No post selected for update.");
+      toast.error("No post selected for update.");
+    }
   };
 
   // Handle input changes
@@ -537,19 +533,28 @@ function BlogEdit() {
 
   //delete blog
   const handleDeletePost = () => {
-    firebase
-      .database()
-      .ref(`posts/${selectedPost2.id}`)
-      .update({ statusUpdate: "Deleted" })
-      .then(() => {
-        setSuccessMessage3("Post deleted successfully.");
-        toast.success(`Post deleted successfully.`);
-        setPosts(posts.filter((post) => post.id !== selectedPost2.id));
-        setSelectedPost2(null);
-      })
-      .catch((error) => {
-        console.error("Error deleting post:", error);
-      });
+    if (selectedPost2) {
+      const postId = selectedPost2.id;
+      const firebaseId = posts.find((post) => post.id == postId).firebaseId;
+
+      firebase
+        .database()
+        .ref(`posts/${firebaseId}`)
+        .update({ statusUpdate: "Deleted" })
+        .then(() => {
+          setSuccessMessage3("Post deleted successfully.");
+          toast.success("Post deleted successfully.");
+          setPosts(posts.filter((post) => post.id !== postId));
+          setSelectedPost2(null);
+        })
+        .catch((error) => {
+          console.error("Error deleting post:", error);
+          toast.error("Error deleting post.");
+        });
+    } else {
+      console.error("No post selected for deletion.");
+      toast.error("No post selected for deletion.");
+    }
   };
 
   //tab section

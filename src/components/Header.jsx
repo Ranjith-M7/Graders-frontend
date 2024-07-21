@@ -69,8 +69,8 @@ function Header() {
   useEffect(() => {
     const handleScroll = () => {
       const scroll = window.scrollY;
-      if (scroll >= 10) {
-        setHeaderClass("background-header header-reduced");
+      if (scroll >= 20) {
+        setHeaderClass("background-header");
       } else {
         setHeaderClass("");
       }
@@ -203,7 +203,7 @@ function Header() {
                   <li>
                     {/* Sign In Button */}
                     <NavLink
-                      to="/signin"
+                      to="/auth"
                       style={{ display: isLoggedIn ? "none" : "block" }}
                       activeClassName="active"
                     >

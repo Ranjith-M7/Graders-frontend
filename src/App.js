@@ -11,8 +11,8 @@ import EventPage from "./components/EventPage";
 import EventDetails from "./components/EventDetails";
 import ContactPage from "./components/ContactPage";
 
-import LoginForm from "./components/signin";
-import SignUpForm from "./components/signup";
+import AuthForm from "./components/AuthForm";
+
 import Profile from "./components/Profile";
 import SeoPage from "./components/SeoPage";
 import AdminPage from "./components/AdminPage";
@@ -36,8 +36,9 @@ function App() {
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/blog-details/:title" element={<BlogDetails />} />
           <Route path="/contact" element={<ContactPage />} />
-          <Route path="/signin" element={<LoginForm />} />
-          <Route path="/signup" element={<SignUpForm />} />
+
+          <Route path="/auth" element={<AuthForm />} />
+
           <Route path="/profile" element={<Profile />} />
           <Route path="/seo-settings" element={<SeoPage />} />
           <Route path="/adminpage" element={<AdminPage />} />

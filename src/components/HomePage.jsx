@@ -1,4 +1,5 @@
 import React from "react";
+import Loader from "./Loader";
 import Header from "./Header";
 import MainBanner from "./MainBanner";
 import Services from "./Services";
@@ -14,6 +15,7 @@ import Footer from "./Footer";
 function HomePage() {
   return (
     <>
+      <Loader />
       <Header />
       <MainBanner />
       <Services />
