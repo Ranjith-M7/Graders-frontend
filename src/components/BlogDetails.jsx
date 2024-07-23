@@ -8,6 +8,7 @@ import { faThumbsUp as farThumbsUp } from "@fortawesome/free-regular-svg-icons";
 import { faThumbsUp as fasThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import "icofont/dist/icofont.css";
 
+import Loader from "./Loader";
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -502,8 +503,9 @@ const BlogDetails = () => {
 
   return (
     <>
+      <Loader />
       <Header />
-      <section className="hero-wrap section">
+      <section className="hero-wrap pt-5">
         <div className="container">
           <div className="row">
             <div className="col-lg-12 text-center">
@@ -835,7 +837,7 @@ const BlogDetails = () => {
                               {post.date}
                             </span>
                             <h6 className="my-2">
-                              <Link 
+                              <Link
                                 to={`/blog/blog-details/${parseHTML(
                                   post.title
                                 )}`}
@@ -897,8 +899,3 @@ const BlogDetails = () => {
   );
 };
 export default BlogDetails;
-
-
-
-
-

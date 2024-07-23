@@ -5,6 +5,7 @@ import { getStorage, ref, getDownloadURL, listAll } from "firebase/storage";
 
 import Header from "./Header";
 import Footer from "./Footer";
+import Loader from "./Loader";
 
 function EventDetails() {
   const { id } = useParams();
@@ -90,22 +91,27 @@ function EventDetails() {
 
   return (
     <>
+      <Loader />
       <Header />
-      <section className="event-details-section" id="event-details">
+      <div className="event-details-section pt-3 pt-md-5" id="event-details">
         <div className="container">
           {/* Row 1 */}
-          <div className="row py-5 mt-md-4 mt-lg-0">
+          <div className="row pb-5">
             <div className="col-lg-4 d-flex align-items-center justify-content-center">
               <div
                 className="image mb-4 my-lg-0"
                 style={{
                   padding: "8px",
                   backgroundColor: "rgb(215, 255, 253)",
-                  borderRadius: "10px"
+                  borderRadius: "10px",
                 }}
               >
-                <img src={event.imageUrl} className="img-fluid" alt="" style={{ borderRadius: "10px"
-                }}/>
+                <img
+                  src={event.imageUrl}
+                  className="img-fluid"
+                  alt=""
+                  style={{ borderRadius: "10px" }}
+                />
               </div>
             </div>
 
@@ -195,7 +201,7 @@ function EventDetails() {
             </div>
           </div>
         </div>
-      </section>
+      </div>
       <Footer />
     </>
   );

@@ -20,88 +20,83 @@ function Courses() {
   useEffect(() => {
     const fetchCoursesData = async () => {
       try {
-        const snapshot = await database.ref("Courses Section").once("value");
-        if (snapshot.exists()) {
-          const data = snapshot.val();
-          const { Title, Subtitle, Rupee_Sign, Courses, Filters } = data;
-
-          const coursesContent = Courses
-            ? Object.values(Courses).map((course) => ({
-                id: course.Id || "",
-                category: course.Category || "",
-                price: course.Price || "",
-                title: course.Title || "",
-                author: course.Author || "",
-              }))
-            : [];
-
-          setCoursesData({
-            title: Title || "",
-            subtitle: Subtitle || "",
-            rupeeSign: Rupee_Sign || "",
-            coursesContent: coursesContent,
-            filtersContent: Filters
-              ? Object.values(Filters).map((filter) => ({
-                  category: filter.Category || "",
-                  name: filter.Name || "",
-                }))
-              : [],
-          });
-
-          // Fetch image URLs for each course
-          const urls = await Promise.all(
-            coursesContent.map(async (course) => {
-              const imageRef = ref(storage, `Course Images/${course.id}`);
-              const listResult = await listAll(imageRef);
-
-              if (listResult.items.length > 0) {
-                const firstImageRef = listResult.items[0];
-                const url = await getDownloadURL(firstImageRef);
-                return url;
-              } else {
-                return "";
-              }
-            })
-          );
-          setImageUrls(urls);
+        const localData = localStorage.getItem("CoursesSection");
+        if (localData && localData !== "undefined") {
+          const parsedData = JSON.parse(localData);
+          setCoursesData(parsedData);
+          setDataLoaded(true);
+          setImageUrls(await fetchImageUrls(parsedData.coursesContent));
         } else {
-          console.log("The courses section data was not found in the database");
+          const snapshot = await database.ref("Courses Section").once("value");
+          if (snapshot.exists()) {
+            const data = snapshot.val();
+            const { Title, Subtitle, Rupee_Sign, Courses, Filters } = data;
+
+            const coursesContent = Courses
+              ? Object.values(Courses).map((course) => ({
+                  id: course.Id || "",
+                  category: course.Category || "",
+                  price: course.Price || "",
+                  title: course.Title || "",
+                  author: course.Author || "",
+                }))
+              : [];
+
+            const parsedData = {
+              title: Title || "",
+              subtitle: Subtitle || "",
+              rupeeSign: Rupee_Sign || "",
+              coursesContent: coursesContent,
+              filtersContent: Filters
+                ? Object.values(Filters).map((filter) => ({
+                    category: filter.Category || "",
+                    name: filter.Name || "",
+                  }))
+                : [],
+            };
+
+            setCoursesData(parsedData);
+            localStorage.setItem("CoursesSection", JSON.stringify(parsedData));
+            setDataLoaded(true);
+            setImageUrls(await fetchImageUrls(coursesContent));
+          } else {
+            console.log(
+              "The courses section data was not found in the database"
+            );
+          }
         }
       } catch (error) {
         console.log(`Error: ${error}`);
       }
     };
+
     fetchCoursesData();
   }, []);
 
-  // Fetch image URLs from Firebase Storage
-  useEffect(() => {
-    const fetchImageUrls = async () => {
-      try {
-        const storageRef = storage.ref("Courses Section");
-        const listResult = await storageRef.listAll();
-        const urls = await Promise.all(
-          listResult.items.map(async (itemRef) => {
-            return await itemRef.getDownloadURL();
-          })
-        );
-        setImageUrls(urls);
-      } catch (error) {
-        console.error("Error fetching image URLs:", error);
-      }
-    };
-    fetchImageUrls();
-  }, []);
+  const fetchImageUrls = async (coursesContent) => {
+    try {
+      const urls = await Promise.all(
+        coursesContent.map(async (course) => {
+          const imageRef = ref(storage, `Course Images/${course.id}`);
+          const listResult = await listAll(imageRef);
 
-  // Check if data is loaded
-  useEffect(() => {
-    if (coursesData.coursesContent.length > 0) {
-      setDataLoaded(true);
+          if (listResult.items.length > 0) {
+            const firstImageRef = listResult.items[0];
+            const url = await getDownloadURL(firstImageRef);
+            return url;
+          } else {
+            return "";
+          }
+        })
+      );
+      return urls;
+    } catch (error) {
+      console.error("Error fetching image URLs:", error);
+      return [];
     }
-  }, [coursesData, imageUrls]);
+  };
 
   const handleFilterClick = (filterValue) => {
-    // console.log(`Filter clicked: ${filterValue}`);
     setActiveFilter(filterValue);
   };
 
@@ -117,8 +112,6 @@ function Courses() {
     1100: 2,
     700: 1,
   };
-
-  // console.log(filteredCourses);
 
   return (
     <section className="section" id="courses">

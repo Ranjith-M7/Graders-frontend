@@ -8,7 +8,7 @@ const Loader = () => {
       // Simulate a delay to hide the loader after some time (e.g., 3 seconds)
       const timer = setTimeout(() => {
         setLoading(false);
-      }, 2000);
+      }, 1500);
   
       return () => clearTimeout(timer);
     }, []);

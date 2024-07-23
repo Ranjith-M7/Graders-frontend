@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { database, storage } from "./firebaseConfig";
 import { getStorage, ref, getDownloadURL, listAll } from "firebase/storage";
 
+import Loader from "./Loader";
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -97,11 +98,15 @@ function CourseDetails() {
 
   return (
     <>
+      <Loader />
       <Header />
-      <section className="course-details-section" id="course-details">
+      <section
+        className="course-details-section pt-3 pt-md-5"
+        id="course-details "
+      >
         <div className="container">
           {/* Row 1 */}
-          <div className="row py-5 mt-md-4 mt-lg-0">
+          <div className="row pb-5">
             <div className="col-lg-4 d-flex align-items-center justify-content-center">
               <div
                 className="image mb-4 my-lg-0 bg-white"

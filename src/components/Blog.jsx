@@ -4,10 +4,12 @@ import "firebase/compat/auth";
 import "firebase/compat/database";
 import "firebase/compat/storage";
 import { Link } from "react-router-dom";
+
+import Loader from "./Loader";
 import Header from "./Header";
 import Footer from "./Footer";
+
 import Pagination from "react-js-pagination";
-import Loader from "./Loader";
 
 function Blog() {
   const [posts, setPosts] = useState([]);
@@ -64,7 +66,7 @@ function Blog() {
     <>
       <Loader />
       <Header />
-      <section className="blog-section section" id="blog">
+      <section className="blog-section pt-5" id="blog">
         <div className="hero-wrap">
           <div className="container">
             <div className="row">
@@ -77,7 +79,7 @@ function Blog() {
             </div>
           </div>
         </div>
-        <div className="container mt-2 mb-5">
+        <div className="container mb-5">
           <div className="row justify-content-center">
             <div className="col-md-6">
               <div className="input-group">

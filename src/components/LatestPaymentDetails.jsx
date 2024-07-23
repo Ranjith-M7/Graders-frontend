@@ -1,10 +1,12 @@
 import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
+import Loader from "./Loader";
 
 function LatestPaymentDetails() {
   return (
     <>
+      <Loader />
       <Header />
       <div
         className="d-flex justify-content-center align-items-center"

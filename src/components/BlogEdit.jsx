@@ -8,12 +8,13 @@ import { Card, Form, Button, Container, Modal, Alert } from "react-bootstrap";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
+import Loader from "./Loader";
 import Header from "./Header";
 import Footer from "./Footer";
+
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { post } from "jquery";
-import Loader from "./Loader";
 
 function BlogEdit() {
   //post blog
@@ -572,9 +573,9 @@ function BlogEdit() {
   };
   return (
     <>
+      <Loader />
       <Header />
-
-      <section className="section" id="blog-edit">
+      <section className="pt-5" id="blog-edit">
         <div className="container">
           <div className="d-flex justify-content-center my-4 main-content">
             <button

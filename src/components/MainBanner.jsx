@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { database } from "./firebaseConfig";
-
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.min.css";
 import "owl.carousel/dist/assets/owl.theme.default.min.css";
@@ -16,13 +15,20 @@ function MainBanner() {
   useEffect(() => {
     const fetchMainBannerData = async () => {
       try {
-        const snapshot = await database.ref("Main Banner/Slides").once("value");
-        if (snapshot.exists()) {
-          const data = snapshot.val();
-          setSlides(Object.values(data));
+        const localData = localStorage.getItem("mainBannerSlides");
+        if (localData && localData !== "undefined") {
+          setSlides(JSON.parse(localData));
           setDataLoaded(true);
         } else {
-          console.log("The banner data was not found in the database");
+          const snapshot = await database.ref("Main Banner/Slides").once("value");
+          if (snapshot.exists()) {
+            const data = snapshot.val();
+            setSlides(Object.values(data));
+            localStorage.setItem("mainBannerSlides", JSON.stringify(Object.values(data)));
+            setDataLoaded(true);
+          } else {
+            console.log("The banner data was not found in the database");
+          }
         }
       } catch (error) {
         console.log(`Error: ${error}`);
@@ -44,7 +50,6 @@ function MainBanner() {
                 items="1"
                 autoplay={true}
                 loop
-
                 dots={true}
                 nav={false}
                 smartSpeed="1500"

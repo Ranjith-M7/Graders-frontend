@@ -5,6 +5,7 @@ import Footer from "./Footer";
 
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "./Loader";
 
 function SeoPage() {
   const [metaTitle, setMetaTitle] = useState("");
@@ -90,8 +91,9 @@ function SeoPage() {
   };
   return (
     <>
+      <Loader />
       <Header />
-      <section className="ftco-section section seo-section" id="seo-page">
+      <section className="ftco-section pt-5 seo-section" id="seo-page">
         <div className="container">
           <div className="row">
             <div className="col-lg-12 text-center">

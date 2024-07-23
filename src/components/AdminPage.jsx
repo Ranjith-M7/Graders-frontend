@@ -10,6 +10,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
+import Loader from "./Loader";
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -205,8 +206,9 @@ const AdminPage = () => {
   };
   return (
     <>
+      <Loader />
       <Header />
-      <section className="admin-section section " id="admin-page">
+      <section className="admin-section pt-5" id="admin-page">
         <div className="container">
           <div className="row">
             <div className="col-lg-12 text-center">

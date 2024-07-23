@@ -11,6 +11,7 @@ import Testimonial from "./Testimonial";
 import Events from "./Events";
 import Contact from "./Contact";
 import Footer from "./Footer";
+import ScrollTop from "./ScrollTop";
 
 function HomePage() {
   return (
@@ -27,6 +28,7 @@ function HomePage() {
       <Events />
       <Contact />
       <Footer />
+      <ScrollTop />
     </>
   );
 }
