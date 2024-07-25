@@ -128,7 +128,7 @@ function Footer() {
               <div className="social-links d-flex">
                 {footerData.social.socialLinks.twitter && (
                   <a href={footerData.social.socialLinks.twitter}>
-                    <i className="bi bi-twitter" />
+                    <i className="bi bi-twitter-x" />
                   </a>
                 )}
                 {footerData.social.socialLinks.facebook && (

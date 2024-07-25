@@ -15,21 +15,17 @@ function MainBanner() {
   useEffect(() => {
     const fetchMainBannerData = async () => {
       try {
-        const localData = localStorage.getItem("mainBannerSlides");
-        if (localData && localData !== "undefined") {
-          setSlides(JSON.parse(localData));
-          setDataLoaded(true);
-        } else {
+
           const snapshot = await database.ref("Main Banner/Slides").once("value");
           if (snapshot.exists()) {
             const data = snapshot.val();
             setSlides(Object.values(data));
-            localStorage.setItem("mainBannerSlides", JSON.stringify(Object.values(data)));
+
             setDataLoaded(true);
           } else {
             console.log("The banner data was not found in the database");
           }
-        }
+      
       } catch (error) {
         console.log(`Error: ${error}`);
       }

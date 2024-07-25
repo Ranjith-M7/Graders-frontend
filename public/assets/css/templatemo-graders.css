@@ -189,12 +189,12 @@ body {
   --primary-color: rgb(23, 133, 130);
   --secondary-color: rgb(215, 255, 253);
 
-  --background-color: #ffffff; 
-  --default-color: #444444; 
-  --heading-color: #012970; 
-  --accent-color: #4154f1; 
-  --surface-color: #ffffff; 
-  --contrast-color: #ffffff; 
+  --background-color: #ffffff;
+  --default-color: #444444;
+  --heading-color: #012970;
+  --accent-color: #4154f1;
+  --surface-color: #ffffff;
+  --contrast-color: #ffffff;
 }
 
 ::selection {
@@ -2441,9 +2441,7 @@ Contact Style
 .footer .social-links {
   margin-top: 5px;
 }
-.footer
-
-.footer .copyright {
+.footer .footer .copyright {
   padding-top: 25px;
   padding-bottom: 25px;
   border-top: 1px solid
@@ -2752,4 +2750,3 @@ body {
     width: 95%;
   }
 }
-

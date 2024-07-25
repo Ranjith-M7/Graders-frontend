@@ -18,38 +18,32 @@ function About() {
   useEffect(() => {
     const fetchAboutData = async () => {
       try {
-        const localData = localStorage.getItem("aboutData");
-        if (localData && localData !== "undefined") {
-          setAboutData(JSON.parse(localData));
-        } else {
-          const snapshot = await database.ref("About Section").once("value");
-          if (snapshot.exists()) {
-            const data = snapshot.val();
-            const { About_Content, FAQ_Section } = data;
+        const snapshot = await database.ref("About Section").once("value");
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          const { About_Content, FAQ_Section } = data;
 
-            // Filter out empty FAQ items
-            const filteredFaqContent = FAQ_Section
-              ? FAQ_Section.filter((item) => item.Question && item.Answers)
-              : [];
+          // Filter out empty FAQ items
+          const filteredFaqContent = FAQ_Section
+            ? FAQ_Section.filter((item) => item.Question && item.Answers)
+            : [];
 
-            const newAboutData = {
-              aboutContent: {
-                title: About_Content.Title || "",
-                subtitle: About_Content.Subtitle || "",
-                description: About_Content.Description || "",
-                button: {
-                  text: About_Content.Button.Text || "",
-                  link: About_Content.Button.Link || "",
-                },
+          const newAboutData = {
+            aboutContent: {
+              title: About_Content.Title || "",
+              subtitle: About_Content.Subtitle || "",
+              description: About_Content.Description || "",
+              button: {
+                text: About_Content.Button.Text || "",
+                link: About_Content.Button.Link || "",
               },
-              faqContent: filteredFaqContent || [],
-            };
+            },
+            faqContent: filteredFaqContent || [],
+          };
 
-            setAboutData(newAboutData);
-            localStorage.setItem("aboutData", JSON.stringify(newAboutData));
-          } else {
-            console.log("The about data was not found in the database");
-          }
+          setAboutData(newAboutData);
+        } else {
+          console.log("The about data was not found in the database");
         }
       } catch (error) {
         console.log(`Error: ${error}`);
@@ -88,7 +82,10 @@ function About() {
                     <div className="accordion-body">
                       <p className="mb-2">{item.Title}</p>
                       {Object.values(item.Answers).map((answer, ansIndex) => (
-                        <p key={ansIndex} dangerouslySetInnerHTML={{ __html: answer }} />
+                        <p
+                          key={ansIndex}
+                          dangerouslySetInnerHTML={{ __html: answer }}
+                        />
                       ))}
                     </div>
                   </div>

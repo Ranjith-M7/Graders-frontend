@@ -20,50 +20,39 @@ function Courses() {
   useEffect(() => {
     const fetchCoursesData = async () => {
       try {
-        const localData = localStorage.getItem("CoursesSection");
-        if (localData && localData !== "undefined") {
-          const parsedData = JSON.parse(localData);
+        const snapshot = await database.ref("Courses Section").once("value");
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          const { Title, Subtitle, Rupee_Sign, Courses, Filters } = data;
+
+          const coursesContent = Courses
+            ? Object.values(Courses).map((course) => ({
+                id: course.Id || "",
+                category: course.Category || "",
+                price: course.Price || "",
+                title: course.Title || "",
+                author: course.Author || "",
+              }))
+            : [];
+
+          const parsedData = {
+            title: Title || "",
+            subtitle: Subtitle || "",
+            rupeeSign: Rupee_Sign || "",
+            coursesContent: coursesContent,
+            filtersContent: Filters
+              ? Object.values(Filters).map((filter) => ({
+                  category: filter.Category || "",
+                  name: filter.Name || "",
+                }))
+              : [],
+          };
+
           setCoursesData(parsedData);
           setDataLoaded(true);
-          setImageUrls(await fetchImageUrls(parsedData.coursesContent));
+          setImageUrls(await fetchImageUrls(coursesContent));
         } else {
-          const snapshot = await database.ref("Courses Section").once("value");
-          if (snapshot.exists()) {
-            const data = snapshot.val();
-            const { Title, Subtitle, Rupee_Sign, Courses, Filters } = data;
-
-            const coursesContent = Courses
-              ? Object.values(Courses).map((course) => ({
-                  id: course.Id || "",
-                  category: course.Category || "",
-                  price: course.Price || "",
-                  title: course.Title || "",
-                  author: course.Author || "",
-                }))
-              : [];
-
-            const parsedData = {
-              title: Title || "",
-              subtitle: Subtitle || "",
-              rupeeSign: Rupee_Sign || "",
-              coursesContent: coursesContent,
-              filtersContent: Filters
-                ? Object.values(Filters).map((filter) => ({
-                    category: filter.Category || "",
-                    name: filter.Name || "",
-                  }))
-                : [],
-            };
-
-            setCoursesData(parsedData);
-            localStorage.setItem("CoursesSection", JSON.stringify(parsedData));
-            setDataLoaded(true);
-            setImageUrls(await fetchImageUrls(coursesContent));
-          } else {
-            console.log(
-              "The courses section data was not found in the database"
-            );
-          }
+          console.log("The courses section data was not found in the database");
         }
       } catch (error) {
         console.log(`Error: ${error}`);
